@@ -24,6 +24,7 @@ gitをインストールする
 winget install Git.Git
 ```
 
+powershellを起動し直し、
 powershell上で以下を実行して結果が表示されればOK
 
 ```
