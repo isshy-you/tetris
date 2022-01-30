@@ -26,7 +26,7 @@ class Block_Controller(object):
     def GetNextMove(self, nextMove, GameStatus):
 
         t1 = datetime.now()
-
+        DEBUG = 1
         # print GameStatus
         print("=================================================>")
         del GameStatus["field_info"]["withblock"]
@@ -68,11 +68,11 @@ class Block_Controller(object):
             EvalValue,x0,direction0 = self.calcEvaluationValueIndex7(self.board_backboard)
         if EvalValue > 0 :
             strategy = (direction0,x0,1,1)
-            print("<<< isshy-you:(EvalValue,shape,strategy(dir,x,y_ope,y_mov))=(",EvalValue,self.CurrentShape_index,strategy,")")
+            if DEBUG == 1 : print("<<< isshy-you:(EvalValue,shape,strategy(dir,x,y_ope,y_mov))=(",EvalValue,self.CurrentShape_index,strategy,")")
             #LatestEvalValue = EvalValue
             LatestEvalValue = 19
         else:
-            print("<<< isshy-you:GiveUp")
+            if DEBUG == 1 : print("<<< isshy-you:GiveUp")
 
         # sample code
         # search with current block Shape
@@ -87,7 +87,7 @@ class Block_Controller(object):
                 EvalValue = self.calcEvaluationValueSample(board)
                 # update best move
                 if EvalValue > LatestEvalValue:
-                    print(">>> SAMPLE   :(EvalValue,index,strategy(dir,x,y_ope,y_mov))=(",EvalValue,self.CurrentShape_index,(direction0, x0, 1, 1),")")
+                    if DEBUG == 1 : print(">>> SAMPLE   :(EvalValue,index,strategy(dir,x,y_ope,y_mov))=(",EvalValue,self.CurrentShape_index,(direction0, x0, 1, 1),")")
                     strategy = (direction0, x0, 1, 1)
                     LatestEvalValue = EvalValue
 
@@ -169,6 +169,7 @@ class Block_Controller(object):
 
     #type-I
     def calcEvaluationValueIndex1(self,board):
+        DEBUG = 1        
         direction = 0
         x0 = 0
         width = self.board_data_width #width=10
@@ -180,12 +181,12 @@ class Block_Controller(object):
         dic_dir3 = {0xf0f:9,0xf07:7,0x70f:7,0xf03:6,0x30f:6}
 
 #       if random.randrange(2)==0:
-#            print("%%%% RANDOM==0 %%%%")
+#            if DEBUG == 1 : print("%%%% RANDOM==0 %%%%")
 #            x_start = 0
 #            x_end = width-1
 #            x_step = 1
 #        else:
-#            print("%%%% RANDOM==1 %%%%")
+#            if DEBUG == 1 : print("%%%% RANDOM==1 %%%%")
 #            x_start = width-1
 #            x_end = 0
 #            x_step = -1
@@ -199,7 +200,7 @@ class Block_Controller(object):
                 pat4 = self.calcBoardPat(self.board_backboard,x,y)
                 pat3 = pat4 >> 4
                 pat2 = pat4 >> 8
-                #print("#pat:",format(pat4,'04x'),format(pat3,'03x'),format(pat2,'02x'))
+                #if DEBUG == 1 : print("#pat:",format(pat4,'04x'),format(pat3,'03x'),format(pat2,'02x'))
                 if (pat2) in dic_dir0:
                     if point < dic_dir0[pat2]+y/2:
                         x0 = x
@@ -209,15 +210,15 @@ class Block_Controller(object):
                         else:
                             xxmax = x+1
                         for xx in range(x,xxmax,1):
-                            print("block search",xx)
+                            if DEBUG == 1 : print("block search",xx)
                             for yy in range(y-1,0,-1):
                                 if board[(yy) * width + (xx)] != 0:
-                                    #print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
-                                    #print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
+                                    #if DEBUG == 1 : print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
+                                    #if DEBUG == 1 : print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
                                     point = -1
                                     break
                         direction=0
-                        print("dir0=",format(pat2,'02x'),"point=",point)
+                        if DEBUG == 1 : print("dir0=",format(pat2,'02x'),"point=",point)
                 if  (pat4) in dic_dir1:
                     if point < dic_dir1[pat4]+y/2:
                         x0 = x+2
@@ -227,15 +228,15 @@ class Block_Controller(object):
                         else:
                             xxmax = x+3+1
                         for xx in range(x,xxmax,1):
-                            print("block search",xx)
+                            if DEBUG == 1 : print("block search",xx)
                             for yy in range(y-1,0,-1):
                                 if board[(yy) * width + (xx)] != 0:
-                                    #print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
-                                    #print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
+                                    #if DEBUG == 1 : print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
+                                    #if DEBUG == 1 : print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
                                     point = -1
                                     break
                         direction=1
-                        print("dir1=",format(pat4,'04x'),"point=",point)
+                        if DEBUG == 1 : print("dir1=",format(pat4,'04x'),"point=",point)
                 if (pat2) in dic_dir2:
                     if point < dic_dir2[pat2]+y/2:
                         x0 = x+1
@@ -245,14 +246,14 @@ class Block_Controller(object):
                         else:
                             xxmax = x+1+1
                         for xx in range(x+1,xxmax,1):
-                            print("block search",xx)
+                            if DEBUG == 1 : print("block search",xx)
                             for yy in range(y,0,-1):
                                 if board[(yy) * width + (xx)] != 0:
-                                    #print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
+                                    #if DEBUG == 1 : print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
                                     point = -1
                                     break
                         direction=0
-                        print("dir2=",format(pat2,'02x'),"point=",point)
+                        if DEBUG == 1 : print("dir2=",format(pat2,'02x'),"point=",point)
                 if (pat3) in dic_dir3:
                     if point < dic_dir3[pat3]+y/2:
                         x0 = x+1
@@ -262,19 +263,20 @@ class Block_Controller(object):
                         else:
                             xxmax = x+1+1
                         for xx in range(x+1,xxmax,1):
-                            print("block search",xx)
+                            if DEBUG == 1 : print("block search",xx)
                             for yy in range(y,0,-1):
                                 if board[(yy) * width + (xx)] != 0:
-                                    #print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
+                                    #if DEBUG == 1 : print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
                                     point = -1
                                     break
                         direction=0
-                        print("dir3=",format(pat3,'03x'),"point=",point)
+                        if DEBUG == 1 : print("dir3=",format(pat3,'03x'),"point=",point)
         score = point
         return score,x0,direction
 
     #type-I
     def calcEvaluationValueIndex1a(self,board):
+        DEBUG = 1
         direction = 0
         x0 = 0
         width = self.board_data_width #width=10
@@ -285,12 +287,12 @@ class Block_Controller(object):
         dic_dir2 = {0xf0:9,0x70:7,0x30:5,0x10:2}
 
 #       if random.randrange(2)==0:
-#            print("%%%% RANDOM==0 %%%%")
+#            if DEBUG == 1 : print("%%%% RANDOM==0 %%%%")
 #            x_start = 0
 #            x_end = width-1
 #            x_step = 1
 #        else:
-#            print("%%%% RANDOM==1 %%%%")
+#            if DEBUG == 1 : print("%%%% RANDOM==1 %%%%")
 #            x_start = width-1
 #            x_end = 0
 #            x_step = -1
@@ -304,7 +306,7 @@ class Block_Controller(object):
                 pat4 = self.calcBoardPat(self.board_backboard,x,y)
                 pat3 = pat4 >> 4
                 pat2 = pat4 >> 8
-                #print("#pat:",format(pat4,'04x'),format(pat3,'03x'),format(pat2,'02x'))
+                #if DEBUG == 1 : print("#pat:",format(pat4,'04x'),format(pat3,'03x'),format(pat2,'02x'))
                 if (pat2) in dic_dir0:
                     if point < dic_dir0[pat2]+y/2:
                         x0 = x
@@ -314,15 +316,15 @@ class Block_Controller(object):
                         else:
                             xxmax = x
                         for xx in range(x,xxmax,1):
-                            print("block search",xx)
+                            if DEBUG == 1 : print("block search",xx)
                             for yy in range(y-1,0,-1):
                                 if board[(yy) * width + (xx)] != 0:
-                                    #print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
-                                    #print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
+                                    #if DEBUG == 1 : print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
+                                    #if DEBUG == 1 : print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
                                     point = -1
                                     break
                         direction=0
-                        print("dir0=",format(pat2,'02x'),"point=",point)
+                        if DEBUG == 1 : print("dir0=",format(pat2,'02x'),"point=",point)
                 if  (pat4) in dic_dir1:
                     if point < dic_dir1[pat4]+y/2:
                         x0 = x+2
@@ -332,15 +334,15 @@ class Block_Controller(object):
                         else:
                             xxmax = x+3
                         for xx in range(x,xxmax,1):
-                            print("block search",xx)
+                            if DEBUG == 1 : print("block search",xx)
                             for yy in range(y-1,0,-1):
                                 if board[(yy) * width + (xx)] != 0:
-                                    #print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
-                                    #print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
+                                    #if DEBUG == 1 : print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
+                                    #if DEBUG == 1 : print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
                                     point = -1
                                     break
                         direction=1
-                        print("dir1=",format(pat4,'04x'),"point=",point)
+                        if DEBUG == 1 : print("dir1=",format(pat4,'04x'),"point=",point)
                 if (pat2) in dic_dir2:
                     if point < dic_dir2[pat2]+y/2:
                         x0 = x+1
@@ -350,19 +352,20 @@ class Block_Controller(object):
                         else:
                             xxmax = x+1
                         for xx in range(x+1,xxmax,1):
-                            print("block search",xx)
+                            if DEBUG == 1 : print("block search",xx)
                             for yy in range(y,0,-1):
                                 if board[(yy) * width + (xx)] != 0:
-                                    #print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
+                                    #if DEBUG == 1 : print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
                                     point = -1
                                     break
                         direction=0
-                        print("dir2=",format(pat2,'02x'),"point=",point)
+                        if DEBUG == 1 : print("dir2=",format(pat2,'02x'),"point=",point)
         score = point
         return score,x0,direction
 
     #type-L
     def calcEvaluationValueIndex2(self,board):
+        DEBUG = 1
         point = -1
         direction = 0
         x0 = 0
@@ -383,12 +386,12 @@ class Block_Controller(object):
         dic_dir3 = {0x111:7}
 
 #       if random.randrange(2)==0:
-#            print("%%%% RANDOM==0 %%%%")
+#            if DEBUG == 1 : print("%%%% RANDOM==0 %%%%")
 #            x_start = 0
 #            x_end = width-1
 #            x_step = 1
 #        else:
-#            print("%%%% RANDOM==1 %%%%")
+#            if DEBUG == 1 : print("%%%% RANDOM==1 %%%%")
 #            x_start = width-1
 #            x_end = 0
 #            x_step = -1
@@ -413,8 +416,8 @@ class Block_Controller(object):
                         for xx in range(x,xxmax,1):
                             for yy in range(y,0,-1):
                                 if board[(yy) * width + (xx)] != 0:
-                                    #print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
-                                    #print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
+                                    #if DEBUG == 1 : print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
+                                    #if DEBUG == 1 : print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
                                     point = -1
                                     break
                             hole = 0
@@ -426,10 +429,10 @@ class Block_Controller(object):
                                         hole = 0
                             if hole >= 4:
                                 point = 1+y/2
-                                print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
+                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
                                 #break
                         direction=0
-                        print("dir0=",format(pat2,'02x'),"point=",point)
+                        if DEBUG == 1 : print("dir0=",format(pat2,'02x'),"point=",point)
                 if (pat3) in dic_dir1:
                     if point < dic_dir1[pat3]+y/2:
                         x0 = x+1
@@ -441,8 +444,8 @@ class Block_Controller(object):
                         for xx in range(x,xxmax,1):
                             for yy in range(y,0,-1):
                                 if board[(yy) * width + (xx)] != 0:
-                                    #print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
-                                    #print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
+                                    #if DEBUG == 1 : print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
+                                    #if DEBUG == 1 : print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
                                     point = -1
                                     break
                             hole = 0
@@ -454,10 +457,10 @@ class Block_Controller(object):
                                         hole = 0
                             if hole >= 4:
                                 point = 1+y/2
-                                print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
+                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
                                 #break
                         direction=1
-                        print("dir1=",format(pat3,'03x'),"point=",point)
+                        if DEBUG == 1 : print("dir1=",format(pat3,'03x'),"point=",point)
                 if (pat2) in dic_dir2:
                     if point < dic_dir2[pat2]+y/2:
                         x0 = x+1
@@ -469,8 +472,8 @@ class Block_Controller(object):
                         for xx in range(x,xxmax,1):
                             for yy in range(y,0,-1):
                                 if board[(yy) * width + (xx)] != 0:
-                                    #print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
-                                    #print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
+                                    #if DEBUG == 1 : print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
+                                    #if DEBUG == 1 : print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
                                     point = -1
                                     break
                             hole = 0
@@ -482,10 +485,10 @@ class Block_Controller(object):
                                         hole = 0
                             if hole >= 4:
                                 point = 1+y/2
-                                print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
+                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
                                 #break
                         direction=2
-                        print("dir2=",format(pat2,'02x'),"point=",point)
+                        if DEBUG == 1 : print("dir2=",format(pat2,'02x'),"point=",point)
                 if (pat3) in dic_dir3:
                     if point < dic_dir3[pat3]+y/2:
                         x0 = x+1
@@ -497,8 +500,8 @@ class Block_Controller(object):
                         for xx in range(x,xxmax,1):
                             for yy in range(y,0,-1):
                                 if board[(yy) * width + (xx)] != 0:
-                                    #print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
-                                    #print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
+                                    #if DEBUG == 1 : print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
+                                    #if DEBUG == 1 : print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
                                     point = -1
                                     break
                             hole = 0
@@ -510,15 +513,16 @@ class Block_Controller(object):
                                         hole = 0
                             if hole >= 4:
                                 point = 1+y/2
-                                print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
+                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
                                 #break
                         direction=3
-                        print("dir3=",format(pat3,'03x'),"point=",point)
+                        if DEBUG == 1 : print("dir3=",format(pat3,'03x'),"point=",point)
         score = point
         return score,x0,direction
 
     #type-J
     def calcEvaluationValueIndex3(self,board):
+        DEBUG = 1
         point = -1
         direction = 0
         x0 = 0
@@ -537,12 +541,12 @@ class Block_Controller(object):
                     0x321:7,0x231:7,0x221:7,0x131:2}
 
 #       if random.randrange(2)==0:
-#            print("%%%% RANDOM==0 %%%%")
+#            if DEBUG == 1 : print("%%%% RANDOM==0 %%%%")
 #            x_start = 0
 #            x_end = width-1
 #            x_step = 1
 #        else:
-#            print("%%%% RANDOM==1 %%%%")
+#            if DEBUG == 1 : print("%%%% RANDOM==1 %%%%")
 #            x_start = width-1
 #            x_end = 0
 #            x_step = -1
@@ -567,8 +571,8 @@ class Block_Controller(object):
                         for xx in range(x,xxmax,1):
                             for yy in range(y,0,-1):
                                 if board[(yy) * width + (xx)] != 0:
-                                    #print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
-                                    #print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
+                                    #if DEBUG == 1 : print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
+                                    #if DEBUG == 1 : print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
                                     point = -1
                                     break
                             hole = 0
@@ -580,10 +584,10 @@ class Block_Controller(object):
                                         hole = 0
                             if hole >= 4:
                                 point = 1+y/2
-                                print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
+                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
                                 #break
                         direction=0
-                        print("dir0=",format(pat2,'02x'),"point=",point)
+                        if DEBUG == 1 : print("dir0=",format(pat2,'02x'),"point=",point)
                 if (pat3) in dic_dir1:
                     if point < dic_dir1[pat3]+y/2:
                         x0 = x+1
@@ -595,8 +599,8 @@ class Block_Controller(object):
                         for xx in range(x,xxmax,1):
                             for yy in range(y,0,-1):
                                 if board[(yy) * width + (xx)] != 0:
-                                    #print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
-                                    #print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
+                                    #if DEBUG == 1 : print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
+                                    #if DEBUG == 1 : print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
                                     point = -1
                                     break
                             hole = 0
@@ -608,10 +612,10 @@ class Block_Controller(object):
                                         hole = 0
                             if hole >= 4:
                                 point = 1+y/2
-                                print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
+                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
                                 #break
                         direction=1
-                        print("dir1=",format(pat3,'03x'),"point=",point)
+                        if DEBUG == 1 : print("dir1=",format(pat3,'03x'),"point=",point)
                 if (pat2) in dic_dir2:
                     if point < dic_dir2[pat2]+y/2:
                         x0 = x
@@ -623,8 +627,8 @@ class Block_Controller(object):
                         for xx in range(x,xxmax,1):
                             for yy in range(y,0,-1):
                                 if board[(yy) * width + (xx)] != 0:
-                                    #print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
-                                    #print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat2,'02x'),")")
+                                    #if DEBUG == 1 : print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
+                                    #if DEBUG == 1 : print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat2,'02x'),")")
                                     point = -1
                                     break
                             hole = 0
@@ -636,10 +640,10 @@ class Block_Controller(object):
                                         hole = 0
                             if hole >= 4:
                                 point = 1+y/2
-                                print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat2,'02x'))
+                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat2,'02x'))
                                 #break
                         direction=2
-                        print("dir2=",format(pat2,'02x'),"point=",point)
+                        if DEBUG == 1 : print("dir2=",format(pat2,'02x'),"point=",point)
                 if (pat3) in dic_dir3:
                     if point < dic_dir3[pat3]+y/2:
                         x0 = x+1
@@ -651,8 +655,8 @@ class Block_Controller(object):
                         for xx in range(x,xxmax,1):
                             for yy in range(y,0,-1):
                                 if board[(yy) * width + (xx)] != 0:
-                                    #print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
-                                    #print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
+                                    #if DEBUG == 1 : print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
+                                    #if DEBUG == 1 : print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
                                     point = -1
                                     break
                             hole = 0
@@ -664,15 +668,16 @@ class Block_Controller(object):
                                         hole = 0
                             if hole >= 4:
                                 point = 1+y/2
-                                print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
+                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
                                 #break
                         direction=3
-                        print("dir3=",format(pat3,'03x'),"point=",point)
+                        if DEBUG == 1 : print("dir3=",format(pat3,'03x'),"point=",point)
         score = point
         return score,x0,direction
 
     #type-T
     def calcEvaluationValueIndex4(self,board):
+        DEBUG = 1
         direction = 0
         x0 = 0
         width = self.board_data_width #width=10
@@ -685,12 +690,12 @@ class Block_Controller(object):
         dic_dir3 = {0x111:7}
 
 #       if random.randrange(2)==0:
-#            print("%%%% RANDOM==0 %%%%")
+#            if DEBUG == 1 : print("%%%% RANDOM==0 %%%%")
 #            x_start = 0
 #            x_end = width-1
 #            x_step = 1
 #        else:
-#            print("%%%% RANDOM==1 %%%%")
+#            if DEBUG == 1 : print("%%%% RANDOM==1 %%%%")
 #            x_start = width-1
 #            x_end = 0
 #            x_step = -1
@@ -715,8 +720,8 @@ class Block_Controller(object):
                         for xx in range(x,xxmax,1):
                             for yy in range(y,0,-1):
                                 if board[(yy) * width + (xx)] != 0:
-                                    #print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
-                                    #print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
+                                    #if DEBUG == 1 : print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
+                                    #if DEBUG == 1 : print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
                                     point = -1
                                     break
                             hole = 0
@@ -728,10 +733,10 @@ class Block_Controller(object):
                                         hole = 0
                             if hole >= 4:
                                 point = 1+y/2
-                                print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
+                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
                                 #break
                         direction=0
-                        print("dir0=",format(pat2,'02x'),"point=",point)
+                        if DEBUG == 1 : print("dir0=",format(pat2,'02x'),"point=",point)
                 if (pat3) in dic_dir1:
                     if point < dic_dir1[pat3]+y/2:
                         x0 = x+1
@@ -743,8 +748,8 @@ class Block_Controller(object):
                         for xx in range(x,xxmax,1):
                             for yy in range(y,0,-1):
                                 if board[(yy) * width + (xx)] != 0:
-                                    #print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
-                                    #print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
+                                    #if DEBUG == 1 : print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
+                                    #if DEBUG == 1 : print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
                                     point = -1
                                     break
                             hole = 0
@@ -756,10 +761,10 @@ class Block_Controller(object):
                                         hole = 0
                             if hole >= 4:
                                 point = 1+y/2
-                                print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
+                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
                                 #break
                         direction=1
-                        print("dir1=",format(pat3,'03x'),"point=",point)
+                        if DEBUG == 1 : print("dir1=",format(pat3,'03x'),"point=",point)
                 if (pat2) in dic_dir2:
                     if point < dic_dir2[pat2]+y/2:
                         x0 = x+1
@@ -771,8 +776,8 @@ class Block_Controller(object):
                         for xx in range(x,xxmax,1):
                             for yy in range(y,0,-1):
                                 if board[(yy) * width + (xx)] != 0:
-                                    #print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
-                                    #print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
+                                    #if DEBUG == 1 : print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
+                                    #if DEBUG == 1 : print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
                                     point = -1
                                     break
                             hole = 0
@@ -784,10 +789,10 @@ class Block_Controller(object):
                                         hole = 0
                             if hole >= 4:
                                 point = 1+y/2
-                                print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
+                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
                                 #break
                         direction=2
-                        print("dir2=",format(pat2,'02x'),"point=",point)
+                        if DEBUG == 1 : print("dir2=",format(pat2,'02x'),"point=",point)
                 if (pat3) in dic_dir3:
                     if point < dic_dir3[pat3]+y/2:
                         x0 = x+1
@@ -799,8 +804,8 @@ class Block_Controller(object):
                         for xx in range(x,xxmax,1):
                             for yy in range(y,0,-1):
                                 if board[(yy) * width + (xx)] != 0:
-                                    #print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
-                                    #print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
+                                    #if DEBUG == 1 : print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
+                                    #if DEBUG == 1 : print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
                                     point = -1
                                     break
                             hole = 0
@@ -812,15 +817,16 @@ class Block_Controller(object):
                                         hole = 0
                             if hole >= 4:
                                 point = 1+y/2
-                                print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
+                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
                                 #break
                         direction=3
-                        print("dir3=",format(pat3,'03x'),"point=",point)
+                        if DEBUG == 1 : print("dir3=",format(pat3,'03x'),"point=",point)
         score = point
         return score,x0,direction
 
     #type-o
     def calcEvaluationValueIndex5(self,board):
+        DEBUG = 1
         direction = 0
         x0 = 0
         width = self.board_data_width #width=10
@@ -837,12 +843,12 @@ class Block_Controller(object):
                     0x711:7,0x611:7,0x511:7,0x411:7}
 
 #       if random.randrange(2)==0:
-#            print("%%%% RANDOM==0 %%%%")
+#            if DEBUG == 1 : print("%%%% RANDOM==0 %%%%")
 #            x_start = 0
 #            x_end = width-1
 #            x_step = 1
 #        else:
-#            print("%%%% RANDOM==1 %%%%")
+#            if DEBUG == 1 : print("%%%% RANDOM==1 %%%%")
 #            x_start = width-1
 #            x_end = 0
 #            x_step = -1
@@ -867,8 +873,8 @@ class Block_Controller(object):
                         for xx in range(x,xxmax,1):
                             for yy in range(y,0,-1):
                                 if board[(yy) * width + (xx)] != 0:
-                                    #print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
-                                    #print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
+                                    #if DEBUG == 1 : print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
+                                    #if DEBUG == 1 : print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
                                     point = -1
                                     break
                             hole = 0
@@ -880,10 +886,10 @@ class Block_Controller(object):
                                         hole = 0
                             if hole >= 4:
                                 point = 1+y/2
-                                print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
+                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
                                 #break
                         direction=0
-                        print("dir0=",format(pat2,'02x'),"point=",point)
+                        if DEBUG == 1 : print("dir0=",format(pat2,'02x'),"point=",point)
                 if (pat3) in dic_dir1:
                     if point < dic_dir1[pat3]+y/2:
                         x0 = x
@@ -895,8 +901,8 @@ class Block_Controller(object):
                         for xx in range(x,xxmax,1):
                             for yy in range(y,0,-1):
                                 if board[(yy) * width + (xx)] != 0:
-                                    #print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
-                                    #print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
+                                    #if DEBUG == 1 : print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
+                                    #if DEBUG == 1 : print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
                                     point = -1
                                     break
                             hole = 0
@@ -908,10 +914,10 @@ class Block_Controller(object):
                                         hole = 0
                             if hole >= 4:
                                 point = 1+y/2
-                                print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
+                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
                                 #break
                         direction=0
-                        print("dir1=",format(pat3,'03x'),"point=",point)
+                        if DEBUG == 1 : print("dir1=",format(pat3,'03x'),"point=",point)
                 if (pat3) in dic_dir2:
                     if point < dic_dir2[pat3]+y/2:
                         x0 = x+1
@@ -923,8 +929,8 @@ class Block_Controller(object):
                         for xx in range(x,xxmax,1):
                             for yy in range(y,0,-1):
                                 if board[(yy) * width + (xx)] != 0:
-                                    #print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
-                                    #print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
+                                    #if DEBUG == 1 : print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
+                                    #if DEBUG == 1 : print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
                                     point = -1
                                     break
                             hole = 0
@@ -936,15 +942,16 @@ class Block_Controller(object):
                                         hole = 0
                             if hole >= 4:
                                 point = 1+y/2
-                                print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
+                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
                                 #break
                         direction=0
-                        print("dir2=",format(pat3,'03x'),"point=",point)
+                        if DEBUG == 1 : print("dir2=",format(pat3,'03x'),"point=",point)
         score = point
         return score,x0,direction
 
     #type-S
     def calcEvaluationValueIndex6(self,board):
+        DEBUG = 1
         point = -1
         direction = 0
         x0 = 0
@@ -959,12 +966,12 @@ class Block_Controller(object):
         dic_dir1 = {0x31:7,0x21:7,0x11:2} #add 210728:0120
     
 #       if random.randrange(2)==0:
-#            print("%%%% RANDOM==0 %%%%")
+#            if DEBUG == 1 : print("%%%% RANDOM==0 %%%%")
 #            x_start = 0
 #            x_end = width-1
 #            x_step = 1
 #        else:
-#            print("%%%% RANDOM==1 %%%%")
+#            if DEBUG == 1 : print("%%%% RANDOM==1 %%%%")
 #            x_start = width-1
 #            x_end = 0
 #            x_step = -1
@@ -989,8 +996,8 @@ class Block_Controller(object):
                         for xx in range(x,xxmax,1):
                             for yy in range(y,0,-1):
                                 if board[(yy) * width + (xx)] != 0:
-                                    #print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
-                                    #print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
+                                    #if DEBUG == 1 : print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
+                                    #if DEBUG == 1 : print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
                                     point = -1
                                     break
                             hole = 0
@@ -1002,10 +1009,10 @@ class Block_Controller(object):
                                         hole = 0
                             if hole >= 4:
                                 point = 1+y/2
-                                print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
+                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
                                 #break
                         direction=0
-                        print("dir0=",format(pat3,'03x'),"point=",point)
+                        if DEBUG == 1 : print("dir0=",format(pat3,'03x'),"point=",point)
                 if (pat2) in dic_dir1:
                     if point < dic_dir1[pat2]+y/2:
                         x0 = x
@@ -1017,11 +1024,11 @@ class Block_Controller(object):
                         for xx in range(x,xxmax,1):
                             for yy in range(y,0,-1):
                                 if board[(yy) * width + (xx)] != 0:
-                                    #print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
-                                    #print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
+                                    #if DEBUG == 1 : print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
+                                    #if DEBUG == 1 : print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
                                     point = -1
                                     break
-                                #print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
+                                #if DEBUG == 1 : print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
                                 break
                             hole = 0
                             for yy in range(height-1,y+1,-1):
@@ -1032,15 +1039,16 @@ class Block_Controller(object):
                                         hole = 0
                             if hole >= 4:
                                 point = 1+y/2
-                                print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
+                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
                                 #break
                         direction=1
-                        print("dir1=",format(pat2,'02x'),"point=",point)
+                        if DEBUG == 1 : print("dir1=",format(pat2,'02x'),"point=",point)
         score = point
         return score,x0,direction
 
     #type-Z
     def calcEvaluationValueIndex7(self,board):
+        DEBUG = 1
         direction = 0
         x0 = 0
         width = self.board_data_width #width=10
@@ -1054,12 +1062,12 @@ class Block_Controller(object):
         dic_dir1 = {0x13:7,0x12:7,0x11:2}#add 210728:0119
 
 #       if random.randrange(2)==0:
-#            print("%%%% RANDOM==0 %%%%")
+#            if DEBUG == 1 : print("%%%% RANDOM==0 %%%%")
 #            x_start = 0
 #            x_end = width-1
 #            x_step = 1
 #        else:
-#            print("%%%% RANDOM==1 %%%%")
+#            if DEBUG == 1 : print("%%%% RANDOM==1 %%%%")
 #            x_start = width-1
 #            x_end = 0
 #            x_step = -1
@@ -1084,8 +1092,8 @@ class Block_Controller(object):
                         for xx in range(x,xxmax,1):
                             for yy in range(y,0,-1):
                                 if board[(yy) * width + (xx)] != 0:
-                                    #print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
-                                    #print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
+                                    #if DEBUG == 1 : print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
+                                    #if DEBUG == 1 : print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
                                     point = -1
                                     break
                             hole = 0
@@ -1097,10 +1105,10 @@ class Block_Controller(object):
                                         hole = 0
                             if hole >= 4:
                                 point = 1+y/2
-                                print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
+                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
                                 #break
                         direction=0
-                        print("dir0=",format(pat3,'03x'),"point=",point)
+                        if DEBUG == 1 : print("dir0=",format(pat3,'03x'),"point=",point)
                 if (pat2) in dic_dir1:
                     if point < dic_dir1[pat2]+y/2:
                         x0 = x
@@ -1112,8 +1120,8 @@ class Block_Controller(object):
                         for xx in range(x,xxmax,1):
                             for yy in range(y,0,-1):
                                 if board[(yy) * width + (xx)] != 0:
-                                    #print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
-                                    #print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
+                                    #if DEBUG == 1 : print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
+                                    #if DEBUG == 1 : print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
                                     point = -1
                                     break
                             hole = 0
@@ -1125,10 +1133,10 @@ class Block_Controller(object):
                                         hole = 0
                             if hole >= 4:
                                 point = 1+y/2
-                                print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
+                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
                                 #break
                         direction=1
-                        print("dir1=",format(pat2,'02x'),"point=",point)
+                        if DEBUG == 1 : print("dir1=",format(pat2,'02x'),"point=",point)
         score = point
         return score,x0,direction
 
