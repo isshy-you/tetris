@@ -169,7 +169,7 @@ class Block_Controller(object):
 
     #type-I
     def calcEvaluationValueIndex1(self,board):
-        DEBUG = 1        
+        DEBUG = 0        
         direction = 0
         x0 = 0
         width = self.board_data_width #width=10
