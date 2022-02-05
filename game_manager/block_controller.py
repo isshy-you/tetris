@@ -195,8 +195,8 @@ class Block_Controller(object):
         x_end = width-1
         x_step = 1
         point = -1
-        for y in range(height - 3, 5 ,-1):
-            for x in range(x_start,x_end,x_step):
+        for y in range(height - 3, 4 ,-1):
+            for x in [0,10,1,9,2,8,3,7,4,6,5]:
                 pat4 = self.calcBoardPat(self.board_backboard,x,y)
                 pat3 = pat4 >> 4
                 pat2 = pat4 >> 8
@@ -273,96 +273,7 @@ class Block_Controller(object):
                         if DEBUG == 1 : print("dir3=",format(pat3,'03x'),"point=",point)
         score = point
         return score,x0,direction
-
-    #type-I
-    def calcEvaluationValueIndex1a(self,board):
-        DEBUG = 1
-        direction = 0
-        x0 = 0
-        width = self.board_data_width #width=10
-        height = self.board_data_height #height=22
-
-        dic_dir0 = {0x0f:9,0x07:7,0x03:5,0x01:2}
-        dic_dir1 = {0x1111:9}
-        dic_dir2 = {0xf0:9,0x70:7,0x30:5,0x10:2}
-
-#       if random.randrange(2)==0:
-#            if DEBUG == 1 : print("%%%% RANDOM==0 %%%%")
-#            x_start = 0
-#            x_end = width-1
-#            x_step = 1
-#        else:
-#            if DEBUG == 1 : print("%%%% RANDOM==1 %%%%")
-#            x_start = width-1
-#            x_end = 0
-#            x_step = -1
-
-        x_start = 0
-        x_end = width-1
-        x_step = 1
-        point = -1
-        for y in range(height - 3, 5 ,-1):
-            for x in range(x_start,x_end,x_step):
-                pat4 = self.calcBoardPat(self.board_backboard,x,y)
-                pat3 = pat4 >> 4
-                pat2 = pat4 >> 8
-                #if DEBUG == 1 : print("#pat:",format(pat4,'04x'),format(pat3,'03x'),format(pat2,'02x'))
-                if (pat2) in dic_dir0:
-                    if point < dic_dir0[pat2]+y/2:
-                        x0 = x
-                        point = dic_dir0[pat2]+y/2
-                        if x > width:
-                            xxmax = width
-                        else:
-                            xxmax = x
-                        for xx in range(x,xxmax,1):
-                            if DEBUG == 1 : print("block search",xx)
-                            for yy in range(y-1,0,-1):
-                                if board[(yy) * width + (xx)] != 0:
-                                    #if DEBUG == 1 : print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
-                                    #if DEBUG == 1 : print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
-                                    point = -1
-                                    break
-                        direction=0
-                        if DEBUG == 1 : print("dir0=",format(pat2,'02x'),"point=",point)
-                if  (pat4) in dic_dir1:
-                    if point < dic_dir1[pat4]+y/2:
-                        x0 = x+2
-                        point = dic_dir1[pat4]+y/2
-                        if x+3 > width:
-                            xxmax = width-3
-                        else:
-                            xxmax = x+3
-                        for xx in range(x,xxmax,1):
-                            if DEBUG == 1 : print("block search",xx)
-                            for yy in range(y-1,0,-1):
-                                if board[(yy) * width + (xx)] != 0:
-                                    #if DEBUG == 1 : print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
-                                    #if DEBUG == 1 : print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
-                                    point = -1
-                                    break
-                        direction=1
-                        if DEBUG == 1 : print("dir1=",format(pat4,'04x'),"point=",point)
-                if (pat2) in dic_dir2:
-                    if point < dic_dir2[pat2]+y/2:
-                        x0 = x+1
-                        point = dic_dir2[pat2]+y/2
-                        if x+1 > width:
-                            xxmax = width
-                        else:
-                            xxmax = x+1
-                        for xx in range(x+1,xxmax,1):
-                            if DEBUG == 1 : print("block search",xx)
-                            for yy in range(y,0,-1):
-                                if board[(yy) * width + (xx)] != 0:
-                                    #if DEBUG == 1 : print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
-                                    point = -1
-                                    break
-                        direction=0
-                        if DEBUG == 1 : print("dir2=",format(pat2,'02x'),"point=",point)
-        score = point
-        return score,x0,direction
-
+   
     #type-L
     def calcEvaluationValueIndex2(self,board):
         DEBUG = 1
@@ -373,17 +284,17 @@ class Block_Controller(object):
         height = self.board_data_height #height=22
 
         dic_dir0 = {0x11:7}
-        dic_dir1 = {0x133:7,\
-                    0x123:7,0x132:7,0x122:7,0x131:2}
+        dic_dir1 = {0x133:8,\
+                    0x123:8,0x132:8,0x122:8,0x131:2}
 #        dic_dir2 = {0x71:7,0xf1:2,0x30:2} #del 210727a
-        dic_dir2 = {0x71:7,0x41:7,0x51:7,0x61:7,0x30:2,0x20:2,\
+        dic_dir2 = {0x71:9,0x41:9,0x51:9,0x61:9,0x30:2,0x20:2,\
                     0xf1:2,0x81:2,0x91:2,0xa1:2,0xb1:2,0xc1:2,0xd1:2,0xe1:2} #add 210727a
 #        dic_dir2 = {0x31:6}
 #        dic_dir2 = {0x71:7,0xf1:1,0x30:1}
 #                    0x41:7,0x61:7,\
 #                    0x81:1,0xc1:1,0xe1:1,\
 #                    0x20:1}
-        dic_dir3 = {0x111:7}
+        dic_dir3 = {0x111:8}
 
 #       if random.randrange(2)==0:
 #            if DEBUG == 1 : print("%%%% RANDOM==0 %%%%")
@@ -400,8 +311,8 @@ class Block_Controller(object):
         x_end = width-1
         x_step = 1
         point = -1
-        for y in range(height - 3, 5 ,-1):
-            for x in range(x_start,x_end,x_step):
+        for y in range(height - 3, 4 ,-1):
+            for x in [0,10,1,9,2,8,3,7,4,6,5]:
                 pat4 = self.calcBoardPat(self.board_backboard,x,y)
                 pat3 = pat4 >> 4
                 pat2 = pat4 >> 8
@@ -428,7 +339,7 @@ class Block_Controller(object):
                                     else:
                                         hole = 0
                             if hole >= 4:
-                                point = 1+y/2
+                                point = -1
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
                                 #break
                         direction=0
@@ -456,7 +367,7 @@ class Block_Controller(object):
                                     else:
                                         hole = 0
                             if hole >= 4:
-                                point = 1+y/2
+                                point = -1
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
                                 #break
                         direction=1
@@ -483,8 +394,8 @@ class Block_Controller(object):
                                         hole += 1
                                     else:
                                         hole = 0
-                            if hole >= 4:
-                                point = 1+y/2
+                            if hole >= 5: #if J or L then special
+                                point = point #if J or L then special
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
                                 #break
                         direction=2
@@ -512,7 +423,7 @@ class Block_Controller(object):
                                     else:
                                         hole = 0
                             if hole >= 4:
-                                point = 1+y/2
+                                point = -1
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
                                 #break
                         direction=3
@@ -530,15 +441,15 @@ class Block_Controller(object):
         height = self.board_data_height #height=22
 
         dic_dir0 = {0x11:7}
-        dic_dir1 = {0x111:7}
+        dic_dir1 = {0x111:8}
 #        dic_dir2 = {0x17:7,0x1f:2,0x03:2} #del 210727a
-        dic_dir2 = {0x17:7,0x14:7,0x15:7,0x16:7,0x03:2,0x02:2,\
+        dic_dir2 = {0x17:9,0x14:9,0x15:9,0x16:9,0x03:2,0x02:2,\
                     0x1f:2,0x18:2,0x19:2,0x1a:2,0x1b:2,0x1c:2,0x1d:2,0x1e:2} #add 210727a
 #                    0x14:7,0x16:7,\
 #                    0x18:1,0x1c:1,0x1e:1,\
 #                    0x02:1}
-        dic_dir3 = {0x331:7,\
-                    0x321:7,0x231:7,0x221:7,0x131:2}
+        dic_dir3 = {0x331:8,\
+                    0x321:8,0x231:8,0x221:8,0x131:2}
 
 #       if random.randrange(2)==0:
 #            if DEBUG == 1 : print("%%%% RANDOM==0 %%%%")
@@ -555,8 +466,8 @@ class Block_Controller(object):
         x_end = width-1
         x_step = 1
         point = -1
-        for y in range(height - 3, 5 ,-1):
-            for x in range(x_start,x_end,x_step):
+        for y in range(height - 3, 4 ,-1):
+            for x in [0,10,1,9,2,8,3,7,4,6,5]:
                 pat4 = self.calcBoardPat(self.board_backboard,x,y)
                 pat3 = pat4 >> 4
                 pat2 = pat4 >> 8
@@ -583,7 +494,7 @@ class Block_Controller(object):
                                     else:
                                         hole = 0
                             if hole >= 4:
-                                point = 1+y/2
+                                point = -1
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
                                 #break
                         direction=0
@@ -611,7 +522,7 @@ class Block_Controller(object):
                                     else:
                                         hole = 0
                             if hole >= 4:
-                                point = 1+y/2
+                                point = -1
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
                                 #break
                         direction=1
@@ -638,8 +549,8 @@ class Block_Controller(object):
                                         hole += 1
                                     else:
                                         hole = 0
-                            if hole >= 4:
-                                point = 1+y/2
+                            if hole >= 5: #if J or L then
+                                point = point #if J or L then special
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat2,'02x'))
                                 #break
                         direction=2
@@ -667,7 +578,7 @@ class Block_Controller(object):
                                     else:
                                         hole = 0
                             if hole >= 4:
-                                point = 1+y/2
+                                point = -1
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
                                 #break
                         direction=3
@@ -704,8 +615,8 @@ class Block_Controller(object):
         x_end = width-1
         x_step = 1
         point = -1
-        for y in range(height - 3, 5 ,-1):
-            for x in range(x_start,x_end,x_step):
+        for y in range(height - 3, 4 ,-1):
+            for x in [0,10,1,9,2,8,3,7,4,6,5]:
                 pat4 = self.calcBoardPat(self.board_backboard,x,y)
                 pat3 = pat4 >> 4
                 pat2 = pat4 >> 8
@@ -732,7 +643,7 @@ class Block_Controller(object):
                                     else:
                                         hole = 0
                             if hole >= 4:
-                                point = 1+y/2
+                                point = -1
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
                                 #break
                         direction=0
@@ -760,7 +671,7 @@ class Block_Controller(object):
                                     else:
                                         hole = 0
                             if hole >= 4:
-                                point = 1+y/2
+                                point = -1
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
                                 #break
                         direction=1
@@ -788,7 +699,7 @@ class Block_Controller(object):
                                     else:
                                         hole = 0
                             if hole >= 4:
-                                point = 1+y/2
+                                point = -1
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
                                 #break
                         direction=2
@@ -816,7 +727,7 @@ class Block_Controller(object):
                                     else:
                                         hole = 0
                             if hole >= 4:
-                                point = 1+y/2
+                                point = -1
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
                                 #break
                         direction=3
@@ -857,8 +768,9 @@ class Block_Controller(object):
         x_end = width-1
         x_step = 1
         point = -1
-        for y in range(height - 3, 5 ,-1):
-            for x in range(x_start,x_end,x_step):
+        for y in range(height - 3, 4 ,-1):
+            #for x in [0,10,1,9,2,8,3,7,4,6,5]:
+            for x in [0,10,1,9,2,8,3,7,4,6,5]:
                 pat4 = self.calcBoardPat(self.board_backboard,x,y)
                 pat3 = pat4 >> 4
                 pat2 = pat4 >> 8
@@ -885,7 +797,7 @@ class Block_Controller(object):
                                     else:
                                         hole = 0
                             if hole >= 4:
-                                point = 1+y/2
+                                point = -1
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
                                 #break
                         direction=0
@@ -913,7 +825,7 @@ class Block_Controller(object):
                                     else:
                                         hole = 0
                             if hole >= 4:
-                                point = 1+y/2
+                                point = -1
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
                                 #break
                         direction=0
@@ -941,7 +853,7 @@ class Block_Controller(object):
                                     else:
                                         hole = 0
                             if hole >= 4:
-                                point = 1+y/2
+                                point = -1
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
                                 #break
                         direction=0
@@ -980,8 +892,8 @@ class Block_Controller(object):
         x_end = width-1
         x_step = 1
         point = -1
-        for y in range(height - 3, 5 ,-1):
-            for x in range(x_start,x_end,x_step):
+        for y in range(height - 3, 4 ,-1):
+            for x in [0,10,1,9,2,8,3,7,4,6,5]:
                 pat4 = self.calcBoardPat(self.board_backboard,x,y)
                 pat3 = pat4 >> 4
                 pat2 = pat4 >> 8
@@ -1008,7 +920,7 @@ class Block_Controller(object):
                                     else:
                                         hole = 0
                             if hole >= 4:
-                                point = 1+y/2
+                                point = -1
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
                                 #break
                         direction=0
@@ -1038,7 +950,7 @@ class Block_Controller(object):
                                     else:
                                         hole = 0
                             if hole >= 4:
-                                point = 1+y/2
+                                point = -1
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
                                 #break
                         direction=1
@@ -1076,8 +988,8 @@ class Block_Controller(object):
         x_end = width-1
         x_step = 1
         point = -1
-        for y in range(height - 3, 5 ,-1):
-            for x in range(x_start,x_end,x_step):
+        for y in range(height - 3, 4 ,-1):
+            for x in [0,10,1,9,2,8,3,7,4,6,5]:
                 pat4 = self.calcBoardPat(self.board_backboard,x,y)
                 pat3 = pat4 >> 4
                 pat2 = pat4 >> 8
@@ -1104,7 +1016,7 @@ class Block_Controller(object):
                                     else:
                                         hole = 0
                             if hole >= 4:
-                                point = 1+y/2
+                                point = -1
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
                                 #break
                         direction=0
@@ -1132,7 +1044,7 @@ class Block_Controller(object):
                                     else:
                                         hole = 0
                             if hole >= 4:
-                                point = 1+y/2
+                                point = -1
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
                                 #break
                         direction=1
