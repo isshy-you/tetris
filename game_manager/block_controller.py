@@ -100,15 +100,6 @@ class Block_Controller(object):
         nextMove["strategy"]["y_operation"] = strategy[2]
         nextMove["strategy"]["y_moveblocknum"] = strategy[3]
         print("=== nextMove:",nextMove)
-        #print("##  ISH01 (ALFA   :12949/10044-11646- 8341/2957-8880-1491) w/SAMPLE CODE ###")
-        #print("##  ISH02 (BLAVO  :13190/ 6497-16069-10025/3574-3797-6524) w/SAMPLE CODE ###")
-        #print("##  ISH03 (CHARLIE:13954/10456-12760- 9677/5255-7045-5554) w/SAMPLE CODE ###")
-        #print("### ISH04 (DELTA  :17115/ 6614, 8945,10902,11079,14282/-1268, -394, 1291,-1775,  593) w/SAMPLE CODE ###")
-        #print("### ISH04a(DELTA  :17115/11205,11235,12376,13828, 6268/ 5509, -796,  378, 4740,  875) w/SAMPLE CODE ###")
-        #print("####ISH04b(DELTA  :17115/10969,12505,14989, 8191, 6745/  965, 2765, 1593,-3277, 2430) w/SAMPLE CODE ###")
-        #print("####ISH04c(DELTA  :17115/11107, 4998,16028, 5471,11140/-2943, 1393, 2441, 2320, 1511) w/SAMPLE CODE ###")
-        #print("####ISH04d(DELTA  :17115/10728, 7888, 9498, 4904, 8007/ 5271,-2585, 2069, 2424,- 795) w/SAMPLE CODE ###")
-        #print("####ISH04e(DELTA  :16931/11579,11211,14222,13674,11069/ 5025,  841,  274, 1031, 5236 ) w/SAMPLE CODE ###")
         return nextMove
 
         
@@ -179,17 +170,6 @@ class Block_Controller(object):
         dic_dir1 = {0x1111:8}
         dic_dir2 = {0xf0:8,0x70:7,0x30:5,0x10:2}
         dic_dir3 = {0xf0f:9,0xf07:7,0x70f:7,0xf03:6,0x30f:6}
-
-#       if random.randrange(2)==0:
-#            if DEBUG == 1 : print("%%%% RANDOM==0 %%%%")
-#            x_start = 0
-#            x_end = width-1
-#            x_step = 1
-#        else:
-#            if DEBUG == 1 : print("%%%% RANDOM==1 %%%%")
-#            x_start = width-1
-#            x_end = 0
-#            x_step = -1
 
         x_start = 0
         x_end = width-1
@@ -286,26 +266,10 @@ class Block_Controller(object):
         dic_dir0 = {0x11:7}
         dic_dir1 = {0x133:8,\
                     0x123:8,0x132:8,0x122:8,0x131:2}
-#        dic_dir2 = {0x71:7,0xf1:2,0x30:2} #del 210727a
         dic_dir2 = {0x71:9,0x41:9,0x51:9,0x61:9,0x30:2,0x20:2,\
                     0xf1:2,0x81:2,0x91:2,0xa1:2,0xb1:2,0xc1:2,0xd1:2,0xe1:2} #add 210727a
-#        dic_dir2 = {0x31:6}
-#        dic_dir2 = {0x71:7,0xf1:1,0x30:1}
-#                    0x41:7,0x61:7,\
-#                    0x81:1,0xc1:1,0xe1:1,\
-#                    0x20:1}
-        dic_dir3 = {0x111:8}
 
-#       if random.randrange(2)==0:
-#            if DEBUG == 1 : print("%%%% RANDOM==0 %%%%")
-#            x_start = 0
-#            x_end = width-1
-#            x_step = 1
-#        else:
-#            if DEBUG == 1 : print("%%%% RANDOM==1 %%%%")
-#            x_start = width-1
-#            x_end = 0
-#            x_step = -1
+        dic_dir3 = {0x111:8}
 
         x_start = 0
         x_end = width-1
@@ -442,25 +406,10 @@ class Block_Controller(object):
 
         dic_dir0 = {0x11:7}
         dic_dir1 = {0x111:8}
-#        dic_dir2 = {0x17:7,0x1f:2,0x03:2} #del 210727a
         dic_dir2 = {0x17:9,0x14:9,0x15:9,0x16:9,0x03:2,0x02:2,\
                     0x1f:2,0x18:2,0x19:2,0x1a:2,0x1b:2,0x1c:2,0x1d:2,0x1e:2} #add 210727a
-#                    0x14:7,0x16:7,\
-#                    0x18:1,0x1c:1,0x1e:1,\
-#                    0x02:1}
         dic_dir3 = {0x331:8,\
                     0x321:8,0x231:8,0x221:8,0x131:2}
-
-#       if random.randrange(2)==0:
-#            if DEBUG == 1 : print("%%%% RANDOM==0 %%%%")
-#            x_start = 0
-#            x_end = width-1
-#            x_step = 1
-#        else:
-#            if DEBUG == 1 : print("%%%% RANDOM==1 %%%%")
-#            x_start = width-1
-#            x_end = 0
-#            x_step = -1
 
         x_start = 0
         x_end = width-1
@@ -594,22 +543,10 @@ class Block_Controller(object):
         width = self.board_data_width #width=10
         height = self.board_data_height #height=22
 
-#        dic_dir0 = {0x13:6}
         dic_dir0 = {0x13:6,0x12:6}
         dic_dir1 = {0x313:7,0x213:7,0x312:7,0x212:7}
         dic_dir2 = {0x31:6,0x21:6}
         dic_dir3 = {0x111:7}
-
-#       if random.randrange(2)==0:
-#            if DEBUG == 1 : print("%%%% RANDOM==0 %%%%")
-#            x_start = 0
-#            x_end = width-1
-#            x_step = 1
-#        else:
-#            if DEBUG == 1 : print("%%%% RANDOM==1 %%%%")
-#            x_start = width-1
-#            x_end = 0
-#            x_step = -1
 
         x_start = 0
         x_end = width-1
@@ -743,7 +680,6 @@ class Block_Controller(object):
         width = self.board_data_width #width=10
         height = self.board_data_height #height=22
 
-#        dic_dir0 = {0x11:7}
         dic_dir0 = {0x11:7,\
                     0x13:4,0x31:4,0x12:4,0x21:4,\
                     0x17:3,0x14:3,0x16:3,0x71:3,0x41:3,0x61:3,\
@@ -753,23 +689,11 @@ class Block_Controller(object):
         dic_dir2 = {0xf11:7,0xe11:7,0xd11:7,0xc11:7,0xb11:7,0xa11:7,0x911:7,0x811:7,\
                     0x711:7,0x611:7,0x511:7,0x411:7}
 
-#       if random.randrange(2)==0:
-#            if DEBUG == 1 : print("%%%% RANDOM==0 %%%%")
-#            x_start = 0
-#            x_end = width-1
-#            x_step = 1
-#        else:
-#            if DEBUG == 1 : print("%%%% RANDOM==1 %%%%")
-#            x_start = width-1
-#            x_end = 0
-#            x_step = -1
-
         x_start = 0
         x_end = width-1
         x_step = 1
         point = -1
         for y in range(height - 3, 4 ,-1):
-            #for x in [0,10,1,9,2,8,3,7,4,6,5]:
             for x in [0,10,1,9,2,8,3,7,4,6,5]:
                 pat4 = self.calcBoardPat(self.board_backboard,x,y)
                 pat3 = pat4 >> 4
@@ -870,24 +794,9 @@ class Block_Controller(object):
         width = self.board_data_width #width=10
         height = self.board_data_height #height=22
 
-#        dic_dir0 = {0x113:7}
         dic_dir0 = {0x113:7,0x112:7}
-#        dic_dir1 = {0x31:7}
-#        dic_dir1 = {0x31:7,0x21:7}
-#        dic_dir1 = {0x31:7,0x21:7,0x30:4,0x70:3,0x11:2} #delete 210728:0120
         dic_dir1 = {0x31:7,0x21:7,0x11:2} #add 210728:0120
     
-#       if random.randrange(2)==0:
-#            if DEBUG == 1 : print("%%%% RANDOM==0 %%%%")
-#            x_start = 0
-#            x_end = width-1
-#            x_step = 1
-#        else:
-#            if DEBUG == 1 : print("%%%% RANDOM==1 %%%%")
-#            x_start = width-1
-#            x_end = 0
-#            x_step = -1
-
         x_start = 0
         x_end = width-1
         x_step = 1
@@ -966,23 +875,8 @@ class Block_Controller(object):
         width = self.board_data_width #width=10
         height = self.board_data_height #height=22
 
-#        dic_dir0 = {0x311:7}
         dic_dir0 = {0x311:7,0x211:7}
-#        dic_dir1 = {0x13:7}
-#        dic_dir1 = {0x13:7,0x12:7}
-#        dic_dir1 = {0x13:7,0x12:7,0x03:4,0x07:3,0x11:2}#delete 210728:0119
         dic_dir1 = {0x13:7,0x12:7,0x11:2}#add 210728:0119
-
-#       if random.randrange(2)==0:
-#            if DEBUG == 1 : print("%%%% RANDOM==0 %%%%")
-#            x_start = 0
-#            x_end = width-1
-#            x_step = 1
-#        else:
-#            if DEBUG == 1 : print("%%%% RANDOM==1 %%%%")
-#            x_start = width-1
-#            x_end = 0
-#            x_step = -1
 
         x_start = 0
         x_end = width-1
