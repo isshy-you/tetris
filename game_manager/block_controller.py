@@ -166,25 +166,25 @@ class Block_Controller(object):
         width = self.board_data_width #width=10
         height = self.board_data_height #height=22
 
-        dic_dir0 = {0x0f:8,0x07:7,0x03:5,0x01:2}
+        dic_dir0 = {0x0f:6,0x07:6,0x03:5,0x01:2}
         dic_dir1 = {0x1111:8}
         dic_dir2 = {0xf0:8,0x70:7,0x30:5,0x10:2}
-        dic_dir3 = {0xf0f:9,0xf07:7,0x70f:7,0xf03:6,0x30f:6}
+        dic_dir3 = {0xf0f:9,0xf07:6,0x70f:6,0xf03:6,0x30f:6}
 
         x_start = 0
         x_end = width-1
         x_step = 1
         point = -1
-        for y in range(height - 3, 4 ,-1):
+        for y in range(height - 3, 0 ,-1):
             for x in [0,10,1,9,2,8,3,7,4,6,5]:
                 pat4 = self.calcBoardPat(self.board_backboard,x,y)
                 pat3 = pat4 >> 4
                 pat2 = pat4 >> 8
                 #if DEBUG == 1 : print("#pat:",format(pat4,'04x'),format(pat3,'03x'),format(pat2,'02x'))
                 if (pat2) in dic_dir0:
-                    if point < dic_dir0[pat2]+y/2:
+                    if point < dic_dir0[pat2]+y/1:
                         x0 = x
-                        point = dic_dir0[pat2]+y/2
+                        point = dic_dir0[pat2]+y/1
                         if x > width:
                             xxmax = width
                         else:
@@ -200,9 +200,9 @@ class Block_Controller(object):
                         direction=0
                         if DEBUG == 1 : print("dir0=",format(pat2,'02x'),"point=",point)
                 if  (pat4) in dic_dir1:
-                    if point < dic_dir1[pat4]+y/2:
+                    if point < dic_dir1[pat4]+y/1:
                         x0 = x+2
-                        point = dic_dir1[pat4]+y/2
+                        point = dic_dir1[pat4]+y/1
                         if x+3 > width:
                             xxmax = width-3
                         else:
@@ -218,9 +218,9 @@ class Block_Controller(object):
                         direction=1
                         if DEBUG == 1 : print("dir1=",format(pat4,'04x'),"point=",point)
                 if (pat2) in dic_dir2:
-                    if point < dic_dir2[pat2]+y/2:
+                    if point < dic_dir2[pat2]+y/1:
                         x0 = x+1
-                        point = dic_dir2[pat2]+y/2
+                        point = dic_dir2[pat2]+y/1
                         if x+1 > width:
                             xxmax = width+1
                         else:
@@ -235,9 +235,9 @@ class Block_Controller(object):
                         direction=0
                         if DEBUG == 1 : print("dir2=",format(pat2,'02x'),"point=",point)
                 if (pat3) in dic_dir3:
-                    if point < dic_dir3[pat3]+y/2:
+                    if point < dic_dir3[pat3]+y/1:
                         x0 = x+1
-                        point = dic_dir3[pat3]+y/2
+                        point = dic_dir3[pat3]+y/1
                         if x+1 > width:
                             xxmax = width+1
                         else:
@@ -266,7 +266,7 @@ class Block_Controller(object):
         dic_dir0 = {0x11:7}
         dic_dir1 = {0x133:8,\
                     0x123:8,0x132:8,0x122:8,0x131:2}
-        dic_dir2 = {0x71:9,0x41:9,0x51:9,0x61:9,0x30:2,0x20:2,\
+        dic_dir2 = {0x71:9,0x41:9,0x51:9,0x61:9,0x70:7,0x30:2,0x20:2,\
                     0xf1:2,0x81:2,0x91:2,0xa1:2,0xb1:2,0xc1:2,0xd1:2,0xe1:2} #add 210727a
 
         dic_dir3 = {0x111:8}
@@ -275,15 +275,15 @@ class Block_Controller(object):
         x_end = width-1
         x_step = 1
         point = -1
-        for y in range(height - 3, 4 ,-1):
+        for y in range(height - 3, 0 ,-1):
             for x in [0,10,1,9,2,8,3,7,4,6,5]:
                 pat4 = self.calcBoardPat(self.board_backboard,x,y)
                 pat3 = pat4 >> 4
                 pat2 = pat4 >> 8
                 if (pat2) in dic_dir0:
-                    if point < dic_dir0[pat2]+y/2:
+                    if point < dic_dir0[pat2]+y/1:
                         x0 = x
-                        point = dic_dir0[pat2]+y/2
+                        point = dic_dir0[pat2]+y/1
                         if x+2 > width:
                             xxmax = width-2
                         else:
@@ -309,9 +309,9 @@ class Block_Controller(object):
                         direction=0
                         if DEBUG == 1 : print("dir0=",format(pat2,'02x'),"point=",point)
                 if (pat3) in dic_dir1:
-                    if point < dic_dir1[pat3]+y/2:
+                    if point < dic_dir1[pat3]+y/1:
                         x0 = x+1
-                        point = dic_dir1[pat3]+y/2
+                        point = dic_dir1[pat3]+y/1
                         if x+3 > width:
                             xxmax = width-3
                         else:
@@ -337,9 +337,9 @@ class Block_Controller(object):
                         direction=1
                         if DEBUG == 1 : print("dir1=",format(pat3,'03x'),"point=",point)
                 if (pat2) in dic_dir2:
-                    if point < dic_dir2[pat2]+y/2:
+                    if point < dic_dir2[pat2]+y/1:
                         x0 = x+1
-                        point = dic_dir2[pat2]+y/2
+                        point = dic_dir2[pat2]+y/1
                         if x+2 > width:
                             xxmax = width-2
                         else:
@@ -358,16 +358,16 @@ class Block_Controller(object):
                                         hole += 1
                                     else:
                                         hole = 0
-                            if hole >= 5: #if J or L then special
-                                point = point #if J or L then special
+                            if hole >= 4:
+                                point = -1
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat4,'04x'))
                                 #break
                         direction=2
                         if DEBUG == 1 : print("dir2=",format(pat2,'02x'),"point=",point)
                 if (pat3) in dic_dir3:
-                    if point < dic_dir3[pat3]+y/2:
+                    if point < dic_dir3[pat3]+y/1:
                         x0 = x+1
-                        point = dic_dir3[pat3]+y/2
+                        point = dic_dir3[pat3]+y/1
                         if x+3 > width:
                             xxmax = width-3
                         else:
@@ -406,7 +406,7 @@ class Block_Controller(object):
 
         dic_dir0 = {0x11:7}
         dic_dir1 = {0x111:8}
-        dic_dir2 = {0x17:9,0x14:9,0x15:9,0x16:9,0x03:2,0x02:2,\
+        dic_dir2 = {0x17:9,0x14:9,0x15:9,0x16:9,0x07:7,0x03:2,0x02:2,\
                     0x1f:2,0x18:2,0x19:2,0x1a:2,0x1b:2,0x1c:2,0x1d:2,0x1e:2} #add 210727a
         dic_dir3 = {0x331:8,\
                     0x321:8,0x231:8,0x221:8,0x131:2}
@@ -415,15 +415,15 @@ class Block_Controller(object):
         x_end = width-1
         x_step = 1
         point = -1
-        for y in range(height - 3, 4 ,-1):
+        for y in range(height - 3, 0 ,-1):
             for x in [0,10,1,9,2,8,3,7,4,6,5]:
                 pat4 = self.calcBoardPat(self.board_backboard,x,y)
                 pat3 = pat4 >> 4
                 pat2 = pat4 >> 8
                 if (pat2) in dic_dir0:
-                    if point < dic_dir0[pat2]+y/2:
+                    if point < dic_dir0[pat2]+y/1:
                         x0 = x+1
-                        point = dic_dir0[pat2]+y/2
+                        point = dic_dir0[pat2]+y/1
                         if x+2 > width:
                             xxmax = width-2
                         else:
@@ -449,9 +449,9 @@ class Block_Controller(object):
                         direction=0
                         if DEBUG == 1 : print("dir0=",format(pat2,'02x'),"point=",point)
                 if (pat3) in dic_dir1:
-                    if point < dic_dir1[pat3]+y/2:
+                    if point < dic_dir1[pat3]+y/1:
                         x0 = x+1
-                        point = dic_dir1[pat3]+y/2
+                        point = dic_dir1[pat3]+y/1
                         if x+3 > width:
                             xxmax = width-3
                         else:
@@ -477,9 +477,9 @@ class Block_Controller(object):
                         direction=1
                         if DEBUG == 1 : print("dir1=",format(pat3,'03x'),"point=",point)
                 if (pat2) in dic_dir2:
-                    if point < dic_dir2[pat2]+y/2:
+                    if point < dic_dir2[pat2]+y/1:
                         x0 = x
-                        point = dic_dir2[pat2]+y/2
+                        point = dic_dir2[pat2]+y/1
                         if x+2 > width:
                             xxmax = width-2
                         else:
@@ -498,16 +498,16 @@ class Block_Controller(object):
                                         hole += 1
                                     else:
                                         hole = 0
-                            if hole >= 5: #if J or L then
-                                point = point #if J or L then special
+                            if hole >= 4:
+                                point = -1
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,yy,format(pat2,'02x'))
                                 #break
                         direction=2
                         if DEBUG == 1 : print("dir2=",format(pat2,'02x'),"point=",point)
                 if (pat3) in dic_dir3:
-                    if point < dic_dir3[pat3]+y/2:
+                    if point < dic_dir3[pat3]+y/1:
                         x0 = x+1
-                        point = dic_dir3[pat3]+y/2
+                        point = dic_dir3[pat3]+y/1
                         if x+3 > width:
                             xxmax = width-3
                         else:
@@ -552,15 +552,15 @@ class Block_Controller(object):
         x_end = width-1
         x_step = 1
         point = -1
-        for y in range(height - 3, 4 ,-1):
+        for y in range(height - 3, 0 ,-1):
             for x in [0,10,1,9,2,8,3,7,4,6,5]:
                 pat4 = self.calcBoardPat(self.board_backboard,x,y)
                 pat3 = pat4 >> 4
                 pat2 = pat4 >> 8
                 if (pat2) in dic_dir0:
-                    if point < dic_dir0[pat2]+y/2:
+                    if point < dic_dir0[pat2]+y/1:
                         x0 = x
-                        point = dic_dir0[pat2]+y/2
+                        point = dic_dir0[pat2]+y/1
                         if x+2 > width:
                             xxmax = width-2
                         else:
@@ -586,9 +586,9 @@ class Block_Controller(object):
                         direction=0
                         if DEBUG == 1 : print("dir0=",format(pat2,'02x'),"point=",point)
                 if (pat3) in dic_dir1:
-                    if point < dic_dir1[pat3]+y/2:
+                    if point < dic_dir1[pat3]+y/1:
                         x0 = x+1
-                        point = dic_dir1[pat3]+y/2
+                        point = dic_dir1[pat3]+y/1
                         if x+3 > width:
                             xxmax = width-3
                         else:
@@ -614,9 +614,9 @@ class Block_Controller(object):
                         direction=1
                         if DEBUG == 1 : print("dir1=",format(pat3,'03x'),"point=",point)
                 if (pat2) in dic_dir2:
-                    if point < dic_dir2[pat2]+y/2:
+                    if point < dic_dir2[pat2]+y/1:
                         x0 = x+1
-                        point = dic_dir2[pat2]+y/2
+                        point = dic_dir2[pat2]+y/1
                         if x+2 > width:
                             xxmax = width-2
                         else:
@@ -642,9 +642,9 @@ class Block_Controller(object):
                         direction=2
                         if DEBUG == 1 : print("dir2=",format(pat2,'02x'),"point=",point)
                 if (pat3) in dic_dir3:
-                    if point < dic_dir3[pat3]+y/2:
+                    if point < dic_dir3[pat3]+y/1:
                         x0 = x+1
-                        point = dic_dir3[pat3]+y/2
+                        point = dic_dir3[pat3]+y/1
                         if x+3 > width:
                             xxmax = width-3
                         else:
@@ -693,15 +693,15 @@ class Block_Controller(object):
         x_end = width-1
         x_step = 1
         point = -1
-        for y in range(height - 3, 4 ,-1):
+        for y in range(height - 3, 0 ,-1):
             for x in [0,10,1,9,2,8,3,7,4,6,5]:
                 pat4 = self.calcBoardPat(self.board_backboard,x,y)
                 pat3 = pat4 >> 4
                 pat2 = pat4 >> 8
                 if (pat2) in dic_dir0:
-                    if point < dic_dir0[pat2]+y/2:
+                    if point < dic_dir0[pat2]+y/1:
                         x0 = x
-                        point = dic_dir0[pat2]+y/2
+                        point = dic_dir0[pat2]+y/1
                         if x+2 > width:
                             xxmax = width-2
                         else:
@@ -727,9 +727,9 @@ class Block_Controller(object):
                         direction=0
                         if DEBUG == 1 : print("dir0=",format(pat2,'02x'),"point=",point)
                 if (pat3) in dic_dir1:
-                    if point < dic_dir1[pat3]+y/2:
+                    if point < dic_dir1[pat3]+y/1:
                         x0 = x
-                        point = dic_dir1[pat3]+y/2
+                        point = dic_dir1[pat3]+y/1
                         if x+2 > width:
                             xxmax = width-2
                         else:
@@ -755,9 +755,9 @@ class Block_Controller(object):
                         direction=0
                         if DEBUG == 1 : print("dir1=",format(pat3,'03x'),"point=",point)
                 if (pat3) in dic_dir2:
-                    if point < dic_dir2[pat3]+y/2:
+                    if point < dic_dir2[pat3]+y/1:
                         x0 = x+1
-                        point = dic_dir2[pat3]+y/2
+                        point = dic_dir2[pat3]+y/1
                         if x+2 > width:
                             xxmax = width-2
                         else:
@@ -795,21 +795,21 @@ class Block_Controller(object):
         height = self.board_data_height #height=22
 
         dic_dir0 = {0x113:7,0x112:7}
-        dic_dir1 = {0x31:7,0x21:7,0x11:2} #add 210728:0120
+        dic_dir1 = {0x31:7,0x21:7,0x11:2,0x10:5} #add 210728:0120
     
         x_start = 0
         x_end = width-1
         x_step = 1
         point = -1
-        for y in range(height - 3, 4 ,-1):
+        for y in range(height - 3, 0 ,-1):
             for x in [0,10,1,9,2,8,3,7,4,6,5]:
                 pat4 = self.calcBoardPat(self.board_backboard,x,y)
                 pat3 = pat4 >> 4
                 pat2 = pat4 >> 8
                 if (pat3) in dic_dir0:
-                    if point < dic_dir0[pat3]+y/2:
+                    if point < dic_dir0[pat3]+y/1:
                         x0 = x+1
-                        point = dic_dir0[pat3]+y/2
+                        point = dic_dir0[pat3]+y/1
                         if x+3 > width:
                             xxmax = width-3
                         else:
@@ -835,9 +835,9 @@ class Block_Controller(object):
                         direction=0
                         if DEBUG == 1 : print("dir0=",format(pat3,'03x'),"point=",point)
                 if (pat2) in dic_dir1:
-                    if point < dic_dir1[pat2]+y/2:
+                    if point < dic_dir1[pat2]+y/1:
                         x0 = x
-                        point = dic_dir1[pat2]+y/2
+                        point = dic_dir1[pat2]+y/1
                         if x+2 > width:
                             xxmax = width-2
                         else:
@@ -876,21 +876,21 @@ class Block_Controller(object):
         height = self.board_data_height #height=22
 
         dic_dir0 = {0x311:7,0x211:7}
-        dic_dir1 = {0x13:7,0x12:7,0x11:2}#add 210728:0119
+        dic_dir1 = {0x13:7,0x12:7,0x11:2,0x01:5}#add 210728:0119
 
         x_start = 0
         x_end = width-1
         x_step = 1
         point = -1
-        for y in range(height - 3, 4 ,-1):
+        for y in range(height - 3, 0 ,-1):
             for x in [0,10,1,9,2,8,3,7,4,6,5]:
                 pat4 = self.calcBoardPat(self.board_backboard,x,y)
                 pat3 = pat4 >> 4
                 pat2 = pat4 >> 8
                 if (pat3) in dic_dir0:
-                    if point < dic_dir0[pat3]+y/2:
+                    if point < dic_dir0[pat3]+y/1:
                         x0 = x+1
-                        point = dic_dir0[pat3]+y/2
+                        point = dic_dir0[pat3]+y/1
                         if x+3 > width:
                             xxmax = width-3
                         else:
@@ -916,9 +916,9 @@ class Block_Controller(object):
                         direction=0
                         if DEBUG == 1 : print("dir0=",format(pat3,'03x'),"point=",point)
                 if (pat2) in dic_dir1:
-                    if point < dic_dir1[pat2]+y/2:
+                    if point < dic_dir1[pat2]+y/1:
                         x0 = x
-                        point = dic_dir1[pat2]+y/2
+                        point = dic_dir1[pat2]+y/1
                         if x+2 > width:
                             xxmax = width-2
                         else:
