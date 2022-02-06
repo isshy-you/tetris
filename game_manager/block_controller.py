@@ -26,7 +26,7 @@ class Block_Controller(object):
     def GetNextMove(self, nextMove, GameStatus):
 
         t1 = datetime.now()
-        DEBUG = 1
+        DEBUG = 0
         # print GameStatus
         print("=================================================>")
         del GameStatus["field_info"]["withblock"]
@@ -176,7 +176,7 @@ class Block_Controller(object):
         x_step = 1
         point = -1
         for y in range(height - 3, 0 ,-1):
-            for x in [0,10,1,9,2,8,3,7,4,6,5]:
+            for x in [0,9,1,8,2,7,3,6,4,5]:
                 pat4 = self.calcBoardPat(self.board_backboard,x,y)
                 pat3 = pat4 >> 4
                 pat2 = pat4 >> 8
@@ -276,7 +276,7 @@ class Block_Controller(object):
         x_step = 1
         point = -1
         for y in range(height - 3, 0 ,-1):
-            for x in [0,10,1,9,2,8,3,7,4,6,5]:
+            for x in [0,9,1,8,2,7,3,6,4,5]:
                 pat4 = self.calcBoardPat(self.board_backboard,x,y)
                 pat3 = pat4 >> 4
                 pat2 = pat4 >> 8
@@ -416,7 +416,7 @@ class Block_Controller(object):
         x_step = 1
         point = -1
         for y in range(height - 3, 0 ,-1):
-            for x in [0,10,1,9,2,8,3,7,4,6,5]:
+            for x in [0,9,1,8,2,7,3,6,4,5]:
                 pat4 = self.calcBoardPat(self.board_backboard,x,y)
                 pat3 = pat4 >> 4
                 pat2 = pat4 >> 8
@@ -553,7 +553,7 @@ class Block_Controller(object):
         x_step = 1
         point = -1
         for y in range(height - 3, 0 ,-1):
-            for x in [0,10,1,9,2,8,3,7,4,6,5]:
+            for x in [0,9,1,8,2,7,3,6,4,5]:
                 pat4 = self.calcBoardPat(self.board_backboard,x,y)
                 pat3 = pat4 >> 4
                 pat2 = pat4 >> 8
@@ -694,7 +694,7 @@ class Block_Controller(object):
         x_step = 1
         point = -1
         for y in range(height - 3, 0 ,-1):
-            for x in [0,10,1,9,2,8,3,7,4,6,5]:
+            for x in [0,9,1,8,2,7,3,6,4,5]:
                 pat4 = self.calcBoardPat(self.board_backboard,x,y)
                 pat3 = pat4 >> 4
                 pat2 = pat4 >> 8
@@ -802,7 +802,7 @@ class Block_Controller(object):
         x_step = 1
         point = -1
         for y in range(height - 3, 0 ,-1):
-            for x in [0,10,1,9,2,8,3,7,4,6,5]:
+            for x in [0,9,1,8,2,7,3,6,4,5]:
                 pat4 = self.calcBoardPat(self.board_backboard,x,y)
                 pat3 = pat4 >> 4
                 pat2 = pat4 >> 8
@@ -883,7 +883,7 @@ class Block_Controller(object):
         x_step = 1
         point = -1
         for y in range(height - 3, 0 ,-1):
-            for x in [0,10,1,9,2,8,3,7,4,6,5]:
+            for x in [0,9,1,8,2,7,3,6,4,5]:
                 pat4 = self.calcBoardPat(self.board_backboard,x,y)
                 pat3 = pat4 >> 4
                 pat2 = pat4 >> 8
