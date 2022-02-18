@@ -256,7 +256,7 @@ class Block_Controller(object):
    
     #type-L
     def calcEvaluationValueIndex2(self,board):
-        DEBUG = 1
+        DEBUG = 0
         point = -1
         direction = 0
         x0 = 0
@@ -397,7 +397,7 @@ class Block_Controller(object):
 
     #type-J
     def calcEvaluationValueIndex3(self,board):
-        DEBUG = 1
+        DEBUG = 0
         point = -1
         direction = 0
         x0 = 0
@@ -537,7 +537,7 @@ class Block_Controller(object):
 
     #type-T
     def calcEvaluationValueIndex4(self,board):
-        DEBUG = 1
+        DEBUG = 0
         direction = 0
         x0 = 0
         width = self.board_data_width #width=10
@@ -674,7 +674,7 @@ class Block_Controller(object):
 
     #type-o
     def calcEvaluationValueIndex5(self,board):
-        DEBUG = 1
+        DEBUG = 0
         direction = 0
         x0 = 0
         width = self.board_data_width #width=10
@@ -787,7 +787,7 @@ class Block_Controller(object):
 
     #type-S
     def calcEvaluationValueIndex6(self,board):
-        DEBUG = 1
+        DEBUG = 0
         point = -1
         direction = 0
         x0 = 0
@@ -869,7 +869,7 @@ class Block_Controller(object):
 
     #type-Z
     def calcEvaluationValueIndex7(self,board):
-        DEBUG = 1
+        DEBUG = 0
         direction = 0
         x0 = 0
         width = self.board_data_width #width=10
