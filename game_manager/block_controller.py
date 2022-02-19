@@ -6,6 +6,8 @@ import pprint
 import copy
 import random
 
+from numpy import iinfo
+
 class Block_Controller(object):
 
     # init parameter
@@ -26,7 +28,7 @@ class Block_Controller(object):
     def GetNextMove(self, nextMove, GameStatus):
 
         t1 = datetime.now()
-        DEBUG = 0
+        DEBUG = 1
         # print GameStatus
         print("=================================================>")
         del GameStatus["field_info"]["withblock"]
@@ -40,6 +42,7 @@ class Block_Controller(object):
         # next shape info
         NextShapeDirectionRange = GameStatus["block_info"]["nextShape"]["direction_range"]
         self.NextShape_class = GameStatus["block_info"]["nextShape"]["class"]
+        self.NextShape_index = GameStatus["block_info"]["nextShape"]["index"]
         # current board info
         self.board_backboard = GameStatus["field_info"]["backboard"]
         # default board definition
@@ -53,19 +56,19 @@ class Block_Controller(object):
 
         # add additional code by isshy-you
         if self.CurrentShape_index==1:
-            EvalValue,x0,direction0 = self.calcEvaluationValueIndex1(self.board_backboard)
+            EvalValue,x0,direction0 = self.calcEvaluationValueIndex1(self.board_backboard, self.NextShape_index)
         elif self.CurrentShape_index==2:
-            EvalValue,x0,direction0 = self.calcEvaluationValueIndex2(self.board_backboard)
+            EvalValue,x0,direction0 = self.calcEvaluationValueIndex2(self.board_backboard, self.NextShape_index)
         elif self.CurrentShape_index==3:
-            EvalValue,x0,direction0 = self.calcEvaluationValueIndex3(self.board_backboard)
+            EvalValue,x0,direction0 = self.calcEvaluationValueIndex3(self.board_backboard, self.NextShape_index)
         elif self.CurrentShape_index==4:
-            EvalValue,x0,direction0 = self.calcEvaluationValueIndex4(self.board_backboard)
+            EvalValue,x0,direction0 = self.calcEvaluationValueIndex4(self.board_backboard, self.NextShape_index)
         elif self.CurrentShape_index==5:
-            EvalValue,x0,direction0 = self.calcEvaluationValueIndex5(self.board_backboard)
+            EvalValue,x0,direction0 = self.calcEvaluationValueIndex5(self.board_backboard, self.NextShape_index)
         elif self.CurrentShape_index==6:
-            EvalValue,x0,direction0 = self.calcEvaluationValueIndex6(self.board_backboard)
+            EvalValue,x0,direction0 = self.calcEvaluationValueIndex6(self.board_backboard, self.NextShape_index)
         elif self.CurrentShape_index==7:
-            EvalValue,x0,direction0 = self.calcEvaluationValueIndex7(self.board_backboard)
+            EvalValue,x0,direction0 = self.calcEvaluationValueIndex7(self.board_backboard, self.NextShape_index)
         if EvalValue > 0 :
             strategy = (direction0,x0,1,1)
             if DEBUG == 1 : print("<<< isshy-you:(EvalValue,shape,strategy(dir,x,y_ope,y_mov))=(",EvalValue,self.CurrentShape_index,strategy,")")
@@ -158,8 +161,17 @@ class Block_Controller(object):
             _board[(_y + dy) * self.board_data_width + _x] = Shape_class.shape
         return _board
 
+    def makehorizontalorder(self,width):
+        order = list(range(width))
+        for ii in range(0,width,1):
+            if (int(ii/2))==(ii/2) :
+                order[ii] = int(ii/2)
+            else:
+                order[ii] = width-1-int(ii/2)
+        return(order)
+
     #type-I
-    def calcEvaluationValueIndex1(self,board):
+    def calcEvaluationValueIndex1(self,board,nextindex):
         DEBUG = 0        
         direction = 0
         x0 = 0
@@ -171,12 +183,14 @@ class Block_Controller(object):
         dic_dir2 = {0xf0:8,0x70:7,0x30:5,0x10:2}
         dic_dir3 = {0xf0f:9,0xf07:6,0x70f:6,0xf03:6,0x30f:6}
 
+        order = self.makehorizontalorder(width)
+                
         x_start = 0
         x_end = width-1
         x_step = 1
         point = -1
         for y in range(height - 3, 0 ,-1):
-            for x in [0,9,1,8,2,7,3,6,4,5]:
+            for x in order:
                 pat4 = self.calcBoardPat(self.board_backboard,x,y)
                 pat3 = pat4 >> 4
                 pat2 = pat4 >> 8
@@ -255,8 +269,8 @@ class Block_Controller(object):
         return score,x0,direction
    
     #type-L
-    def calcEvaluationValueIndex2(self,board):
-        DEBUG = 1
+    def calcEvaluationValueIndex2(self,board,nextindex):
+        DEBUG = 0
         point = -1
         direction = 0
         x0 = 0
@@ -271,12 +285,14 @@ class Block_Controller(object):
 
         dic_dir3 = {0x111:8}
 
+        order = self.makehorizontalorder(width)
+
         x_start = 0
         x_end = width-1
         x_step = 1
         point = -1
         for y in range(height - 3, 0 ,-1):
-            for x in [0,9,1,8,2,7,3,6,4,5]:
+            for x in order:
                 pat4 = self.calcBoardPat(self.board_backboard,x,y)
                 pat3 = pat4 >> 4
                 pat2 = pat4 >> 8
@@ -396,8 +412,8 @@ class Block_Controller(object):
         return score,x0,direction
 
     #type-J
-    def calcEvaluationValueIndex3(self,board):
-        DEBUG = 1
+    def calcEvaluationValueIndex3(self,board,nextindex):
+        DEBUG = 0
         point = -1
         direction = 0
         x0 = 0
@@ -411,12 +427,14 @@ class Block_Controller(object):
         dic_dir3 = {0x331:8,\
                     0x321:8,0x231:8,0x221:8,0x131:2}
 
+        order = self.makehorizontalorder(width)
+
         x_start = 0
         x_end = width-1
         x_step = 1
         point = -1
         for y in range(height - 3, 0 ,-1):
-            for x in [0,9,1,8,2,7,3,6,4,5]:
+            for x in order:
                 pat4 = self.calcBoardPat(self.board_backboard,x,y)
                 pat3 = pat4 >> 4
                 pat2 = pat4 >> 8
@@ -536,8 +554,8 @@ class Block_Controller(object):
         return score,x0,direction
 
     #type-T
-    def calcEvaluationValueIndex4(self,board):
-        DEBUG = 1
+    def calcEvaluationValueIndex4(self,board,nextindex):
+        DEBUG = 0
         direction = 0
         x0 = 0
         width = self.board_data_width #width=10
@@ -548,12 +566,14 @@ class Block_Controller(object):
         dic_dir2 = {0x31:6,0x21:6}
         dic_dir3 = {0x111:7}
 
+        order = self.makehorizontalorder(width)
+
         x_start = 0
         x_end = width-1
         x_step = 1
         point = -1
         for y in range(height - 3, 0 ,-1):
-            for x in [0,9,1,8,2,7,3,6,4,5]:
+            for x in order:
                 pat4 = self.calcBoardPat(self.board_backboard,x,y)
                 pat3 = pat4 >> 4
                 pat2 = pat4 >> 8
@@ -673,8 +693,8 @@ class Block_Controller(object):
         return score,x0,direction
 
     #type-o
-    def calcEvaluationValueIndex5(self,board):
-        DEBUG = 1
+    def calcEvaluationValueIndex5(self,board,nextindex):
+        DEBUG = 0
         direction = 0
         x0 = 0
         width = self.board_data_width #width=10
@@ -689,12 +709,14 @@ class Block_Controller(object):
         dic_dir2 = {0xf11:7,0xe11:7,0xd11:7,0xc11:7,0xb11:7,0xa11:7,0x911:7,0x811:7,\
                     0x711:7,0x611:7,0x511:7,0x411:7}
 
+        order = self.makehorizontalorder(width)
+
         x_start = 0
         x_end = width-1
         x_step = 1
         point = -1
         for y in range(height - 3, 0 ,-1):
-            for x in [0,9,1,8,2,7,3,6,4,5]:
+            for x in order:
                 pat4 = self.calcBoardPat(self.board_backboard,x,y)
                 pat3 = pat4 >> 4
                 pat2 = pat4 >> 8
@@ -786,8 +808,8 @@ class Block_Controller(object):
         return score,x0,direction
 
     #type-S
-    def calcEvaluationValueIndex6(self,board):
-        DEBUG = 1
+    def calcEvaluationValueIndex6(self,board,nextindex):
+        DEBUG = 0
         point = -1
         direction = 0
         x0 = 0
@@ -797,12 +819,14 @@ class Block_Controller(object):
         dic_dir0 = {0x113:7,0x112:7}
         dic_dir1 = {0x31:7,0x21:7,0x11:2,0x10:5} #add 210728:0120
     
+        order = self.makehorizontalorder(width)
+
         x_start = 0
         x_end = width-1
         x_step = 1
         point = -1
         for y in range(height - 3, 0 ,-1):
-            for x in [0,9,1,8,2,7,3,6,4,5]:
+            for x in order:
                 pat4 = self.calcBoardPat(self.board_backboard,x,y)
                 pat3 = pat4 >> 4
                 pat2 = pat4 >> 8
@@ -868,8 +892,8 @@ class Block_Controller(object):
         return score,x0,direction
 
     #type-Z
-    def calcEvaluationValueIndex7(self,board):
-        DEBUG = 1
+    def calcEvaluationValueIndex7(self,board,nextindex):
+        DEBUG = 0
         direction = 0
         x0 = 0
         width = self.board_data_width #width=10
@@ -878,12 +902,14 @@ class Block_Controller(object):
         dic_dir0 = {0x311:7,0x211:7}
         dic_dir1 = {0x13:7,0x12:7,0x11:2,0x01:5}#add 210728:0119
 
+        order = self.makehorizontalorder(width)
+
         x_start = 0
         x_end = width-1
         x_step = 1
         point = -1
         for y in range(height - 3, 0 ,-1):
-            for x in [0,9,1,8,2,7,3,6,4,5]:
+            for x in order:
                 pat4 = self.calcBoardPat(self.board_backboard,x,y)
                 pat3 = pat4 >> 4
                 pat2 = pat4 >> 8
