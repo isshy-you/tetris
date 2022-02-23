@@ -175,8 +175,6 @@ class Block_Controller(object):
         block=0
         for yy in range(ypos,0,-1):
             if board[(yy) * width + (xpos)] != 0:
-                #if DEBUG == 1 : print("#####BLOCKED ",xx,yy,format(pat4,'04x'))
-                #if DEBUG == 1 : print("(index,x0,x,y,direction,pat)=(",self.CurrentShape_index,x0,x,y,direction,format(pat4,'04x'),")")
                 block = 1
                 break
         return(block)
@@ -184,7 +182,7 @@ class Block_Controller(object):
     def counthole(self,board,xpos,ypos,width,height):
         hole=0
         if (height-1<ypos+1): return(0)
-        for yy in range(height-1,ypos+3,-1):
+        for yy in range(height-1,ypos,-1):
             #if (yy < height):
             if board[(yy) * width + (xpos)] == 0:
                 hole += 1
@@ -201,8 +199,8 @@ class Block_Controller(object):
         width = self.board_data_width #width=10
         height = self.board_data_height #height=22
 
-        dic_dir0 = {0x0f:6,0x07:6,0x03:5,0x01:2,0x00:1}
-        dic_dir1 = {0x0000:1,0x0001:1,0x0010:1,0x0011:1
+        dic_dir0 = {0x0f:8,0x07:7,0x03:5,0x01:2}
+        dic_dir1 = {          0x0001:1,0x0010:1,0x0011:1
                     ,0x0100:1,0x0101:1,0x0110:1,0x0111:1
                     ,0x1000:1,0x1001:1,0x1010:1,0x1011:1
                     ,0x1100:1,0x1101:1,0x1110:1,0x1111:8
@@ -215,12 +213,14 @@ class Block_Controller(object):
         dic_widx = [1,4,1,1]
         dic_widy = [4,1,4,4]
 
+        dic_dir = [0,1,0,0]
+
         order = self.makehorizontalorder(width)
                 
         x_start = 0
         x_end = width-1
         x_step = 1
-        point = -1
+        point = [-1,-1,-1,-1] #point,x,y,direction
         for y in range(height - 3, 0 ,-1):
             for x in order:
                 pat4 = self.calcBoardPat(self.board_backboard,x,y)
@@ -229,40 +229,42 @@ class Block_Controller(object):
                 #if DEBUG == 1 : print("#pat:",format(pat4,'04x'),format(pat3,'03x'),format(pat2,'02x'))
                 nopoint = 0
                 hole = 0
-                if (pat2) in dic_dir0:
-                    if point < dic_dir0[pat2]+y/1:
-                        x0 = x+dic_alix[0]
-                        if x+dic_widx[0] > width:
-                            nopoint=1
-                            break
-                        else:
-                            xxmax = x+dic_widx[0]-1
+                direction=0
+                #if self.checkupper(board,x+dic_alix[direction],y-dic_aliy[direction],width)!=1 :
+                #    hole=self.counthole(board,x,y+dic_widy[direction]-dic_aliy[direction]-1,width,height)
+                #    if (hole >= 4):
+                #        if DEBUG == 1 : print("### FOUND THE HOLE(",hole,")",x,y,format(pat4,'04x'))
+                #        point=[10,x,y,direction]
+                if (x<(width-1))and((pat2) in dic_dir0):
+                    getpoint = dic_dir0[pat2]
+                    xxmax = x + dic_widx[direction]
+                    if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
+                        #print('x,y,point,getpoint0=',x,y,point,getpoint)
                         for xx in range(x,xxmax,1):
                             if self.checkupper(board,xx,y,width)==1:
+                                if DEBUG ==1 : print('### BLOCKED BY UPPER at ',xx,y)
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y,width,height)
-                            if (hole <=1):
-                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
-                                nopoint = 1
-                                break
+                            #hole=self.counthole(board,xx,y,width,height)
+                            #if (hole <=1):
+                            #    if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
+                            #    nopoint = 1
+                            #    break
                         if (nopoint==0):
-                            direction=0
-                            point = dic_dir0[pat2]+y/1
+                            point = getpoint,x+dic_alix[direction],y,dic_dir[direction]
                             if DEBUG == 1 : print("dir0=",format(pat2,'02x'),"point=",point)
                             if DEBUG == 1 : print('(x,y)=',x,y,'pat4=',format(pat4,'04x'))
                 nopoint = 0
                 hole = 0
-                if  (pat4) in dic_dir1:
-                    if point < dic_dir1[pat4]+y/1:
-                        x0 = x+dic_alix[1]
-                        if x+dic_widx[1] > width:
-                            nopoint=1
-                            break
-                        else:
-                            xxmax = x+dic_widx[1]-1
+                direction=1
+                if  (x<(width-3))and((pat4) in dic_dir1):
+                    getpoint = dic_dir1[pat4]
+                    xxmax = x + dic_widx[direction]
+                    if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
+                        #print('x,y,point,getpoint1=',x,y,point,getpoint)
                         for xx in range(x,xxmax,1):
                             if self.checkupper(board,xx,y,width)==1:
+                                if DEBUG ==1 : print('### BLOCKED BY UPPER at ',xx,y)
                                 nopoint = 1
                                 break
                             hole=self.counthole(board,xx,y,width,height)
@@ -271,60 +273,55 @@ class Block_Controller(object):
                                 nopoint = 1
                                 break
                         if (nopoint==0):
-                            direction=1
-                            point = dic_dir1[pat4]+y/1
+                            point = getpoint,x+dic_alix[direction],y,dic_dir[direction]
                             if DEBUG == 1 : print("dir1=",format(pat4,'04x'),"point=",point)
                             if DEBUG == 1 : print('(x,y)=',x,y,'pat4=',format(pat4,'04x'))
                 nopoint = 0
                 hole = 0
-                if (pat2) in dic_dir2:
-                    if point < dic_dir2[pat2]+y/1:
-                        x0 = x+dic_alix[2]
-                        if x+dic_widx[2] > width:
-                            nopoint=1
-                            break
-                        else:
-                            xxmax = x+dic_widx[2]-1
+                direction=2
+                if (x>0) and ((pat2) in dic_dir2):
+                    getpoint = dic_dir2[pat2]
+                    xxmax = x + dic_widx[direction]
+                    if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
+                        #print('x,y,point,getpoint2=',x,y,point,getpoint)
                         for xx in range(x,xxmax,1):
                             if self.checkupper(board,xx,y,width)==1:
+                                if DEBUG ==1 : print('### BLOCKED BY UPPER at ',xx,y)
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y,width,height)
-                            if (hole <=1):
-                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
-                                nopoint = 1
-                                break
+                            #hole=self.counthole(board,xx,y,width,height)
+                            #if (hole <=1):
+                            #    if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
+                            #    nopoint = 1
+                            #    break
                         if (nopoint==0):
-                            direction=0
-                            point = dic_dir2[pat2]+y/1
+                            point = getpoint,x+dic_alix[direction],y,dic_dir[direction]
                             if DEBUG == 1 : print("dir2=",format(pat2,'02x'),"point=",point)
                             if DEBUG == 1 : print('(x,y)=',x,y,'pat4=',format(pat4,'04x'))
                 nopoint = 0
                 hole = 0
-                if (pat3) in dic_dir3:
-                    if point < dic_dir3[pat3]+y/1:
-                        x0 = x+dic_alix[3]
-                        if x+dic_widx[3] > width:
-                            nopoint=1
-                            break
-                        else:
-                            xxmax = x+dic_widx[3]-1
+                direction=3
+                if (x<(width-1))and((pat3) in dic_dir3):
+                    getpoint = dic_dir3[pat3]
+                    xxmax = x + dic_widx[direction]
+                    if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
+                        #print('x,y,point,getpoint3=',x,y,point,getpoint)
                         for xx in range(x,xxmax,1):
                             if self.checkupper(board,xx,y,width)==1:
+                                if DEBUG ==1 : print('### BLOCKED BY UPPER at ',xx,y)
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y,width,height)
-                            if (hole <=1) :
-                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
-                                nopoint = 1
-                                break
+                            #hole=self.counthole(board,xx,y,width,height)
+                            #if (hole <=1) :
+                            #    if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
+                            #    nopoint = 1
+                            #    break
                         if (nopoint==0):
-                            direction=0
-                            point = dic_dir3[pat3]+y/1
+                            point = getpoint,x+dic_alix[direction],y,dic_dir[direction]
                             if DEBUG == 1 : print("dir3=",format(pat3,'03x'),"point=",point)
                             if DEBUG == 1 : print('(x,y)=',x,y,'pat4=',format(pat4,'04x'))
-        score = point
-        return score,x0,direction
+        #print('point=',point)
+        return point[0],point[1],point[3]
    
     #type-L
     def calcEvaluationValueIndex2(self,board,nextindex):
