@@ -161,7 +161,9 @@ class Block_Controller(object):
             _board[(_y + dy) * self.board_data_width + _x] = Shape_class.shape
         return _board
 
-    def makehorizontalorder(self,width):
+    def makehorizontalorder(self):
+        width = self.board_data_width #width=10
+        height = self.board_data_height #height=22
         order = list(range(width))
         for ii in range(0,width,1):
             if (int(ii/2))==(ii/2) :
@@ -171,7 +173,9 @@ class Block_Controller(object):
         return(order)
 
 
-    def checkupper(self,board,xpos,ypos,width):
+    def checkupper(self,board,xpos,ypos):
+        width = self.board_data_width #width=10
+        height = self.board_data_height #height=22
         block=0
         for yy in range(ypos,0,-1):
             if board[(yy) * width + (xpos)] != 0:
@@ -179,7 +183,9 @@ class Block_Controller(object):
                 break
         return(block)
 
-    def counthole(self,board,xpos,ypos,width,height):
+    def counthole(self,board,xpos,ypos):
+        width = self.board_data_width #width=10
+        height = self.board_data_height #height=22
         hole=0
         if (height-1<ypos+1): return(0)
         for yy in range(height-1,ypos,-1):
@@ -190,14 +196,24 @@ class Block_Controller(object):
                 hole = 0
         return(hole)
 
-    #type-I
-    def calcEvaluationValueIndex1(self,board,nextindex):
-        DEBUG = 1        
-        if DEBUG==1: print('block_type-I')
-        direction = 0
-        x0 = 0
+    def maxblockheight(self,board):
         width = self.board_data_width #width=10
         height = self.board_data_height #height=22
+        for yy in range(height-1,0,-1):
+            for xx in range(0,width,1):
+                if board[yy*width+xx]!=0:
+                    height = yy
+        return(height)
+
+    #type-I
+    def calcEvaluationValueIndex1(self,board,nextindex):
+        DEBUG = 0
+        if DEBUG==1: print('block_type-I')
+        direction = 0
+        width = self.board_data_width #width=10
+        height = self.board_data_height #height=22
+        order = self.makehorizontalorder()
+        blockheight = self.maxblockheight(board)
 
         dic_dir0 = {0x0f:8,0x07:7,0x03:5,0x01:2}
         dic_dir1 = {          0x0001:1,0x0010:1,0x0011:1
@@ -215,13 +231,11 @@ class Block_Controller(object):
 
         dic_dir = [0,1,0,0]
 
-        order = self.makehorizontalorder(width)
-                
         x_start = 0
         x_end = width-1
         x_step = 1
         point = [-1,-1,-1,-1] #point,x,y,direction
-        for y in range(height - 3, 0 ,-1):
+        for y in range(height - 3, blockheight ,-1):
             for x in order:
                 pat4 = self.calcBoardPat(self.board_backboard,x,y)
                 pat3 = pat4 >> 4
@@ -230,22 +244,22 @@ class Block_Controller(object):
                 nopoint = 0
                 hole = 0
                 direction=0
-                #if self.checkupper(board,x+dic_alix[direction],y-dic_aliy[direction],width)!=1 :
-                #    hole=self.counthole(board,x,y+dic_widy[direction]-dic_aliy[direction]-1,width,height)
-                #    if (hole >= 4):
-                #        if DEBUG == 1 : print("### FOUND THE HOLE(",hole,")",x,y,format(pat4,'04x'))
-                #        point=[10,x,y,direction]
+                if self.checkupper(board,x+dic_alix[direction],y)!=1 :
+                    hole=self.counthole(board,x,y)
+                    if (hole >= 4):
+                        if DEBUG == 1 : print("### FOUND THE HOLE(",hole,")",x,y,format(pat4,'04x'))
+                        point=[10,x,y,direction]
                 if (x<(width-1))and((pat2) in dic_dir0):
                     getpoint = dic_dir0[pat2]
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         #print('x,y,point,getpoint0=',x,y,point,getpoint)
                         for xx in range(x,xxmax,1):
-                            if self.checkupper(board,xx,y,width)==1:
+                            if self.checkupper(board,xx,y)==1:
                                 if DEBUG ==1 : print('### BLOCKED BY UPPER at ',xx,y)
                                 nopoint = 1
                                 break
-                            #hole=self.counthole(board,xx,y,width,height)
+                            #hole=self.counthole(board,xx,y)
                             #if (hole <=1):
                             #    if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
                             #    nopoint = 1
@@ -263,11 +277,11 @@ class Block_Controller(object):
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         #print('x,y,point,getpoint1=',x,y,point,getpoint)
                         for xx in range(x,xxmax,1):
-                            if self.checkupper(board,xx,y,width)==1:
+                            if self.checkupper(board,xx,y)==1:
                                 if DEBUG ==1 : print('### BLOCKED BY UPPER at ',xx,y)
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y,width,height)
+                            hole=self.counthole(board,xx,y)
                             if (hole >=1)and(hole <=4) :
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
                                 nopoint = 1
@@ -285,11 +299,11 @@ class Block_Controller(object):
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         #print('x,y,point,getpoint2=',x,y,point,getpoint)
                         for xx in range(x,xxmax,1):
-                            if self.checkupper(board,xx,y,width)==1:
+                            if self.checkupper(board,xx,y)==1:
                                 if DEBUG ==1 : print('### BLOCKED BY UPPER at ',xx,y)
                                 nopoint = 1
                                 break
-                            #hole=self.counthole(board,xx,y,width,height)
+                            #hole=self.counthole(board,xx,y)
                             #if (hole <=1):
                             #    if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
                             #    nopoint = 1
@@ -307,11 +321,11 @@ class Block_Controller(object):
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         #print('x,y,point,getpoint3=',x,y,point,getpoint)
                         for xx in range(x,xxmax,1):
-                            if self.checkupper(board,xx,y,width)==1:
+                            if self.checkupper(board,xx,y)==1:
                                 if DEBUG ==1 : print('### BLOCKED BY UPPER at ',xx,y)
                                 nopoint = 1
                                 break
-                            #hole=self.counthole(board,xx,y,width,height)
+                            #hole=self.counthole(board,xx,y)
                             #if (hole <=1) :
                             #    if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
                             #    nopoint = 1
@@ -340,7 +354,7 @@ class Block_Controller(object):
 
         dic_dir3 = {0x111:8}
 
-        order = self.makehorizontalorder(width)
+        order = self.makehorizontalorder()
 
         x_start = 0
         x_end = width-1
@@ -363,10 +377,10 @@ class Block_Controller(object):
                         else:
                             xxmax = x+2-1
                         for xx in range(x,xxmax,1):
-                            if self.checkupper(board,xx,y,width)==1:
+                            if self.checkupper(board,xx,y)==1:
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y,width,height)
+                            hole=self.counthole(board,xx,y)
                             if (hole >=1)and(hole <=4) :
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
                                 nopoint = 1
@@ -387,10 +401,10 @@ class Block_Controller(object):
                         else:
                             xxmax = x+3-1
                         for xx in range(x,xxmax,1):
-                            if self.checkupper(board,xx,y,width)==1:
+                            if self.checkupper(board,xx,y)==1:
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y,width,height)
+                            hole=self.counthole(board,xx,y)
                             if (hole >=1)and(hole <=4) :
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
                                 nopoint = 1
@@ -411,10 +425,10 @@ class Block_Controller(object):
                         else:
                             xxmax = x+2-1
                         for xx in range(x,xxmax,1):
-                            if self.checkupper(board,xx,y,width)==1:
+                            if self.checkupper(board,xx,y)==1:
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y,width,height)
+                            hole=self.counthole(board,xx,y)
                             if (hole >=1)and(hole <=4) :
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
                                 nopoint = 1
@@ -435,10 +449,10 @@ class Block_Controller(object):
                         else:
                             xxmax = x+3-1
                         for xx in range(x,xxmax,1):
-                            if self.checkupper(board,xx,y,width)==1:
+                            if self.checkupper(board,xx,y)==1:
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y,width,height)
+                            hole=self.counthole(board,xx,y)
                             if (hole >=1)and(hole <=4) :
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
                                 nopoint = 1
@@ -467,7 +481,7 @@ class Block_Controller(object):
         dic_dir3 = {0x331:8,\
                     0x321:8,0x231:8,0x221:8,0x131:2}
 
-        order = self.makehorizontalorder(width)
+        order = self.makehorizontalorder()
 
         x_start = 0
         x_end = width-1
@@ -489,10 +503,10 @@ class Block_Controller(object):
                         else:
                             xxmax = x+2-1
                         for xx in range(x,xxmax,1):
-                            if self.checkupper(board,xx,y,width)==1:
+                            if self.checkupper(board,xx,y)==1:
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y,width,height)
+                            hole=self.counthole(board,xx,y)
                             if (hole >=1)and(hole <=4) :
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
                                 nopoint = 1
@@ -513,10 +527,10 @@ class Block_Controller(object):
                         else:
                             xxmax = x+3-1
                         for xx in range(x,xxmax,1):
-                            if self.checkupper(board,xx,y,width)==1:
+                            if self.checkupper(board,xx,y)==1:
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y,width,height)
+                            hole=self.counthole(board,xx,y)
                             if (hole >=1)and(hole <=4) :
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
                                 nopoint = 1
@@ -537,10 +551,10 @@ class Block_Controller(object):
                         else:
                             xxmax = x+2-1
                         for xx in range(x,xxmax,1):
-                            if self.checkupper(board,xx,y,width)==1:
+                            if self.checkupper(board,xx,y)==1:
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y,width,height)
+                            hole=self.counthole(board,xx,y)
                             if (hole >=1)and(hole <=4) :
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
                                 nopoint = 1
@@ -561,10 +575,10 @@ class Block_Controller(object):
                         else:
                             xxmax = x+3-1
                         for xx in range(x,xxmax,1):
-                            if self.checkupper(board,xx,y,width)==1:
+                            if self.checkupper(board,xx,y)==1:
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y,width,height)
+                            hole=self.counthole(board,xx,y)
                             if (hole >=1)and(hole <=4) :
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
                                 nopoint = 1
@@ -591,7 +605,7 @@ class Block_Controller(object):
         dic_dir2 = {0x31:6,0x21:6}
         dic_dir3 = {0x111:9}
 
-        order = self.makehorizontalorder(width)
+        order = self.makehorizontalorder()
 
         x_start = 0
         x_end = width-1
@@ -613,10 +627,10 @@ class Block_Controller(object):
                         else:
                             xxmax = x+2-1
                         for xx in range(x,xxmax,1):
-                            if self.checkupper(board,xx,y,width)==1:
+                            if self.checkupper(board,xx,y)==1:
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y,width,height)
+                            hole=self.counthole(board,xx,y)
                             if (hole >=1)and(hole <=4) :
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
                                 nopoint = 1
@@ -637,10 +651,10 @@ class Block_Controller(object):
                         else:
                             xxmax = x+3-1
                         for xx in range(x,xxmax,1):
-                            if self.checkupper(board,xx,y,width)==1:
+                            if self.checkupper(board,xx,y)==1:
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y,width,height)
+                            hole=self.counthole(board,xx,y)
                             if (hole >=1)and(hole <=4) :
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
                                 nopoint = 1
@@ -661,10 +675,10 @@ class Block_Controller(object):
                         else:
                             xxmax = x+2-1
                         for xx in range(x,xxmax,1):
-                            if self.checkupper(board,xx,y,width)==1:
+                            if self.checkupper(board,xx,y)==1:
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y,width,height)
+                            hole=self.counthole(board,xx,y)
                             if (hole >=1)and(hole <=4) :
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
                                 nopoint = 1
@@ -685,10 +699,10 @@ class Block_Controller(object):
                         else:
                             xxmax = x+3-1
                         for xx in range(x,xxmax,1):
-                            if self.checkupper(board,xx,y,width)==1:
+                            if self.checkupper(board,xx,y)==1:
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y,width,height)
+                            hole=self.counthole(board,xx,y)
                             if (hole >=1)and(hole <=4) :
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
                                 nopoint = 1
@@ -719,7 +733,7 @@ class Block_Controller(object):
         dic_dir2 = {0xf11:7,0xe11:7,0xd11:7,0xc11:7,0xb11:7,0xa11:7,0x911:7,0x811:7,\
                     0x711:7,0x611:7,0x511:7,0x411:7}
 
-        order = self.makehorizontalorder(width)
+        order = self.makehorizontalorder()
 
         x_start = 0
         x_end = width-1
@@ -741,10 +755,10 @@ class Block_Controller(object):
                         else:
                             xxmax = x+2-1
                         for xx in range(x,xxmax,1):
-                            if self.checkupper(board,xx,y,width)==1:
+                            if self.checkupper(board,xx,y)==1:
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y,width,height)
+                            hole=self.counthole(board,xx,y)
                             if (hole >=1)and(hole <=4) :
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
                                 nopoint = 1
@@ -765,10 +779,10 @@ class Block_Controller(object):
                         else:
                             xxmax = x+2-1
                         for xx in range(x,xxmax,1):
-                            if self.checkupper(board,xx,y,width)==1:
+                            if self.checkupper(board,xx,y)==1:
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y,width,height)
+                            hole=self.counthole(board,xx,y)
                             if (hole >=1)and(hole <=4) :
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
                                 nopoint = 1
@@ -789,10 +803,10 @@ class Block_Controller(object):
                         else:
                             xxmax = x+2-1
                         for xx in range(x,xxmax,1):
-                            if self.checkupper(board,xx,y,width)==1:
+                            if self.checkupper(board,xx,y)==1:
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y,width,height)
+                            hole=self.counthole(board,xx,y)
                             if (hole >=1)and(hole <=4) :
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
                                 nopoint = 1
@@ -817,7 +831,7 @@ class Block_Controller(object):
         dic_dir0 = {0x113:7,0x112:7}
         dic_dir1 = {0x31:7,0x21:7,0x11:2,0x10:5} #add 210728:0120
     
-        order = self.makehorizontalorder(width)
+        order = self.makehorizontalorder()
 
         x_start = 0
         x_end = width-1
@@ -839,10 +853,10 @@ class Block_Controller(object):
                         else:
                             xxmax = x+3-1
                         for xx in range(x,xxmax,1):
-                            if self.checkupper(board,xx,y,width)==1:
+                            if self.checkupper(board,xx,y)==1:
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y,width,height)
+                            hole=self.counthole(board,xx,y)
                             if (hole >=1)and(hole <=4) :
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
                                 nopoint = 1
@@ -863,10 +877,10 @@ class Block_Controller(object):
                         else:
                             xxmax = x+2-1
                         for xx in range(x,xxmax,1):
-                            if self.checkupper(board,xx,y,width)==1:
+                            if self.checkupper(board,xx,y)==1:
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y,width,height)
+                            hole=self.counthole(board,xx,y)
                             if (hole >=1)and(hole <=4) :
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
                                 nopoint = 1
@@ -891,7 +905,7 @@ class Block_Controller(object):
         dic_dir0 = {0x311:7,0x211:7}
         dic_dir1 = {0x13:7,0x12:7,0x11:2,0x01:5}#add 210728:0119
 
-        order = self.makehorizontalorder(width)
+        order = self.makehorizontalorder()
 
         x_start = 0
         x_end = width-1
@@ -913,10 +927,10 @@ class Block_Controller(object):
                         else:
                             xxmax = x+3-1
                         for xx in range(x,xxmax,1):
-                            if self.checkupper(board,xx,y,width)==1:
+                            if self.checkupper(board,xx,y)==1:
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y,width,height)
+                            hole=self.counthole(board,xx,y)
                             if (hole >=1)and(hole <=4) :
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
                                 nopoint = 1
@@ -937,10 +951,10 @@ class Block_Controller(object):
                         else:
                             xxmax = x+2-1
                         for xx in range(x,xxmax,1):
-                            if self.checkupper(board,xx,y,width)==1:
+                            if self.checkupper(board,xx,y)==1:
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y,width,height)
+                            hole=self.counthole(board,xx,y)
                             if (hole >=1)and(hole <=4) :
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
                                 nopoint = 1
