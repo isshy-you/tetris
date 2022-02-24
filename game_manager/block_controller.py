@@ -187,8 +187,8 @@ class Block_Controller(object):
         width = self.board_data_width #width=10
         height = self.board_data_height #height=22
         hole=0
-        if (height-1<ypos+3+1): return(0)
-        for yy in range(height-1,ypos+3,-1):
+        if (height-1<ypos+4+1): return(0)
+        for yy in range(height-1,ypos+4,-1):
             #if (yy < height):
             if board[(yy) * width + (xpos)] == 0:
                 hole += 1
@@ -265,7 +265,7 @@ class Block_Controller(object):
                                 break
                             #hole=self.counthole(board,xx,y)
                             #if (hole <=1):
-                            #    if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
+                            #    if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
                             #    nopoint = 1
                             #    break
                         if (nopoint==0):
@@ -287,7 +287,7 @@ class Block_Controller(object):
                                 break
                             hole=self.counthole(board,xx,y)
                             if (hole >=1)and(hole <=4) :
-                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
+                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
                                 nopoint = 1
                                 break
                         if (nopoint==0):
@@ -309,7 +309,7 @@ class Block_Controller(object):
                                 break
                             #hole=self.counthole(board,xx,y)
                             #if (hole <=1):
-                            #    if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
+                            #    if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
                             #    nopoint = 1
                             #    break
                         if (nopoint==0):
@@ -331,7 +331,7 @@ class Block_Controller(object):
                                 break
                             #hole=self.counthole(board,xx,y)
                             #if (hole <=1) :
-                            #    if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
+                            #    if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
                             #    nopoint = 1
                             #    break
                         if (nopoint==0):
@@ -353,7 +353,7 @@ class Block_Controller(object):
         dic_dir0 = {0x11:7}
         dic_dir1 = {0x133:8,\
                     0x123:8,0x132:8,0x122:8,0x131:2}
-        dic_dir2 = {0x71:9,0x41:9,0x51:9,0x61:9,0x70:7,0x30:2,0x20:2,\
+        dic_dir2 = {0x71:9,0x41:9,0x51:9,0x61:9,0x70:2,0x30:2,0x20:2,\
                     0xf1:2,0x81:2,0x91:2,0xa1:2,0xb1:2,0xc1:2,0xd1:2,0xe1:2} #add 210727a
         dic_dir3 = {0x111:8}
 
@@ -378,7 +378,7 @@ class Block_Controller(object):
                 hole = 0
                 direction=0
                 if (x<(width-1))and((pat2) in dic_dir0):
-                    getpoint = dic_dir0[pat2]
+                    getpoint = dic_dir0[pat2]+y
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         #print('x,y,point,getpoint0=',x,y,point,getpoint)
@@ -389,7 +389,7 @@ class Block_Controller(object):
                                 break
                             hole=self.counthole(board,xx,y)
                             if (hole >=1)and(hole <=4) :
-                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
+                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
                                 nopoint = 1
                                 break
                         if (nopoint==0):
@@ -400,7 +400,7 @@ class Block_Controller(object):
                 hole = 0
                 direction=1
                 if (x<(width-2))and((pat3) in dic_dir1):
-                    getpoint = dic_dir1[pat3]
+                    getpoint = dic_dir1[pat3]+y
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         for xx in range(x,xxmax,1):
@@ -410,7 +410,7 @@ class Block_Controller(object):
                                 break
                             hole=self.counthole(board,xx,y)
                             if (hole >=1)and(hole <=4) :
-                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
+                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
                                 nopoint = 1
                                 break
                         if (nopoint==0):
@@ -421,7 +421,7 @@ class Block_Controller(object):
                 hole = 0
                 direction=2
                 if (x<(width-1))and((pat2) in dic_dir2):
-                    getpoint = dic_dir2[pat2]
+                    getpoint = dic_dir2[pat2]+y
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         #print('x,y,point,getpoint1=',x,y,point,getpoint)
@@ -432,7 +432,7 @@ class Block_Controller(object):
                                 break
                             hole=self.counthole(board,xx,y)
                             if (hole >=1)and(hole <=4) :
-                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
+                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
                                 nopoint = 1
                                 break
                         if (nopoint==0):
@@ -443,7 +443,7 @@ class Block_Controller(object):
                 hole = 0
                 direction=3
                 if (x<(width-1))and((pat3) in dic_dir3):
-                    getpoint = dic_dir3[pat3]
+                    getpoint = dic_dir3[pat3]+y
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         #print('x,y,point,getpoint1=',x,y,point,getpoint)
@@ -454,7 +454,7 @@ class Block_Controller(object):
                                 break
                             hole=self.counthole(board,xx,y)
                             if (hole >=1)and(hole <=4) :
-                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
+                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
                                 nopoint = 1
                                 break
                         if (nopoint==0):
@@ -474,7 +474,7 @@ class Block_Controller(object):
 
         dic_dir0 = {0x11:7}
         dic_dir1 = {0x111:8}
-        dic_dir2 = {0x17:9,0x14:9,0x15:9,0x16:9,0x07:7,0x03:2,0x02:2,\
+        dic_dir2 = {0x17:9,0x14:9,0x15:9,0x16:9,0x07:2,0x03:2,0x02:2,\
                     0x1f:2,0x18:2,0x19:2,0x1a:2,0x1b:2,0x1c:2,0x1d:2,0x1e:2} #add 210727a
         dic_dir3 = {0x331:8,\
                     0x321:8,0x231:8,0x221:8,0x131:2}
@@ -500,7 +500,7 @@ class Block_Controller(object):
                 hole = 0
                 direction=0
                 if (x<(width-1))and((pat2) in dic_dir0):
-                    getpoint = dic_dir0[pat2]
+                    getpoint = dic_dir0[pat2]+y
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         #print('x,y,point,getpoint0=',x,y,point,getpoint)
@@ -511,7 +511,7 @@ class Block_Controller(object):
                                 break
                             hole=self.counthole(board,xx,y)
                             if (hole >=1)and(hole <=4) :
-                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
+                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
                                 nopoint = 1
                                 break
                         if (nopoint==0):
@@ -522,7 +522,7 @@ class Block_Controller(object):
                 hole = 0
                 direction=1
                 if (x<(width-2))and((pat3) in dic_dir1):
-                    getpoint = dic_dir1[pat3]
+                    getpoint = dic_dir1[pat3]+y
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         for xx in range(x,xxmax,1):
@@ -532,7 +532,7 @@ class Block_Controller(object):
                                 break
                             hole=self.counthole(board,xx,y)
                             if (hole >=1)and(hole <=4) :
-                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
+                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
                                 nopoint = 1
                                 break
                         if (nopoint==0):
@@ -543,7 +543,7 @@ class Block_Controller(object):
                 hole = 0
                 direction=2
                 if (x<(width-1))and((pat2) in dic_dir2):
-                    getpoint = dic_dir2[pat2]
+                    getpoint = dic_dir2[pat2]+y
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         #print('x,y,point,getpoint1=',x,y,point,getpoint)
@@ -554,7 +554,7 @@ class Block_Controller(object):
                                 break
                             hole=self.counthole(board,xx,y)
                             if (hole >=1)and(hole <=4) :
-                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
+                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
                                 nopoint = 1
                                 break
                         if (nopoint==0):
@@ -565,7 +565,7 @@ class Block_Controller(object):
                 hole = 0
                 direction=3
                 if (x<(width-1))and((pat3) in dic_dir3):
-                    getpoint = dic_dir3[pat3]
+                    getpoint = dic_dir3[pat3]+y
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         #print('x,y,point,getpoint1=',x,y,point,getpoint)
@@ -576,7 +576,7 @@ class Block_Controller(object):
                                 break
                             hole=self.counthole(board,xx,y)
                             if (hole >=1)and(hole <=4) :
-                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
+                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
                                 nopoint = 1
                                 break
                         if (nopoint==0):
@@ -620,7 +620,7 @@ class Block_Controller(object):
                 hole = 0
                 direction=0
                 if (x<(width-1))and((pat2) in dic_dir0):
-                    getpoint = dic_dir0[pat2]
+                    getpoint = dic_dir0[pat2]+y
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         #print('x,y,point,getpoint0=',x,y,point,getpoint)
@@ -631,7 +631,7 @@ class Block_Controller(object):
                                 break
                             hole=self.counthole(board,xx,y)
                             if (hole >=1)and(hole <=4) :
-                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
+                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
                                 nopoint = 1
                                 break
                         if (nopoint==0):
@@ -642,7 +642,7 @@ class Block_Controller(object):
                 hole = 0
                 direction=1
                 if (x<(width-2))and((pat3) in dic_dir1):
-                    getpoint = dic_dir1[pat3]
+                    getpoint = dic_dir1[pat3]+y
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         for xx in range(x,xxmax,1):
@@ -652,7 +652,7 @@ class Block_Controller(object):
                                 break
                             hole=self.counthole(board,xx,y)
                             if (hole >=1)and(hole <=4) :
-                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
+                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
                                 nopoint = 1
                                 break
                         if (nopoint==0):
@@ -663,7 +663,7 @@ class Block_Controller(object):
                 hole = 0
                 direction=2
                 if (x<(width-1))and((pat2) in dic_dir2):
-                    getpoint = dic_dir2[pat2]
+                    getpoint = dic_dir2[pat2]+y
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         #print('x,y,point,getpoint1=',x,y,point,getpoint)
@@ -674,7 +674,7 @@ class Block_Controller(object):
                                 break
                             hole=self.counthole(board,xx,y)
                             if (hole >=1)and(hole <=4) :
-                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
+                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
                                 nopoint = 1
                                 break
                         if (nopoint==0):
@@ -685,7 +685,7 @@ class Block_Controller(object):
                 hole = 0
                 direction=3
                 if (x<(width-1))and((pat3) in dic_dir3):
-                    getpoint = dic_dir3[pat3]
+                    getpoint = dic_dir3[pat3]+y
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         #print('x,y,point,getpoint1=',x,y,point,getpoint)
@@ -696,7 +696,7 @@ class Block_Controller(object):
                                 break
                             hole=self.counthole(board,xx,y)
                             if (hole >=1)and(hole <=4) :
-                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
+                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
                                 nopoint = 1
                                 break
                         if (nopoint==0):
@@ -744,7 +744,7 @@ class Block_Controller(object):
                 hole = 0
                 direction=0
                 if (x<(width-1))and((pat2) in dic_dir0):
-                    getpoint = dic_dir0[pat2]
+                    getpoint = dic_dir0[pat2]+y
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         #print('x,y,point,getpoint0=',x,y,point,getpoint)
@@ -755,7 +755,7 @@ class Block_Controller(object):
                                 break
                             hole=self.counthole(board,xx,y)
                             if (hole >=1)and(hole <=4) :
-                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
+                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
                                 nopoint = 1
                                 break
                         if (nopoint==0):
@@ -766,7 +766,7 @@ class Block_Controller(object):
                 hole = 0
                 direction=1
                 if (x<(width-2))and((pat3) in dic_dir1):
-                    getpoint = dic_dir1[pat3]
+                    getpoint = dic_dir1[pat3]+y
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         for xx in range(x,xxmax,1):
@@ -776,7 +776,7 @@ class Block_Controller(object):
                                 break
                             hole=self.counthole(board,xx,y)
                             if (hole >=1)and(hole <=4) :
-                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
+                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
                                 nopoint = 1
                                 break
                         if (nopoint==0):
@@ -787,7 +787,7 @@ class Block_Controller(object):
                 hole = 0
                 direction=2
                 if (x<(width-1))and((pat3) in dic_dir2):
-                    getpoint = dic_dir2[pat3]
+                    getpoint = dic_dir2[pat3]+y
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         #print('x,y,point,getpoint1=',x,y,point,getpoint)
@@ -798,7 +798,7 @@ class Block_Controller(object):
                                 break
                             hole=self.counthole(board,xx,y)
                             if (hole >=1)and(hole <=4) :
-                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
+                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
                                 nopoint = 1
                                 break
                         if (nopoint==0):
@@ -816,8 +816,8 @@ class Block_Controller(object):
         height = self.board_data_height #height=22
         blockheight = self.maxblockheight(board)
 
-        dic_dir0 = {0x113:7,0x112:7}
-        dic_dir1 = {0x31:6,0x21:6,0x11:2,0x10:2} 
+        dic_dir0 = {0x113:7,0x112:7,0x111:3}
+        dic_dir1 = {0x31:6,0x21:6,0x11:2,0x10:1} 
     
         order = self.makehorizontalorder()
         dic_alix = [1,0,0,0]
@@ -840,7 +840,7 @@ class Block_Controller(object):
                 hole = 0
                 direction=0
                 if (x<(width-1))and((pat3) in dic_dir0):
-                    getpoint = dic_dir0[pat3]
+                    getpoint = dic_dir0[pat3]+y
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         #print('x,y,point,getpoint0=',x,y,point,getpoint)
@@ -849,11 +849,11 @@ class Block_Controller(object):
                                 if DEBUG ==1 : print('### BLOCKED BY UPPER at ',xx,y)
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y)
-                            if (hole >=1)and(hole <=4) :
-                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
-                                nopoint = 1
-                                break
+                            #hole=self.counthole(board,xx,y)
+                            #if (hole >=3)and(hole <=4) :
+                            #    if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
+                            #    nopoint = 1
+                            #    break
                         if (nopoint==0):
                             point = getpoint,x+dic_alix[direction],y,dic_dir[direction]
                             if DEBUG == 1 : print("dir0=",format(pat2,'02x'),"point=",point)
@@ -862,7 +862,7 @@ class Block_Controller(object):
                 hole = 0
                 direction=1
                 if (x<(width-2))and((pat2) in dic_dir1):
-                    getpoint = dic_dir1[pat2]
+                    getpoint = dic_dir1[pat2]+y
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         for xx in range(x,xxmax,1):
@@ -870,11 +870,11 @@ class Block_Controller(object):
                                 if DEBUG ==1 : print('### BLOCKED BY UPPER at ',xx,y)
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y)
-                            if (hole >=1)and(hole <=4) :
-                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
-                                nopoint = 1
-                                break
+                            #hole=self.counthole(board,xx,y)
+                            #if (hole >=3)and(hole <=4) :
+                            #    if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
+                            #    nopoint = 1
+                            #    break
                         if (nopoint==0):
                             point = getpoint,x+dic_alix[direction],y,dic_dir[direction]
                             if DEBUG == 1 : print("dir1=",format(pat4,'04x'),"point=",point)
@@ -890,8 +890,8 @@ class Block_Controller(object):
         height = self.board_data_height #height=22
         blockheight = self.maxblockheight(board)
 
-        dic_dir0 = {0x311:7,0x211:7}
-        dic_dir1 = {0x13:6,0x12:6,0x11:2,0x01:2}
+        dic_dir0 = {0x311:7,0x211:7,0x111:3}
+        dic_dir1 = {0x13:6,0x12:6,0x11:2,0x01:1}
 
         order = self.makehorizontalorder()
         dic_alix = [1,0,0,0]
@@ -914,7 +914,7 @@ class Block_Controller(object):
                 hole = 0
                 direction=0
                 if (x<(width-1))and((pat3) in dic_dir0):
-                    getpoint = dic_dir0[pat3]
+                    getpoint = dic_dir0[pat3]+y
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         #print('x,y,point,getpoint0=',x,y,point,getpoint)
@@ -923,11 +923,11 @@ class Block_Controller(object):
                                 if DEBUG ==1 : print('### BLOCKED BY UPPER at ',xx,y)
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y)
-                            if (hole >=1)and(hole <=4) :
-                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
-                                nopoint = 1
-                                break
+                            #hole=self.counthole(board,xx,y)
+                            #if (hole >=3)and(hole <=4) :
+                            #    if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
+                            #    nopoint = 1
+                            #    break
                         if (nopoint==0):
                             point = getpoint,x+dic_alix[direction],y,dic_dir[direction]
                             if DEBUG == 1 : print("dir0=",format(pat2,'02x'),"point=",point)
@@ -936,7 +936,7 @@ class Block_Controller(object):
                 hole = 0
                 direction=1
                 if (x<(width-2))and((pat2) in dic_dir1):
-                    getpoint = dic_dir1[pat2]
+                    getpoint = dic_dir1[pat2]+y
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         for xx in range(x,xxmax,1):
@@ -944,11 +944,11 @@ class Block_Controller(object):
                                 if DEBUG ==1 : print('### BLOCKED BY UPPER at ',xx,y)
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y)
-                            if (hole >=1)and(hole <=4) :
-                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",xx,y,format(pat4,'04x'))
-                                nopoint = 1
-                                break
+                            #hole=self.counthole(board,xx,y)
+                            #if (hole >=3)and(hole <=4) :
+                            #    if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
+                            #    nopoint = 1
+                            #    break
                         if (nopoint==0):
                             point = getpoint,x+dic_alix[direction],y,dic_dir[direction]
                             if DEBUG == 1 : print("dir1=",format(pat4,'04x'),"point=",point)
