@@ -28,7 +28,7 @@ class Block_Controller(object):
     def GetNextMove(self, nextMove, GameStatus):
 
         t1 = datetime.now()
-        DEBUG = 1
+        DEBUG = 0 #OFF
         # print GameStatus
         print("=================================================>")
         del GameStatus["field_info"]["withblock"]
@@ -208,7 +208,7 @@ class Block_Controller(object):
 
     #type-I
     def calcEvaluationValueIndex1(self,board,nextindex):
-        DEBUG = 1
+        DEBUG = 0 #OFF
         if DEBUG==1: print('block_type-I')
         direction = 0
         width = self.board_data_width #width=10
@@ -344,7 +344,7 @@ class Block_Controller(object):
    
     #type-L
     def calcEvaluationValueIndex2(self,board,nextindex):
-        DEBUG = 1
+        DEBUG = 0 #OFF
         if DEBUG==1: print('block_type-L')
         direction = 0
         width = self.board_data_width #width=10
@@ -470,7 +470,7 @@ class Block_Controller(object):
 
     #type-J
     def calcEvaluationValueIndex3(self,board,nextindex):
-        DEBUG = 1
+        DEBUG = 0 #OFF
         if DEBUG==1: print('block_type-J')
         direction = 0
         width = self.board_data_width #width=10
@@ -596,7 +596,7 @@ class Block_Controller(object):
 
     #type-T
     def calcEvaluationValueIndex4(self,board,nextindex):
-        DEBUG = 1
+        DEBUG = 0 #OFF
         if DEBUG==1: print('block_type-T')
         direction = 0
         width = self.board_data_width #width=10
@@ -720,7 +720,7 @@ class Block_Controller(object):
 
     #type-O
     def calcEvaluationValueIndex5(self,board,nextindex):
-        DEBUG = 1
+        DEBUG = 0 #OFF
         if DEBUG==1: print('block_type-O')
         direction = 0
         width = self.board_data_width #width=10
@@ -825,7 +825,7 @@ class Block_Controller(object):
 
     #type-S
     def calcEvaluationValueIndex6(self,board,nextindex):
-        DEBUG = 1
+        DEBUG = 0 #OFF
         if DEBUG==1: print('block_type-S')
         direction = 0
         width = self.board_data_width #width=10
@@ -901,7 +901,7 @@ class Block_Controller(object):
 
     #type-Z
     def calcEvaluationValueIndex7(self,board,nextindex):
-        DEBUG = 1
+        DEBUG = 0 #OFF
         if DEBUG==1: print('block_type-Z')
         direction = 0
         width = self.board_data_width #width=10
