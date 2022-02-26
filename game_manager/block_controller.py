@@ -70,7 +70,8 @@ class Block_Controller(object):
         elif self.CurrentShape_index==7:
             EvalValue,x0,direction0 = self.calcEvaluationValueIndex7(self.board_backboard, self.NextShape_index)
         if EvalValue > 0 :
-            strategy = (direction0,x0,1,self.board_data_height-1)
+            #strategy = (direction0,x0,1,self.board_data_height-1)
+            strategy = (direction0,x0,1,1)
             if DEBUG == 1 : print("<<< isshy-you:(EvalValue,shape,strategy(dir,x,y_ope,y_mov))=(",EvalValue,self.CurrentShape_index,strategy,")")
             #LatestEvalValue = EvalValue
             LatestEvalValue = 19
@@ -97,7 +98,8 @@ class Block_Controller(object):
         # search best nextMove <--
 
         #print("!!! debug    :(EvalValue,index,strategy(dir,x,y_ope,y_mov))=( ",LatestEvalValue,self.CurrentShape_index,strategy,")")
-        print("=== processing time ===(", datetime.now() - t1,")")
+        processtime = datetime.now()-t1
+        print("=== processing time ===(", processtime,")")
         nextMove["strategy"]["direction"] = strategy[0]
         nextMove["strategy"]["x"] = strategy[1]
         nextMove["strategy"]["y_operation"] = strategy[2]
@@ -236,7 +238,6 @@ class Block_Controller(object):
         x_end = width-1
         x_step = 1
         point = [-1,-1,-1,-1] #point,x,y,direction
-        print(blockheight)
         for y in range(height - 3, blockheight ,-1):
             for x in order:
                 pat4 = self.calcBoardPat(self.board_backboard,x,y)
@@ -276,7 +277,7 @@ class Block_Controller(object):
                 hole = 0
                 direction=1
                 if  (x<(width-3))and((pat4) in dic_dir1):
-                    getpoint = dic_dir1[pat4]+y
+                    getpoint = dic_dir1[pat4]+y+dic_widy[direction]-dic_aliy[direction]
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         #print('x,y,point,getpoint1=',x,y,point,getpoint)
@@ -299,7 +300,7 @@ class Block_Controller(object):
                 hole = 0
                 direction=2
                 if (x>0) and ((pat2) in dic_dir2):
-                    getpoint = dic_dir2[pat2]+y
+                    getpoint = dic_dir2[pat2]+y+dic_widy[direction]-dic_aliy[direction]
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         #print('x,y,point,getpoint2=',x,y,point,getpoint)
@@ -321,7 +322,7 @@ class Block_Controller(object):
                 hole = 0
                 direction=3
                 if (x<(width-1))and((pat3) in dic_dir3):
-                    getpoint = dic_dir3[pat3]+y
+                    getpoint = dic_dir3[pat3]+y+dic_widy[direction]-dic_aliy[direction]
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         #print('x,y,point,getpoint3=',x,y,point,getpoint)
@@ -339,7 +340,7 @@ class Block_Controller(object):
                             point = getpoint,x+dic_alix[direction],y,dic_dir[direction]
                             if DEBUG == 1 : print("dir3=",format(pat3,'03x'),"point=",point)
                             if DEBUG == 1 : print('(x,y)=',x,y,'pat4=',format(pat4,'04x'))
-            if DEBUG == 1 : print("x,y,pat=",x,y,format(pat4,'04x'),"point=",point)
+            #if DEBUG == 1 : print("x,y,pat=",x,y,format(pat4,'04x'),"point=",point)
         return point[0],point[1],point[3]
    
     #type-L
@@ -352,11 +353,12 @@ class Block_Controller(object):
         blockheight = self.maxblockheight(board)
 
         dic_dir0 = {0x11:7}
-        dic_dir1 = {0x133:8,\
-                    0x123:8,0x132:8,0x122:8,0x131:2}
-        dic_dir2 = {0x71:8,0x41:8,0x51:8,0x61:8,0x70:8,0x30:2,0x20:2,\
+        dic_dir1 = {0x133:8,0x123:8,0x132:8,0x122:8,
+                    0x131:2}
+        dic_dir2 = {0x71:8,0x41:8,0x51:8,0x61:8,
+                    0x70:1,0x30:1,0x20:1,
                     0xf1:2,0x81:2,0x91:2,0xa1:2,0xb1:2,0xc1:2,0xd1:2,0xe1:2} #add 210727a
-        dic_dir3 = {0x111:8}
+        dic_dir3 = {0x111:9}
 
         order = self.makehorizontalorder()
         dic_alix = [0,1,1,1]
@@ -379,7 +381,7 @@ class Block_Controller(object):
                 hole = 0
                 direction=0
                 if (x<(width-1))and((pat2) in dic_dir0):
-                    getpoint = dic_dir0[pat2]+y
+                    getpoint = dic_dir0[pat2]+y+dic_widy[direction]-dic_aliy[direction]
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         #print('x,y,point,getpoint0=',x,y,point,getpoint)
@@ -402,7 +404,7 @@ class Block_Controller(object):
                 hole = 0
                 direction=1
                 if (x<(width-2))and((pat3) in dic_dir1):
-                    getpoint = dic_dir1[pat3]+y
+                    getpoint = dic_dir1[pat3]+y+dic_widy[direction]-dic_aliy[direction]
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         for xx in range(x,xxmax,1):
@@ -424,7 +426,7 @@ class Block_Controller(object):
                 hole = 0
                 direction=2
                 if (x<(width-1))and((pat2) in dic_dir2):
-                    getpoint = dic_dir2[pat2]+y
+                    getpoint = dic_dir2[pat2]+y+dic_widy[direction]-dic_aliy[direction]
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         #print('x,y,point,getpoint1=',x,y,point,getpoint)
@@ -447,7 +449,7 @@ class Block_Controller(object):
                 hole = 0
                 direction=3
                 if (x<(width-1))and((pat3) in dic_dir3):
-                    getpoint = dic_dir3[pat3]+y
+                    getpoint = dic_dir3[pat3]+y+dic_widy[direction]-dic_aliy[direction]
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         #print('x,y,point,getpoint1=',x,y,point,getpoint)
@@ -478,11 +480,12 @@ class Block_Controller(object):
         blockheight = self.maxblockheight(board)
 
         dic_dir0 = {0x11:7}
-        dic_dir1 = {0x111:8}
-        dic_dir2 = {0x17:8,0x14:8,0x15:8,0x16:8,0x07:8,0x03:2,0x02:2,\
+        dic_dir1 = {0x111:9}
+        dic_dir2 = {0x17:8,0x14:8,0x15:8,0x16:8,
+                    0x07:1,0x03:1,0x02:1,
                     0x1f:2,0x18:2,0x19:2,0x1a:2,0x1b:2,0x1c:2,0x1d:2,0x1e:2} #add 210727a
-        dic_dir3 = {0x331:8,\
-                    0x321:8,0x231:8,0x221:8,0x131:2}
+        dic_dir3 = {0x331:8,0x321:8,0x231:8,0x221:8,
+                    0x131:2}
 
         order = self.makehorizontalorder()
         dic_alix = [1,1,0,1]
@@ -505,7 +508,7 @@ class Block_Controller(object):
                 hole = 0
                 direction=0
                 if (x<(width-1))and((pat2) in dic_dir0):
-                    getpoint = dic_dir0[pat2]+y
+                    getpoint = dic_dir0[pat2]+y+dic_widy[direction]-dic_aliy[direction]
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         #print('x,y,point,getpoint0=',x,y,point,getpoint)
@@ -528,7 +531,7 @@ class Block_Controller(object):
                 hole = 0
                 direction=1
                 if (x<(width-2))and((pat3) in dic_dir1):
-                    getpoint = dic_dir1[pat3]+y
+                    getpoint = dic_dir1[pat3]+y+dic_widy[direction]-dic_aliy[direction]
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         for xx in range(x,xxmax,1):
@@ -550,7 +553,7 @@ class Block_Controller(object):
                 hole = 0
                 direction=2
                 if (x<(width-1))and((pat2) in dic_dir2):
-                    getpoint = dic_dir2[pat2]+y
+                    getpoint = dic_dir2[pat2]+y+dic_widy[direction]-dic_aliy[direction]
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         #print('x,y,point,getpoint1=',x,y,point,getpoint)
@@ -573,7 +576,7 @@ class Block_Controller(object):
                 hole = 0
                 direction=3
                 if (x<(width-1))and((pat3) in dic_dir3):
-                    getpoint = dic_dir3[pat3]+y
+                    getpoint = dic_dir3[pat3]+y+dic_widy[direction]-dic_aliy[direction]
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         #print('x,y,point,getpoint1=',x,y,point,getpoint)
@@ -629,7 +632,7 @@ class Block_Controller(object):
                 hole = 0
                 direction=0
                 if (x<(width-1))and((pat2) in dic_dir0):
-                    getpoint = dic_dir0[pat2]+y
+                    getpoint = dic_dir0[pat2]+y+dic_widy[direction]-dic_aliy[direction]
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         #print('x,y,point,getpoint0=',x,y,point,getpoint)
@@ -652,7 +655,7 @@ class Block_Controller(object):
                 hole = 0
                 direction=1
                 if (x<(width-2))and((pat3) in dic_dir1):
-                    getpoint = dic_dir1[pat3]+y
+                    getpoint = dic_dir1[pat3]+y+dic_widy[direction]-dic_aliy[direction]
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         for xx in range(x,xxmax,1):
@@ -674,7 +677,7 @@ class Block_Controller(object):
                 hole = 0
                 direction=2
                 if (x<(width-1))and((pat2) in dic_dir2):
-                    getpoint = dic_dir2[pat2]+y
+                    getpoint = dic_dir2[pat2]+y+dic_widy[direction]-dic_aliy[direction]
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         #print('x,y,point,getpoint1=',x,y,point,getpoint)
@@ -697,7 +700,7 @@ class Block_Controller(object):
                 hole = 0
                 direction=3
                 if (x<(width-1))and((pat3) in dic_dir3):
-                    getpoint = dic_dir3[pat3]+y
+                    getpoint = dic_dir3[pat3]+y+dic_widy[direction]-dic_aliy[direction]
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         #print('x,y,point,getpoint1=',x,y,point,getpoint)
@@ -727,7 +730,7 @@ class Block_Controller(object):
         height = self.board_data_height #height=22
         blockheight = self.maxblockheight(board)
 
-        dic_dir0 = {0x11:7,\
+        dic_dir0 = {0x11:9,\
                     0x13:4,0x31:4,0x12:4,0x21:4,\
                     0x17:3,0x14:3,0x16:3,0x71:3,0x41:3,0x61:3,\
                     0x10:2,0x01:2}
@@ -757,7 +760,7 @@ class Block_Controller(object):
                 hole = 0
                 direction=0
                 if (x<(width-1))and((pat2) in dic_dir0):
-                    getpoint = dic_dir0[pat2]+y
+                    getpoint = dic_dir0[pat2]+y+dic_widy[direction]-dic_aliy[direction]
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         #print('x,y,point,getpoint0=',x,y,point,getpoint)
@@ -780,7 +783,7 @@ class Block_Controller(object):
                 hole = 0
                 direction=1
                 if (x<(width-2))and((pat3) in dic_dir1):
-                    getpoint = dic_dir1[pat3]+y
+                    getpoint = dic_dir1[pat3]+y+dic_widy[direction]-dic_aliy[direction]
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         for xx in range(x,xxmax,1):
@@ -802,7 +805,7 @@ class Block_Controller(object):
                 hole = 0
                 direction=2
                 if (x<(width-1))and((pat3) in dic_dir2):
-                    getpoint = dic_dir2[pat3]+y
+                    getpoint = dic_dir2[pat3]+y+dic_widy[direction]-dic_aliy[direction]
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         #print('x,y,point,getpoint1=',x,y,point,getpoint)
@@ -856,7 +859,7 @@ class Block_Controller(object):
                 hole = 0
                 direction=0
                 if (x<(width-1))and((pat3) in dic_dir0):
-                    getpoint = dic_dir0[pat3]+y
+                    getpoint = dic_dir0[pat3]+y+dic_widy[direction]-dic_aliy[direction]
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         #print('x,y,point,getpoint0=',x,y,point,getpoint)
@@ -879,7 +882,7 @@ class Block_Controller(object):
                 hole = 0
                 direction=1
                 if (x<(width-2))and((pat2) in dic_dir1):
-                    getpoint = dic_dir1[pat2]+y
+                    getpoint = dic_dir1[pat2]+y+dic_widy[direction]-dic_aliy[direction]
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         for xx in range(x,xxmax,1):
@@ -932,7 +935,7 @@ class Block_Controller(object):
                 hole = 0
                 direction=0
                 if (x<(width-1))and((pat3) in dic_dir0):
-                    getpoint = dic_dir0[pat3]+y
+                    getpoint = dic_dir0[pat3]+y+dic_widy[direction]-dic_aliy[direction]
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         #print('x,y,point,getpoint0=',x,y,point,getpoint)
@@ -955,7 +958,7 @@ class Block_Controller(object):
                 hole = 0
                 direction=1
                 if (x<(width-2))and((pat2) in dic_dir1):
-                    getpoint = dic_dir1[pat2]+y
+                    getpoint = dic_dir1[pat2]+y+dic_widy[direction]-dic_aliy[direction]
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         for xx in range(x,xxmax,1):
