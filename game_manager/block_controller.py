@@ -163,7 +163,23 @@ class Block_Controller(object):
             _board[(_y + dy) * self.board_data_width + _x] = Shape_class.shape
         return _board
 
-    def makehorizontalorder(self):
+    def makehorizontalorder1(self): #[0,1,2,3,4,5,6,6,8,9]
+        #width = self.board_data_width #width=10
+        #height = self.board_data_height #height=22
+        #order = list(range(width))
+        #for ii in range(0,width,1):
+        #    order[ii]=ii
+        return([0,1,2,3,4,5,6,7,8,9])
+
+    def makehorizontalorder2(self): #[9,8,7,6,5,4,3,2,1,0]
+        #width = self.board_data_width #width=10
+        #height = self.board_data_height #height=22
+        #order = list(range(width))
+        #for ii in range(0,width,1):
+        #    order[ii]=width-ii-1
+        return([9,8,7,6,5,4,3,2,1,0])
+
+    def makehorizontalorder3(self): #[0,9,1,8,2,7,3,6,4,5]
         width = self.board_data_width #width=10
         height = self.board_data_height #height=22
         order = list(range(width))
@@ -174,6 +190,16 @@ class Block_Controller(object):
                 order[ii] = width-1-int(ii/2)
         return(order)
 
+    def makehorizontalorder4(self): #[5,4,6,3,7,2,8,1,9,0]
+        width = self.board_data_width #width=10
+        height = self.board_data_height #height=22
+        order = list(range(width))
+        for ii in range(0,width,1):
+            if (int(ii/2))==(ii/2) :
+                order[width-1-ii] = int(ii/2)
+            else:
+                order[width-1-ii] = width-1-int(ii/2)
+        return(order)
 
     def checkupper(self,board,xpos,ypos):
         width = self.board_data_width #width=10
@@ -215,7 +241,7 @@ class Block_Controller(object):
         direction = 0
         width = self.board_data_width #width=10
         height = self.board_data_height #height=22
-        order = self.makehorizontalorder()
+        order = self.makehorizontalorder3()
         blockheight = self.maxblockheight(board)
 
         dic_dir0 = {0x0f:8,0x07:7,0x03:5,0x01:2}
@@ -360,7 +386,7 @@ class Block_Controller(object):
                     0xf1:2,0x81:2,0x91:2,0xa1:2,0xb1:2,0xc1:2,0xd1:2,0xe1:2} #add 210727a
         dic_dir3 = {0x111:9}
 
-        order = self.makehorizontalorder()
+        order = self.makehorizontalorder3()
         dic_alix = [0,1,1,1]
         dic_aliy = [1,1,1,1]
         dic_widx = [2,3,2,3]
@@ -487,7 +513,7 @@ class Block_Controller(object):
         dic_dir3 = {0x331:8,0x321:8,0x231:8,0x221:8,
                     0x131:2}
 
-        order = self.makehorizontalorder()
+        order = self.makehorizontalorder3()
         dic_alix = [1,1,0,1]
         dic_aliy = [1,1,1,0]
         dic_widx = [2,3,2,3]
@@ -611,7 +637,7 @@ class Block_Controller(object):
         dic_dir2 = {0x31:6,0x21:6}
         dic_dir3 = {0x111:7}
 
-        order = self.makehorizontalorder()
+        order = self.makehorizontalorder3()
         dic_alix = [0,1,1,1]
         dic_aliy = [1,1,1,0]
         dic_widx = [2,3,2,3]
@@ -739,7 +765,7 @@ class Block_Controller(object):
         dic_dir2 = {0xf11:7,0xe11:7,0xd11:7,0xc11:7,0xb11:7,0xa11:7,0x911:7,0x811:7,\
                     0x711:7,0x611:7,0x511:7,0x411:7}
 
-        order = self.makehorizontalorder()
+        order = self.makehorizontalorder3()
         dic_alix = [0,0,1,0]
         dic_aliy = [1,1,1,0]
         dic_widx = [2,2,2,0]
@@ -838,7 +864,7 @@ class Block_Controller(object):
         dic_dir0 = {0x113:8,0x112:8,0x111:3}
         dic_dir1 = {0x31:6,0x21:6,0x11:2,0x10:1} 
     
-        order = self.makehorizontalorder()
+        order = self.makehorizontalorder3()
         dic_alix = [1,0,0,0]
         dic_aliy = [1,1,0,0]
         dic_widx = [3,2,0,0]
@@ -914,7 +940,7 @@ class Block_Controller(object):
         dic_dir0 = {0x311:8,0x211:8,0x111:3}
         dic_dir1 = {0x13:6,0x12:6,0x11:2,0x01:1}
 
-        order = self.makehorizontalorder()
+        order = self.makehorizontalorder3()
         dic_alix = [1,0,0,0]
         dic_aliy = [1,1,0,0]
         dic_widx = [3,2,0,0]
