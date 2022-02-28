@@ -163,6 +163,12 @@ class Block_Controller(object):
             _board[(_y + dy) * self.board_data_width + _x] = Shape_class.shape
         return _board
 
+    def makehorizontalorder(self,maxheight):
+        if maxheight < 10 :
+            return(self.makehorizontalorder4())
+        else :
+            return(self.makehorizontalorder3())
+
     def makehorizontalorder1(self): #[0,1,2,3,4,5,6,6,8,9]
         #width = self.board_data_width #width=10
         #height = self.board_data_height #height=22
@@ -241,8 +247,8 @@ class Block_Controller(object):
         direction = 0
         width = self.board_data_width #width=10
         height = self.board_data_height #height=22
-        order = self.makehorizontalorder3()
         blockheight = self.maxblockheight(board)
+        order = self.makehorizontalorder(blockheight)
 
         dic_dir0 = {0x0f:8,0x07:7,0x03:5,0x01:2}
         dic_dir1 = {          0x0001:1,0x0010:1,0x0011:1
@@ -377,6 +383,7 @@ class Block_Controller(object):
         width = self.board_data_width #width=10
         height = self.board_data_height #height=22
         blockheight = self.maxblockheight(board)
+        order = self.makehorizontalorder(blockheight)
 
         dic_dir0 = {0x11:7}
         dic_dir1 = {0x133:8,0x123:8,0x132:8,0x122:8,
@@ -386,7 +393,6 @@ class Block_Controller(object):
                     0xf1:2,0x81:2,0x91:2,0xa1:2,0xb1:2,0xc1:2,0xd1:2,0xe1:2} #add 210727a
         dic_dir3 = {0x111:9}
 
-        order = self.makehorizontalorder3()
         dic_alix = [0,1,1,1]
         dic_aliy = [1,1,1,1]
         dic_widx = [2,3,2,3]
@@ -504,6 +510,7 @@ class Block_Controller(object):
         width = self.board_data_width #width=10
         height = self.board_data_height #height=22
         blockheight = self.maxblockheight(board)
+        order = self.makehorizontalorder(blockheight)
 
         dic_dir0 = {0x11:7}
         dic_dir1 = {0x111:9}
@@ -513,7 +520,6 @@ class Block_Controller(object):
         dic_dir3 = {0x331:8,0x321:8,0x231:8,0x221:8,
                     0x131:2}
 
-        order = self.makehorizontalorder3()
         dic_alix = [1,1,0,1]
         dic_aliy = [1,1,1,0]
         dic_widx = [2,3,2,3]
@@ -631,13 +637,13 @@ class Block_Controller(object):
         width = self.board_data_width #width=10
         height = self.board_data_height #height=22
         blockheight = self.maxblockheight(board)
+        order = self.makehorizontalorder(blockheight)
 
         dic_dir0 = {0x13:6,0x12:6}
         dic_dir1 = {0x313:8,0x213:8,0x312:8,0x212:8}
         dic_dir2 = {0x31:6,0x21:6}
         dic_dir3 = {0x111:7}
 
-        order = self.makehorizontalorder3()
         dic_alix = [0,1,1,1]
         dic_aliy = [1,1,1,0]
         dic_widx = [2,3,2,3]
@@ -755,6 +761,7 @@ class Block_Controller(object):
         width = self.board_data_width #width=10
         height = self.board_data_height #height=22
         blockheight = self.maxblockheight(board)
+        order = self.makehorizontalorder(blockheight)
 
         dic_dir0 = {0x11:9,\
                     0x13:4,0x31:4,0x12:4,0x21:4,\
@@ -765,7 +772,6 @@ class Block_Controller(object):
         dic_dir2 = {0xf11:7,0xe11:7,0xd11:7,0xc11:7,0xb11:7,0xa11:7,0x911:7,0x811:7,\
                     0x711:7,0x611:7,0x511:7,0x411:7}
 
-        order = self.makehorizontalorder3()
         dic_alix = [0,0,1,0]
         dic_aliy = [1,1,1,0]
         dic_widx = [2,2,2,0]
@@ -860,11 +866,11 @@ class Block_Controller(object):
         width = self.board_data_width #width=10
         height = self.board_data_height #height=22
         blockheight = self.maxblockheight(board)
+        order = self.makehorizontalorder(blockheight)
 
         dic_dir0 = {0x113:8,0x112:8,0x111:3}
         dic_dir1 = {0x31:6,0x21:6,0x11:2,0x10:1} 
     
-        order = self.makehorizontalorder3()
         dic_alix = [1,0,0,0]
         dic_aliy = [1,1,0,0]
         dic_widx = [3,2,0,0]
@@ -936,11 +942,11 @@ class Block_Controller(object):
         width = self.board_data_width #width=10
         height = self.board_data_height #height=22
         blockheight = self.maxblockheight(board)
+        order = self.makehorizontalorder(blockheight)
 
         dic_dir0 = {0x311:8,0x211:8,0x111:3}
         dic_dir1 = {0x13:6,0x12:6,0x11:2,0x01:1}
 
-        order = self.makehorizontalorder3()
         dic_alix = [1,0,0,0]
         dic_aliy = [1,1,0,0]
         dic_widx = [3,2,0,0]
