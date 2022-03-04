@@ -28,7 +28,7 @@ class Block_Controller(object):
     def GetNextMove(self, nextMove, GameStatus):
 
         t1 = datetime.now()
-        DEBUG = 0 #OFF
+        DEBUG = 1 #OFF
         # print GameStatus
         print("=================================================>")
         del GameStatus["field_info"]["withblock"]
@@ -242,8 +242,8 @@ class Block_Controller(object):
 
     #type-I
     def calcEvaluationValueIndex1(self,board,nextindex):
-        DEBUG = 0 #OFF
-        if DEBUG==1: print('block_type-I')
+        DEBUG = 1 #OFF
+        if DEBUG==1: print('block_type-I -> ',nextindex)
         direction = 0
         width = self.board_data_width #width=10
         height = self.board_data_height #height=22
@@ -251,13 +251,14 @@ class Block_Controller(object):
         order = self.makehorizontalorder(blockheight)
 
         dic_dir0 = {0x0f:8,0x07:7,0x03:5,0x01:2}
-        dic_dir1 = {          0x0001:1,0x0010:1,0x0011:1
-                    ,0x0100:1,0x0101:1,0x0110:1,0x0111:1
-                    ,0x1000:1,0x1001:1,0x1010:1,0x1011:1
-                    ,0x1100:1,0x1101:1,0x1110:1,0x1111:8
+        #dic_dir0 = {0x1f:7,0x17:5,0x13:2}
+        dic_dir1 = { 0x1333:2,0x3133:2,0x3313:2,0x3331:2
+                    ,0x3333:8,0x2222:8,0x1111:9
                     }
         dic_dir2 = {0xf0:8,0x70:7,0x30:5,0x10:2}
+        #dic_dir2 = {0xF1:7,0x71:5,0x31:2}
         dic_dir3 = {0xf0f:9,0xf07:6,0x70f:6,0xf03:6,0x30f:6}
+        #dic_dir3 = {0xf1f:6,0xf17:6,0x71f:6,0x31f:5,0xf13:5}
 
         dic_alix = [0,2,1,1]
         dic_aliy = [1,0,1,1]
@@ -318,13 +319,14 @@ class Block_Controller(object):
                                 if DEBUG ==1 : print('### BLOCKED BY UPPER at ',xx,y)
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y)
-                            if (hole >=1)and(hole <=4) :
-                                if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
-                                getpoint -= hole*2
-                                if nextindex==1:
-                                    nopoint = 1
-                                    break
+                            #hole=self.counthole(board,xx,y)
+                            #if (hole >=1)and(hole <=4) :
+                            #    if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
+                            #    getpoint -= hole*2
+                            #    if nextindex==1 and hole>=4:
+                            #        if DEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
+                            #        nopoint = 1
+                            #        break
                         if (nopoint==0):
                             point = getpoint,x+dic_alix[direction],y,dic_dir[direction]
                             if DEBUG == 1 : print("dir1=",format(pat4,'04x'),"point=",point)
@@ -378,8 +380,8 @@ class Block_Controller(object):
    
     #type-L
     def calcEvaluationValueIndex2(self,board,nextindex):
-        DEBUG = 0 #OFF
-        if DEBUG==1: print('block_type-L')
+        DEBUG = 1 #OFF
+        if DEBUG==1: print('block_type-L -> ',nextindex)
         direction = 0
         width = self.board_data_width #width=10
         height = self.board_data_height #height=22
@@ -423,11 +425,13 @@ class Block_Controller(object):
                                 if DEBUG ==1 : print('### BLOCKED BY UPPER at ',xx,y)
                                 nopoint = 1
                                 break
+                            #if (x==xx and pat2&0xf0==0)and(x+1==xx and pat2&0x0f==0): #穴開きテスト
                             hole=self.counthole(board,xx,y)
                             if (hole >=1)and(hole <=4) :
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
                                 getpoint -= hole*2
-                                if nextindex==1:
+                                if nextindex==1 and hole>=4:
+                                    if DEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
                                     nopoint = 1
                                     break
                         if (nopoint==0):
@@ -450,7 +454,8 @@ class Block_Controller(object):
                             if (hole >=1)and(hole <=4) :
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
                                 getpoint -= hole*2
-                                if nextindex==1:
+                                if nextindex==1 and hole>=4:
+                                    if DEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
                                     nopoint = 1
                                     break
                         if (nopoint==0):
@@ -474,7 +479,8 @@ class Block_Controller(object):
                             if (hole >=1)and(hole <=4) :
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
                                 getpoint -= hole*2
-                                if nextindex==1:
+                                if nextindex==1 and hole>=4:
+                                    if DEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
                                     nopoint = 1
                                     break
                         if (nopoint==0):
@@ -498,7 +504,8 @@ class Block_Controller(object):
                             if (hole >=1)and(hole <=4) :
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
                                 getpoint -= hole*2
-                                if nextindex==1:
+                                if nextindex==1 and hole>=4:
+                                    if DEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
                                     nopoint = 1
                                     break
                         if (nopoint==0):
@@ -509,8 +516,8 @@ class Block_Controller(object):
 
     #type-J
     def calcEvaluationValueIndex3(self,board,nextindex):
-        DEBUG = 0 #OFF
-        if DEBUG==1: print('block_type-J')
+        DEBUG = 1 #OFF
+        if DEBUG==1: print('block_type-J -> ',nextindex)
         direction = 0
         width = self.board_data_width #width=10
         height = self.board_data_height #height=22
@@ -558,7 +565,8 @@ class Block_Controller(object):
                             if (hole >=1)and(hole <=4) :
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
                                 getpoint -= hole*2
-                                if nextindex==1:
+                                if nextindex==1 and hole>=4:
+                                    if DEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
                                     nopoint = 1
                                     break
                         if (nopoint==0):
@@ -581,7 +589,8 @@ class Block_Controller(object):
                             if (hole >=1)and(hole <=4) :
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
                                 getpoint -= hole*2
-                                if nextindex==1:
+                                if nextindex==1 and hole>=4:
+                                    if DEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
                                     nopoint = 1
                                     break
                         if (nopoint==0):
@@ -605,7 +614,8 @@ class Block_Controller(object):
                             if (hole >=1)and(hole <=4) :
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
                                 getpoint -= hole*2
-                                if nextindex==1:
+                                if nextindex==1 and hole>=4:
+                                    if DEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
                                     nopoint = 1
                                     break
                         if (nopoint==0):
@@ -629,7 +639,8 @@ class Block_Controller(object):
                             if (hole >=1)and(hole <=4) :
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
                                 getpoint -= hole*2
-                                if nextindex==1:
+                                if nextindex==1 and hole>=4:
+                                    if DEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
                                     nopoint = 1
                                     break
                         if (nopoint==0):
@@ -640,8 +651,8 @@ class Block_Controller(object):
 
     #type-T
     def calcEvaluationValueIndex4(self,board,nextindex):
-        DEBUG = 0 #OFF
-        if DEBUG==1: print('block_type-T')
+        DEBUG = 1 #OFF
+        if DEBUG==1: print('block_type-T -> ',nextindex)
         direction = 0
         width = self.board_data_width #width=10
         height = self.board_data_height #height=22
@@ -686,7 +697,8 @@ class Block_Controller(object):
                             if (hole >=1)and(hole <=4) :
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
                                 getpoint -= hole*2
-                                if nextindex==1:
+                                if nextindex==1 and hole>=4:
+                                    if DEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
                                     nopoint = 1
                                     break
                         if (nopoint==0):
@@ -709,7 +721,8 @@ class Block_Controller(object):
                             if (hole >=2)and(hole <=4) :
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
                                 getpoint -= hole*2
-                                if nextindex==1:
+                                if nextindex==1 and hole>=4:
+                                    if DEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
                                     nopoint = 1
                                     break
                         if (nopoint==0):
@@ -733,7 +746,8 @@ class Block_Controller(object):
                             if (hole >=1)and(hole <=4) :
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
                                 getpoint -= hole*2
-                                if nextindex==1:
+                                if nextindex==1 and hole>=4:
+                                    if DEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
                                     nopoint = 1
                                     break
                         if (nopoint==0):
@@ -757,7 +771,8 @@ class Block_Controller(object):
                             if (hole >=2)and(hole <=4) :
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
                                 getpoint -= hole*2
-                                if nextindex==1:
+                                if nextindex==1 and hole>=4:
+                                    if DEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
                                     nopoint = 1
                                     break
                         if (nopoint==0):
@@ -768,8 +783,8 @@ class Block_Controller(object):
 
     #type-O
     def calcEvaluationValueIndex5(self,board,nextindex):
-        DEBUG = 0 #OFF
-        if DEBUG==1: print('block_type-O')
+        DEBUG = 1 #OFF
+        if DEBUG==1: print('block_type-O -> ',nextindex)
         direction = 0
         width = self.board_data_width #width=10
         height = self.board_data_height #height=22
@@ -818,7 +833,8 @@ class Block_Controller(object):
                             if (hole >=1)and(hole <=4) :
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
                                 getpoint -= hole*2
-                                if nextindex==1:
+                                if nextindex==1 and hole>=4:
+                                    if DEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
                                     nopoint = 1
                                     break
                         if (nopoint==0):
@@ -841,7 +857,8 @@ class Block_Controller(object):
                             if (hole >=1)and(hole <=4) :
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
                                 getpoint -= hole*2
-                                if nextindex==1:
+                                if nextindex==1 and hole>=4:
+                                    if DEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
                                     nopoint = 1
                                     break
                         if (nopoint==0):
@@ -865,7 +882,8 @@ class Block_Controller(object):
                             if (hole >=1)and(hole <=4) :
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
                                 getpoint -= hole*2
-                                if nextindex==1:
+                                if nextindex==1 and hole>=4:
+                                    if DEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
                                     nopoint = 1
                                     break
                         if (nopoint==0):
@@ -876,8 +894,8 @@ class Block_Controller(object):
 
     #type-S
     def calcEvaluationValueIndex6(self,board,nextindex):
-        DEBUG = 0 #OFF
-        if DEBUG==1: print('block_type-S')
+        DEBUG = 1 #OFF
+        if DEBUG==1: print('block_type-S -> ',nextindex)
         direction = 0
         width = self.board_data_width #width=10
         height = self.board_data_height #height=22
@@ -920,7 +938,8 @@ class Block_Controller(object):
                             if (hole >=3)and(hole <=4) :
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
                                 getpoint -= hole*2
-                                if nextindex==1:
+                                if nextindex==1 and hole>=4:
+                                    if DEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
                                     nopoint = 1
                                     break
                         if (nopoint==0):
@@ -943,7 +962,8 @@ class Block_Controller(object):
                             if (hole >=3)and(hole <=4) :
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
                                 getpoint -= hole*2
-                                if nextindex==1:
+                                if nextindex==1 and hole>=4:
+                                    if DEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
                                     nopoint = 1
                                     break
                         if (nopoint==0):
@@ -954,8 +974,8 @@ class Block_Controller(object):
 
     #type-Z
     def calcEvaluationValueIndex7(self,board,nextindex):
-        DEBUG = 0 #OFF
-        if DEBUG==1: print('block_type-Z')
+        DEBUG = 1 #OFF
+        if DEBUG==1: print('block_type-Z -> ',nextindex)
         direction = 0
         width = self.board_data_width #width=10
         height = self.board_data_height #height=22
@@ -998,7 +1018,8 @@ class Block_Controller(object):
                             if (hole >=3)and(hole <=4) :
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
                                 getpoint -= hole*2
-                                if nextindex==1:
+                                if nextindex==1 and hole>=4:
+                                    if DEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
                                     nopoint = 1
                                     break
                         if (nopoint==0):
@@ -1021,7 +1042,8 @@ class Block_Controller(object):
                             if (hole >=3)and(hole <=4) :
                                 if DEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
                                 getpoint -= hole*2
-                                if nextindex==1:
+                                if nextindex==1 and hole>=4:
+                                    if DEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
                                     nopoint = 1
                                     break
                         if (nopoint==0):
