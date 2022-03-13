@@ -218,6 +218,7 @@ class Block_Controller(object):
         return(block)
 
     def counthole(self,board,xpos,ypos):
+        return(0)
         width = self.board_data_width #width=10
         height = self.board_data_height #height=22
         hole=0
@@ -229,7 +230,6 @@ class Block_Controller(object):
             else:
                 hole = 0
 #        return(hole)
-        return(0)
 
     def maxblockheight(self,board):
         width = self.board_data_width #width=10
@@ -281,13 +281,13 @@ class Block_Controller(object):
                 hole = 0
                 direction=0
                 #check over 4 hole
-                if self.checkupper(board,x+dic_alix[direction],y)!=1 :
-                    hole=self.counthole(board,x,y-4)
-                    if (hole >= 4):
-                        getpoint = 10+hole-4+y
-                        if (((point[0]<getpoint))):
-                            if self.MYDEBUG == 1 : print("### FOUND THE HOLE(",hole,")",x,y,format(pat4,'04x'))
-                            point=getpoint,x,y,direction
+                # if self.checkupper(board,x+dic_alix[direction],y)!=1 :
+                #     hole=self.counthole(board,x,y-4)
+                #     if (hole >= 4):
+                #         getpoint = 10+hole-4+y
+                #         if (((point[0]<getpoint))):
+                #             if self.MYDEBUG == 1 : print("### FOUND THE HOLE(",hole,")",x,y,format(pat4,'04x'))
+                #             point=getpoint,x,y,direction
                 if (x<(width))and((pat2) in dic_dir0):
                     #getpoint = dic_dir0[pat2]+y+dic_widy[direction]-dic_aliy[direction] #for Lv2
                     getpoint = dic_dir0[pat2] #for Lv1
@@ -391,7 +391,8 @@ class Block_Controller(object):
         order = self.makehorizontalorder(blockheight)
 
         dic_dir0 = {0x11:7}
-        dic_dir1 = {0x133:8,0x123:8,0x132:8,0x122:8,
+        #dic_dir1 = {0x133:9,0x123:8,0x132:8,0x122:8,  #for Lv2~ (Lv1:17520)
+        dic_dir1 = {0x133:8,0x123:8,0x132:8,0x122:8,   #for Lv1  (Lv1:18850)
                     0x131:2}
         dic_dir2 = {0x71:8,0x41:8,0x51:8,0x61:8,
 #                    0x70:1,0x30:1,0x20:1,
@@ -428,14 +429,14 @@ class Block_Controller(object):
                                 nopoint = 1
                                 break
                             #if (x==xx and pat2&0xf0==0)and(x+1==xx and pat2&0x0f==0): #穴開きテスト
-                            hole=self.counthole(board,xx,y)
-                            if (hole >=1)and(hole <=4) :
-                                if self.MYDEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
-                                getpoint -= hole*1
-                                if nextindex==1 and hole>=4:
-                                    if self.MYDEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
-                                    nopoint = 1
-                                    break
+                            # hole=self.counthole(board,xx,y)
+                            # if (hole >=1)and(hole <=4) :
+                            #     if self.MYDEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
+                            #     getpoint -= hole*1
+                            #     if nextindex==1 and hole>=4:
+                            #         if self.MYDEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
+                            #         nopoint = 1
+                            #         break
                         if (nopoint==0):
                             point = getpoint,x+dic_alix[direction],y,dic_dir[direction]
                             if self.MYDEBUG == 1 : print("dir0=",format(pat2,'02x'),"point=",point)
@@ -452,14 +453,14 @@ class Block_Controller(object):
                                 if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y)
-                            if (hole >=1)and(hole <=4) :
-                                if self.MYDEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
-                                getpoint -= hole*1
-                                if nextindex==1 and hole>=4:
-                                    if self.MYDEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
-                                    nopoint = 1
-                                    break
+                            # hole=self.counthole(board,xx,y)
+                            # if (hole >=1)and(hole <=4) :
+                            #     if self.MYDEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
+                            #     getpoint -= hole*1
+                            #     if nextindex==1 and hole>=4:
+                            #         if self.MYDEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
+                            #         nopoint = 1
+                            #         break
                         if (nopoint==0):
                             point = getpoint,x+dic_alix[direction],y,dic_dir[direction]
                             if self.MYDEBUG == 1 : print("dir1=",format(pat4,'04x'),"point=",point)
@@ -477,14 +478,14 @@ class Block_Controller(object):
                                 if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y)
-                            if (hole >=1)and(hole <=4) :
-                                if self.MYDEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
-                                getpoint -= hole*1
-                                if nextindex==1 and hole>=4:
-                                    if self.MYDEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
-                                    nopoint = 1
-                                    break
+                            # hole=self.counthole(board,xx,y)
+                            # if (hole >=1)and(hole <=4) :
+                            #     if self.MYDEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
+                            #     getpoint -= hole*1
+                            #     if nextindex==1 and hole>=4:
+                            #         if self.MYDEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
+                            #         nopoint = 1
+                            #         break
                         if (nopoint==0):
                             point = getpoint,x+dic_alix[direction],y,dic_dir[direction]
                             if self.MYDEBUG == 1 : print("dir1=",format(pat4,'04x'),"point=",point)
@@ -531,7 +532,8 @@ class Block_Controller(object):
         dic_dir2 = {0x17:8,0x14:8,0x15:8,0x16:8,
 #                    0x07:1,0x03:1,0x02:1,
                     0x1f:2,0x18:2,0x19:2,0x1a:2,0x1b:2,0x1c:2,0x1d:2,0x1e:2} #add 210727a
-        dic_dir3 = {0x331:8,0x321:8,0x231:8,0x221:8,
+        #dic_dir3 = {0x331:9,0x321:8,0x231:8,0x221:8, #for Lv2
+        dic_dir3 = {0x331:8,0x321:8,0x231:8,0x221:8,  #for Lv1
                     0x131:2}
 
         dic_alix = [1,1,0,1]
@@ -563,14 +565,14 @@ class Block_Controller(object):
                                 if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y)
-                            if (hole >=1)and(hole <=4) :
-                                if self.MYDEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
-                                getpoint -= hole*1
-                                if nextindex==1 and hole>=4:
-                                    if self.MYDEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
-                                    nopoint = 1
-                                    break
+                            # hole=self.counthole(board,xx,y)
+                            # if (hole >=1)and(hole <=4) :
+                            #     if self.MYDEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
+                            #     getpoint -= hole*1
+                            #     if nextindex==1 and hole>=4:
+                            #         if self.MYDEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
+                            #         nopoint = 1
+                            #         break
                         if (nopoint==0):
                             point = getpoint,x+dic_alix[direction],y,dic_dir[direction]
                             if self.MYDEBUG == 1 : print("dir0=",format(pat2,'02x'),"point=",point)
@@ -587,14 +589,14 @@ class Block_Controller(object):
                                 if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y)
-                            if (hole >=1)and(hole <=4) :
-                                if self.MYDEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
-                                getpoint -= hole*1
-                                if nextindex==1 and hole>=4:
-                                    if self.MYDEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
-                                    nopoint = 1
-                                    break
+                            # hole=self.counthole(board,xx,y)
+                            # if (hole >=1)and(hole <=4) :
+                            #     if self.MYDEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
+                            #     getpoint -= hole*1
+                            #     if nextindex==1 and hole>=4:
+                            #         if self.MYDEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
+                            #         nopoint = 1
+                            #         break
                         if (nopoint==0):
                             point = getpoint,x+dic_alix[direction],y,dic_dir[direction]
                             if self.MYDEBUG == 1 : print("dir1=",format(pat4,'04x'),"point=",point)
@@ -612,14 +614,14 @@ class Block_Controller(object):
                                 if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y)
-                            if (hole >=1)and(hole <=4) :
-                                if self.MYDEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
-                                getpoint -= hole*1
-                                if nextindex==1 and hole>=4:
-                                    if self.MYDEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
-                                    nopoint = 1
-                                    break
+                            # hole=self.counthole(board,xx,y)
+                            # if (hole >=1)and(hole <=4) :
+                            #     if self.MYDEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
+                            #     getpoint -= hole*1
+                            #     if nextindex==1 and hole>=4:
+                            #         if self.MYDEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
+                            #         nopoint = 1
+                            #         break
                         if (nopoint==0):
                             point = getpoint,x+dic_alix[direction],y,dic_dir[direction]
                             if self.MYDEBUG == 1 : print("dir1=",format(pat4,'04x'),"point=",point)
@@ -637,14 +639,14 @@ class Block_Controller(object):
                                 if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y)
-                            if (hole >=1)and(hole <=4) :
-                                if self.MYDEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
-                                getpoint -= hole*1
-                                if nextindex==1 and hole>=4:
-                                    if self.MYDEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
-                                    nopoint = 1
-                                    break
+                            # hole=self.counthole(board,xx,y)
+                            # if (hole >=1)and(hole <=4) :
+                            #     if self.MYDEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
+                            #     getpoint -= hole*1
+                            #     if nextindex==1 and hole>=4:
+                            #         if self.MYDEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
+                            #         nopoint = 1
+                            #         break
                         if (nopoint==0):
                             point = getpoint,x+dic_alix[direction],y,dic_dir[direction]
                             if self.MYDEBUG == 1 : print("dir1=",format(pat4,'04x'),"point=",point)
@@ -695,14 +697,14 @@ class Block_Controller(object):
                                 if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y)
-                            if (hole >=1)and(hole <=4) :
-                                if self.MYDEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
-                                getpoint -= hole*1
-                                if nextindex==1 and hole>=4:
-                                    if self.MYDEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
-                                    nopoint = 1
-                                    break
+                            # hole=self.counthole(board,xx,y)
+                            # if (hole >=1)and(hole <=4) :
+                            #     if self.MYDEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
+                            #     getpoint -= hole*1
+                            #     if nextindex==1 and hole>=4:
+                            #         if self.MYDEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
+                            #         nopoint = 1
+                            #         break
                         if (nopoint==0):
                             point = getpoint,x+dic_alix[direction],y,dic_dir[direction]
                             if self.MYDEBUG == 1 : print("dir0=",format(pat2,'02x'),"point=",point)
@@ -719,14 +721,14 @@ class Block_Controller(object):
                                 if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y)
-                            if (hole >=2)and(hole <=4) :
-                                if self.MYDEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
-                                getpoint -= hole*1
-                                if nextindex==1 and hole>=4:
-                                    if self.MYDEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
-                                    nopoint = 1
-                                    break
+                            # hole=self.counthole(board,xx,y)
+                            # if (hole >=2)and(hole <=4) :
+                            #     if self.MYDEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
+                            #     getpoint -= hole*1
+                            #     if nextindex==1 and hole>=4:
+                            #         if self.MYDEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
+                            #         nopoint = 1
+                            #         break
                         if (nopoint==0):
                             point = getpoint,x+dic_alix[direction],y,dic_dir[direction]
                             if self.MYDEBUG == 1 : print("dir1=",format(pat4,'04x'),"point=",point)
@@ -744,14 +746,14 @@ class Block_Controller(object):
                                 if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y)
-                            if (hole >=1)and(hole <=4) :
-                                if self.MYDEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
-                                getpoint -= hole*1
-                                if nextindex==1 and hole>=4:
-                                    if self.MYDEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
-                                    nopoint = 1
-                                    break
+                            # hole=self.counthole(board,xx,y)
+                            # if (hole >=1)and(hole <=4) :
+                            #     if self.MYDEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
+                            #     getpoint -= hole*1
+                            #     if nextindex==1 and hole>=4:
+                            #         if self.MYDEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
+                            #         nopoint = 1
+                            #         break
                         if (nopoint==0):
                             point = getpoint,x+dic_alix[direction],y,dic_dir[direction]
                             if self.MYDEBUG == 1 : print("dir1=",format(pat4,'04x'),"point=",point)
@@ -769,14 +771,14 @@ class Block_Controller(object):
                                 if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y)
-                            if (hole >=2)and(hole <=4) :
-                                if self.MYDEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
-                                getpoint -= hole*1
-                                if nextindex==1 and hole>=4:
-                                    if self.MYDEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
-                                    nopoint = 1
-                                    break
+                            # hole=self.counthole(board,xx,y)
+                            # if (hole >=2)and(hole <=4) :
+                            #     if self.MYDEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
+                            #     getpoint -= hole*1
+                            #     if nextindex==1 and hole>=4:
+                            #         if self.MYDEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
+                            #         nopoint = 1
+                            #         break
                         if (nopoint==0):
                             point = getpoint,x+dic_alix[direction],y,dic_dir[direction]
                             if self.MYDEBUG == 1 : print("dir1=",format(pat4,'04x'),"point=",point)
@@ -831,14 +833,14 @@ class Block_Controller(object):
                                 if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y)
-                            if (hole >=1)and(hole <=4) :
-                                if self.MYDEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
-                                getpoint -= hole*1
-                                if nextindex==1 and hole>=4:
-                                    if self.MYDEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
-                                    nopoint = 1
-                                    break
+                            # hole=self.counthole(board,xx,y)
+                            # if (hole >=1)and(hole <=4) :
+                            #     if self.MYDEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
+                            #     getpoint -= hole*1
+                            #     if nextindex==1 and hole>=4:
+                            #         if self.MYDEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
+                            #         nopoint = 1
+                            #         break
                         if (nopoint==0):
                             point = getpoint,x+dic_alix[direction],y,dic_dir[direction]
                             if self.MYDEBUG == 1 : print("dir0=",format(pat2,'02x'),"point=",point)
@@ -855,14 +857,14 @@ class Block_Controller(object):
                                 if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y)
-                            if (hole >=1)and(hole <=4) :
-                                if self.MYDEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
-                                getpoint -= hole*1
-                                if nextindex==1 and hole>=4:
-                                    if self.MYDEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
-                                    nopoint = 1
-                                    break
+                            # hole=self.counthole(board,xx,y)
+                            # if (hole >=1)and(hole <=4) :
+                            #     if self.MYDEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
+                            #     getpoint -= hole*1
+                            #     if nextindex==1 and hole>=4:
+                            #         if self.MYDEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
+                            #         nopoint = 1
+                            #         break
                         if (nopoint==0):
                             point = getpoint,x+dic_alix[direction],y,dic_dir[direction]
                             if self.MYDEBUG == 1 : print("dir1=",format(pat4,'04x'),"point=",point)
@@ -880,14 +882,14 @@ class Block_Controller(object):
                                 if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y)
-                            if (hole >=1)and(hole <=4) :
-                                if self.MYDEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
-                                getpoint -= hole*1
-                                if nextindex==1 and hole>=4:
-                                    if self.MYDEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
-                                    nopoint = 1
-                                    break
+                            # hole=self.counthole(board,xx,y)
+                            # if (hole >=1)and(hole <=4) :
+                            #     if self.MYDEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
+                            #     getpoint -= hole*1
+                            #     if nextindex==1 and hole>=4:
+                            #         if self.MYDEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
+                            #         nopoint = 1
+                            #         break
                         if (nopoint==0):
                             point = getpoint,x+dic_alix[direction],y,dic_dir[direction]
                             if self.MYDEBUG == 1 : print("dir1=",format(pat4,'04x'),"point=",point)
@@ -936,14 +938,14 @@ class Block_Controller(object):
                                 if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y)
-                            if (hole >=3)and(hole <=4) :
-                                if self.MYDEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
-                                getpoint -= hole*1
-                                if nextindex==1 and hole>=4:
-                                    if self.MYDEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
-                                    nopoint = 1
-                                    break
+                            # hole=self.counthole(board,xx,y)
+                            # if (hole >=3)and(hole <=4) :
+                            #     if self.MYDEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
+                            #     getpoint -= hole*1
+                            #     if nextindex==1 and hole>=4:
+                            #         if self.MYDEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
+                            #         nopoint = 1
+                            #         break
                         if (nopoint==0):
                             point = getpoint,x+dic_alix[direction],y,dic_dir[direction]
                             if self.MYDEBUG == 1 : print("dir0=",format(pat3,'03x'),"point=",point)
@@ -960,14 +962,14 @@ class Block_Controller(object):
                                 if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y)
-                            if (hole >=3)and(hole <=4) :
-                                if self.MYDEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
-                                getpoint -= hole*1
-                                if nextindex==1 and hole>=4:
-                                    if self.MYDEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
-                                    nopoint = 1
-                                    break
+                            # hole=self.counthole(board,xx,y)
+                            # if (hole >=3)and(hole <=4) :
+                            #     if self.MYDEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
+                            #     getpoint -= hole*1
+                            #     if nextindex==1 and hole>=4:
+                            #         if self.MYDEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
+                            #         nopoint = 1
+                            #         break
                         if (nopoint==0):
                             point = getpoint,x+dic_alix[direction],y,dic_dir[direction]
                             if self.MYDEBUG == 1 : print("dir1=",format(pat2,'02x'),"point=",point)
@@ -1016,14 +1018,14 @@ class Block_Controller(object):
                                 if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y)
-                            if (hole >=3)and(hole <=4) :
-                                if self.MYDEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
-                                getpoint -= hole*1
-                                if nextindex==1 and hole>=4:
-                                    if self.MYDEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
-                                    nopoint = 1
-                                    break
+                            # hole=self.counthole(board,xx,y)
+                            # if (hole >=3)and(hole <=4) :
+                            #     if self.MYDEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
+                            #     getpoint -= hole*1
+                            #     if nextindex==1 and hole>=4:
+                            #         if self.MYDEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
+                            #         nopoint = 1
+                            #         break
                         if (nopoint==0):
                             point = getpoint,x+dic_alix[direction],y,dic_dir[direction]
                             if self.MYDEBUG == 1 : print("dir0=",format(pat3,'03x'),"point=",point)
@@ -1040,14 +1042,14 @@ class Block_Controller(object):
                                 if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
                                 nopoint = 1
                                 break
-                            hole=self.counthole(board,xx,y)
-                            if (hole >=3)and(hole <=4) :
-                                if self.MYDEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
-                                getpoint -= hole*1
-                                if nextindex==1 and hole>=4:
-                                    if self.MYDEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
-                                    nopoint = 1
-                                    break
+                            # hole=self.counthole(board,xx,y)
+                            # if (hole >=3)and(hole <=4) :
+                            #     if self.MYDEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
+                            #     getpoint -= hole*1
+                            #     if nextindex==1 and hole>=4:
+                            #         if self.MYDEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
+                            #         nopoint = 1
+                            #         break
                         if (nopoint==0):
                             point = getpoint,x+dic_alix[direction],y,dic_dir[direction]
                             if self.MYDEBUG == 1 : print("dir1=",format(pat2,'02x'),"point=",point)
