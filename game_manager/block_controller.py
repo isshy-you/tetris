@@ -288,7 +288,7 @@ class Block_Controller(object):
                         if (((point[0]<getpoint))):
                             if self.MYDEBUG == 1 : print("### FOUND THE HOLE(",hole,")",x,y,format(pat4,'04x'))
                             point=getpoint,x,y,direction
-                if (x<(width-1))and((pat2) in dic_dir0):
+                if (x<(width))and((pat2) in dic_dir0):
                     #getpoint = dic_dir0[pat2]+y+dic_widy[direction]-dic_aliy[direction] #for Lv2
                     getpoint = dic_dir0[pat2] #for Lv1
                     xxmax = x + dic_widx[direction]
