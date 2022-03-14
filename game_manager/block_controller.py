@@ -165,9 +165,9 @@ class Block_Controller(object):
 
     def makehorizontalorder(self,maxheight):
         if maxheight < 10 :
-            return(self.makehorizontalorder4())
-        else :
             return(self.makehorizontalorder3())
+        else :
+            return(self.makehorizontalorder4())
 
     def makehorizontalorder1(self): #[0,1,2,3,4,5,6,6,8,9]
         #width = self.board_data_width #width=10
@@ -298,8 +298,8 @@ class Block_Controller(object):
                                 if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
                                 nopoint = 1
                                 break
-                            # hole=self.counthole(board,xx,y)
-                            # if (hole <=1):
+                            #hole=self.counthole(board,xx,y)
+                            #if (hole <=1):
                             #    if self.MYDEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
                             #    nopoint = 1
                             #    break
@@ -389,11 +389,11 @@ class Block_Controller(object):
         blockheight = self.maxblockheight(board)
         order = self.makehorizontalorder(blockheight)
 
-        dic_dir0 = {0x11:7}
-        dic_dir1 = {0x133:9,0x123:8,0x132:8,0x122:8,  #for Lv2~ (Lv1:17520)
+        dic_dir0 = {0x11:6}
+        dic_dir1 = {0x133:8,0x123:7,0x132:7,0x122:7,  #for Lv2~ (Lv1:17520)
         #dic_dir1 = {0x133:8,0x123:8,0x132:8,0x122:8,   #for Lv1  (Lv1:18783)
                     0x131:2}
-        dic_dir2 = {0x71:8,0x41:8,0x51:8,0x61:8,
+        dic_dir2 = {0x71:6,0x41:6,0x51:6,0x61:6,
 #                    0x70:1,0x30:1,0x20:1,
                     0xf1:2,0x81:2,0x91:2,0xa1:2,0xb1:2,0xc1:2,0xd1:2,0xe1:2} #add 210727a
         dic_dir3 = {0x111:9}
@@ -526,12 +526,12 @@ class Block_Controller(object):
         blockheight = self.maxblockheight(board)
         order = self.makehorizontalorder(blockheight)
 
-        dic_dir0 = {0x11:7}
+        dic_dir0 = {0x11:6}
         dic_dir1 = {0x111:9}
-        dic_dir2 = {0x17:8,0x14:8,0x15:8,0x16:8,
+        dic_dir2 = {0x17:6,0x14:6,0x15:6,0x16:6,
 #                    0x07:1,0x03:1,0x02:1,
                     0x1f:2,0x18:2,0x19:2,0x1a:2,0x1b:2,0x1c:2,0x1d:2,0x1e:2} #add 210727a
-        dic_dir3 = {0x331:9,0x321:8,0x231:8,0x221:8, #for Lv2~ (Lv1:17520)
+        dic_dir3 = {0x331:8,0x321:7,0x231:7,0x221:7, #for Lv2~ (Lv1:17520)
         #dic_dir3 = {0x331:8,0x321:8,0x231:8,0x221:8,  #for Lv1  (Lv1:18783)
                     0x131:2}
 
