@@ -389,12 +389,12 @@ class Block_Controller(object):
         blockheight = self.maxblockheight(board)
         order = self.makehorizontalorder(blockheight)
 
-        dic_dir0 = {0x11:6}
+        dic_dir0 = {0x11:6,0x10:1,0x01:1}
         dic_dir1 = {0x133:8,0x123:7,0x132:7,0x122:7,  #for Lv2~ (Lv1:17520)
         #dic_dir1 = {0x133:8,0x123:8,0x132:8,0x122:8,   #for Lv1  (Lv1:18783)
                     0x131:2}
         dic_dir2 = {0x71:6,0x41:6,0x51:6,0x61:6,
-#                    0x70:1,0x30:1,0x20:1,
+                    0x70:1,0x60:1,0x50:1,0x40:1,0x30:1,0x20:1,0x10:1,
                     0xf1:2,0x81:2,0x91:2,0xa1:2,0xb1:2,0xc1:2,0xd1:2,0xe1:2} #add 210727a
         dic_dir3 = {0x111:9}
 
@@ -526,10 +526,10 @@ class Block_Controller(object):
         blockheight = self.maxblockheight(board)
         order = self.makehorizontalorder(blockheight)
 
-        dic_dir0 = {0x11:6}
+        dic_dir0 = {0x11:6,0x10:1,0x01:1}
         dic_dir1 = {0x111:9}
         dic_dir2 = {0x17:6,0x14:6,0x15:6,0x16:6,
-#                    0x07:1,0x03:1,0x02:1,
+                    0x07:1,0x06:1,0x05:1,0x04:1,0x03:1,0x02:1,0x01:1,
                     0x1f:2,0x18:2,0x19:2,0x1a:2,0x1b:2,0x1c:2,0x1d:2,0x1e:2} #add 210727a
         dic_dir3 = {0x331:8,0x321:7,0x231:7,0x221:7, #for Lv2~ (Lv1:17520)
         #dic_dir3 = {0x331:8,0x321:8,0x231:8,0x221:8,  #for Lv1  (Lv1:18783)
@@ -906,7 +906,7 @@ class Block_Controller(object):
         order = self.makehorizontalorder(blockheight)
 
         dic_dir0 = {0x113:8,0x112:8,0x111:3}
-        dic_dir1 = {0x31:6,0x21:6,0x11:2,0x10:1} 
+        dic_dir1 = {0x31:6,0x21:6,0x11:2,0x10:1,0x20:1} 
     
         dic_alix = [1,0,0,0]
         dic_aliy = [1,1,0,0]
@@ -986,7 +986,7 @@ class Block_Controller(object):
         order = self.makehorizontalorder(blockheight)
 
         dic_dir0 = {0x311:8,0x211:8,0x111:3}
-        dic_dir1 = {0x13:6,0x12:6,0x11:2,0x01:1}
+        dic_dir1 = {0x13:6,0x12:6,0x11:2,0x01:1,0x02:1}
 
         dic_alix = [1,0,0,0]
         dic_aliy = [1,1,0,0]
