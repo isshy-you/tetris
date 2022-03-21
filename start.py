@@ -59,7 +59,7 @@ def start():
                       IS_MODE,
                       INPUT_RANDOM_SEED,
                       DROP_INTERVAL,
-                      RESULT_LOG_JSON,
+                      '',
                       USER_NAME,
                       SHAPE_LIST_MAX)
     if args.game_level >= 0:
