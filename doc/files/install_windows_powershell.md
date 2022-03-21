@@ -25,7 +25,9 @@ winget install Git.Git
 ## もし y/n と出る場合は、y と入力する。y=yes という意味である。
 ```
 
+
 新しくpowershellを起動し、以下を実行して結果が表示されればOK
+
 
 ```
 git --version
