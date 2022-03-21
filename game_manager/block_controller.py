@@ -250,7 +250,10 @@ class Block_Controller(object):
         blockheight = self.maxblockheight(board)
         order = self.makehorizontalorder(blockheight)
 
-        dic_dir0 = {0x0f:8,0x07:7,0x03:5,0x01:2}
+        dic_dir0 = {0x0f:8,0x07:7,0x03:5,0x01:2
+                    ,0x08:8,0x09:8,0x0a:8,0x0b:8,0x0c:8,0x0d:8,0x0e:8
+                    ,0x06:7,0x05:7,0x04:7
+                    ,0x02:5}
         #dic_dir0 = {0x1f:7,0x17:5,0x13:2}
         dic_dir1 = { 0x1333:2,0x3133:2,0x3313:2,0x3331:2
                     ,0x1233:2,0x2133:2,0x2313:2,0x2331:2
@@ -260,19 +263,55 @@ class Block_Controller(object):
                     ,0x1232:2,0x2132:2,0x2312:2,0x2321:2
                     ,0x1322:2,0x3122:2,0x3212:2,0x3221:2
                     ,0x1222:2,0x2122:2,0x2212:2,0x2221:2
-                    ,0x3333:9,0x2222:9,0x1111:9
-                    ,0x2333:9,0x3233:9,0x3323:9,0x3332:9
-                    ,0x2233:9,0x2323:9,0x2332:9,0x3232:9,0x3322:9
-                    ,0x2223:9,0x2232:9,0x2322:9,0x3222:9
+                    ,0x3333:8,0x2222:8,0x1111:8
+                    ,0x2333:7,0x3233:7,0x3323:7,0x3332:7
+                    ,0x2233:7,0x2323:7,0x2332:7,0x3232:7,0x3322:7
+                    ,0x2223:7,0x2232:7,0x2322:7,0x3222:7
                     }
-        dic_dir2 = {0xf0:8,0x70:7,0x30:3,0x10:1}
+        dic_dir2 = {0xf0:8,0x70:7,0x30:3,0x10:1
+                    ,0x80:8,0x90:8,0xa0:8,0xb0:8,0xc0:8,0xd0:8,0xe0:8
+                    ,0x60:7,0x50:7,0x4:7
+                    ,0x20:3}
         #dic_dir2 = {0xF1:7,0x71:5,0x31:2}
-        dic_dir3 = {0xf0f:9,0xf07:6,0x70f:6,0xf03:6,0x30f:6
-                    ,0x707:6,0x303:3} #for Lv3
+        dic_dir3 = { 0xf0f:9,0xe0f:9,0xd0f:9,0xc0f:9,0xb0f:9,0xa0f:9,0x90f:9,0x80f:9
+                    ,0xf0e:9,0xe0e:9,0xd0e:9,0xc0e:9,0xb0e:9,0xa0e:9,0x90e:9,0x80e:9
+                    ,0xf0d:9,0xe0d:9,0xd0d:9,0xc0d:9,0xb0d:9,0xa0d:9,0x90d:9,0x80d:9
+                    ,0xf0c:9,0xe0c:9,0xd0c:9,0xc0c:9,0xb0c:9,0xa0c:9,0x90c:9,0x80c:9
+                    ,0xf0b:9,0xe0b:9,0xd0b:9,0xc0b:9,0xb0b:9,0xa0b:9,0x90b:9,0x80b:9
+                    ,0xf0a:9,0xe0a:9,0xd0a:9,0xc0a:9,0xb0a:9,0xa0a:9,0x90a:9,0x80a:9
+                    ,0xf09:9,0xe09:9,0xd09:9,0xc09:9,0xb09:9,0xa09:9,0x909:9,0x809:9
+                    ,0xf08:9,0xe08:9,0xd08:9,0xc08:9,0xb08:9,0xa08:9,0x908:9,0x808:9
+                    ,0xf07:7,0xf06:7,0xf05:7,0xf04:7
+                    ,0xe07:7,0xe06:7,0xe05:7,0xe04:7
+                    ,0xd07:7,0xd06:7,0xd05:7,0xd04:7
+                    ,0xc07:7,0xc06:7,0xc05:7,0xc04:7
+                    ,0xb07:7,0xb06:7,0xb05:7,0xb04:7
+                    ,0xa07:7,0xa06:7,0xa05:7,0xa04:7
+                    ,0x907:7,0x906:7,0x905:7,0x904:7
+                    ,0x807:7,0x806:7,0x805:7,0x804:7
+                    ,0x70f:7,0x60f:7,0x50f:7,0x40f:7
+                    ,0x70e:7,0x60e:7,0x50e:7,0x40e:7
+                    ,0x70d:7,0x60d:7,0x50d:7,0x40d:7
+                    ,0x70c:7,0x60c:7,0x50c:7,0x40c:7
+                    ,0x70b:7,0x60b:7,0x50b:7,0x40b:7
+                    ,0x70a:7,0x60a:7,0x50a:7,0x40a:7
+                    ,0x709:7,0x609:7,0x509:7,0x409:7
+                    ,0x708:7,0x608:7,0x508:7,0x408:7
+                    ,0xf03:5,0xe03:5,0xd03:5,0xc03:5,0xb03:5,0xa03:5,0x903:5,0x803:5
+                    ,0xf02:5,0xe02:5,0xd02:5,0xc02:5,0xb02:5,0xa02:5,0x902:5,0x802:5
+                    ,0x30f:5,0x30e:5,0x30d:5,0x30c:5,0x30b:5,0x30a:5,0x309:5,0x308:5
+                    ,0x20f:5,0x20e:5,0x20d:5,0x20c:5,0x20b:5,0x20a:5,0x209:5,0x208:5
+                    ,0x707:6,0x706:6,0x705:6,0x704:6
+                    ,0x607:6,0x606:6,0x605:6,0x604:6
+                    ,0x507:6,0x506:6,0x505:6,0x504:6
+                    ,0x407:6,0x406:6,0x405:6,0x404:6
+                    ,0x303:3,0x302:3,0x203:3
+                    ,0x101:1}
         #dic_dir3 = {0xf1f:6,0xf17:6,0x71f:6,0x31f:5,0xf13:5}
 
         dic_alix = [0,2,1,1]
         dic_aliy = [1,0,1,1]
+        dic_ofsx = [0,0,1,1]
         dic_widx = [1,4,1,1]
         dic_widy = [4,1,4,4]
 
@@ -299,14 +338,16 @@ class Block_Controller(object):
                             if self.MYDEBUG == 1 : print("### FOUND THE HOLE(",hole,")",x,y,format(pat4,'04x'))
                             point=getpoint,x,y,direction
                 if (x<(width))and((pat2) in dic_dir0):
+                    if self.MYDEBUG == 1 : print('(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'))
                     getpoint = dic_dir0[pat2]+y*2+dic_widy[direction]-dic_aliy[direction] #for Lv2
                     #getpoint = dic_dir0[pat2] #for Lv1
-                    xxmax = x + dic_widx[direction]
+                    xxmin = x + dic_ofsx[direction]
+                    xxmax = x + dic_widx[direction]+1
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         #print('x,y,point,getpoint0=',x,y,point,getpoint)
-                        for xx in range(x,xxmax,1):
+                        for xx in range(xxmin,xxmax,1):
                             if self.checkupper(board,xx,y)==1:
-                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
+                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',direction,xx,y)
                                 nopoint = 1
                                 break
                             #hole=self.counthole(board,xx,y)
@@ -317,18 +358,20 @@ class Block_Controller(object):
                         if (nopoint==0):
                             point = getpoint,x+dic_alix[direction],y,dic_dir[direction]
                             if self.MYDEBUG == 1 : print("dir0=",format(pat2,'02x'),"point=",point)
-                            if self.MYDEBUG == 1 : print('(x,y)=',x,y,'pat4=',format(pat4,'04x'))
+                            # if self.MYDEBUG == 1 : print('(x,y)=',x,y,'pat4=',format(pat4,'04x'))
                 nopoint = 0
                 hole = 0
                 direction=1
                 if  (x<(width-3))and((pat4) in dic_dir1):
+                    if self.MYDEBUG == 1 : print('(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'))
                     getpoint = dic_dir1[pat4]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    xxmax = x + dic_widx[direction]
+                    xxmin = x + dic_ofsx[direction]
+                    xxmax = x + dic_widx[direction]+1
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         #print('x,y,point,getpoint1=',x,y,point,getpoint)
-                        for xx in range(x,xxmax,1):
+                        for xx in range(xxmin,xxmax,1):
                             if self.checkupper(board,xx,y)==1:
-                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
+                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',direction,xx,y)
                                 nopoint = 1
                                 break
                             #hole=self.counthole(board,xx,y)
@@ -342,18 +385,20 @@ class Block_Controller(object):
                         if (nopoint==0):
                             point = getpoint,x+dic_alix[direction],y,dic_dir[direction]
                             if self.MYDEBUG == 1 : print("dir1=",format(pat4,'04x'),"point=",point)
-                            if self.MYDEBUG == 1 : print('(x,y)=',x,y,'pat4=',format(pat4,'04x'))
+                            # if self.MYDEBUG == 1 : print('(x,y)=',x,y,'pat4=',format(pat4,'04x'))
                 nopoint = 0
                 hole = 0
                 direction=2
                 if (x>0) and ((pat2) in dic_dir2):
+                    if self.MYDEBUG == 1 : print('(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'))
                     getpoint = dic_dir2[pat2]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    xxmax = x + dic_widx[direction]
+                    xxmin = x + dic_ofsx[direction]
+                    xxmax = x + dic_widx[direction]+1
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         #print('x,y,point,getpoint2=',x,y,point,getpoint)
-                        for xx in range(x,xxmax,1):
+                        for xx in range(xxmin,xxmax,1):
                             if self.checkupper(board,xx,y)==1:
-                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
+                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',direction,xx,y)
                                 nopoint = 1
                                 break
                             #hole=self.counthole(board,xx,y)
@@ -364,18 +409,20 @@ class Block_Controller(object):
                         if (nopoint==0):
                             point = getpoint,x+dic_alix[direction],y,dic_dir[direction]
                             if self.MYDEBUG == 1 : print("dir2=",format(pat2,'02x'),"point=",point)
-                            if self.MYDEBUG == 1 : print('(x,y)=',x,y,'pat4=',format(pat4,'04x'))
+                            # if self.MYDEBUG == 1 : print('(x,y)=',x,y,'pat4=',format(pat4,'04x'))
                 nopoint = 0
                 hole = 0
                 direction=3
                 if (x<(width-2))and((pat3) in dic_dir3):
+                    if self.MYDEBUG == 1 : print('(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'))
                     getpoint = dic_dir3[pat3]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    xxmax = x + dic_widx[direction]
+                    xxmin = x + dic_ofsx[direction]
+                    xxmax = x + dic_widx[direction]+1
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         #print('x,y,point,getpoint3=',x,y,point,getpoint)
-                        for xx in range(x,xxmax,1):
+                        for xx in range(xxmin,xxmax,1):
                             if self.checkupper(board,xx,y)==1:
-                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
+                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',direction,xx,y)
                                 nopoint = 1
                                 break
                             #hole=self.counthole(board,xx,y)
@@ -386,7 +433,7 @@ class Block_Controller(object):
                         if (nopoint==0):
                             point = getpoint,x+dic_alix[direction],y,dic_dir[direction]
                             if self.MYDEBUG == 1 : print("dir3=",format(pat3,'03x'),"point=",point)
-                            if self.MYDEBUG == 1 : print('(x,y)=',x,y,'pat4=',format(pat4,'04x'))
+                            # if self.MYDEBUG == 1 : print('(x,y)=',x,y,'pat4=',format(pat4,'04x'))
             #if self.MYDEBUG == 1 : print("x,y,pat=",x,y,format(pat4,'04x'),"point=",point)
         return point[0],point[1],point[3]
    
@@ -403,7 +450,8 @@ class Block_Controller(object):
         dic_dir0 = {0x11:6,0x10:1,0x01:1}
         dic_dir1 = {0x133:8,0x123:7,0x132:7,0x122:7,  #for Lv2~ (Lv1:17520)
         #dic_dir1 = {0x133:8,0x123:8,0x132:8,0x122:8,   #for Lv1  (Lv1:18783)
-                    0x131:2}
+                    0x131:2,
+                    0x011:7}
         dic_dir2 = {0x71:6,0x41:6,0x51:6,0x61:6,
                     0x70:1,0x60:1,0x50:1,0x40:1,0x30:1,0x20:1,0x10:1, #for Lv3
                     0xf1:2,0x81:2,0x91:2,0xa1:2,0xb1:2,0xc1:2,0xd1:2,0xe1:2} #add 210727a
@@ -411,6 +459,7 @@ class Block_Controller(object):
 
         dic_alix = [0,1,1,1]
         dic_aliy = [1,1,1,1]
+        dic_ofsx = [0,0,0,0]
         dic_widx = [2,3,2,3]
         dic_widy = [3,2,3,2]
 
@@ -435,7 +484,7 @@ class Block_Controller(object):
                         #print('x,y,point,getpoint0=',x,y,point,getpoint)
                         for xx in range(x,xxmax,1):
                             if self.checkupper(board,xx,y)==1:
-                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
+                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',direction,xx,y)
                                 nopoint = 1
                                 break
                             #if (x==xx and pat2&0xf0==0)and(x+1==xx and pat2&0x0f==0): #穴開きテスト
@@ -460,7 +509,7 @@ class Block_Controller(object):
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         for xx in range(x,xxmax,1):
                             if self.checkupper(board,xx,y)==1:
-                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
+                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',direction,xx,y)
                                 nopoint = 1
                                 break
                             # hole=self.counthole(board,xx,y)
@@ -485,7 +534,7 @@ class Block_Controller(object):
                         #print('x,y,point,getpoint1=',x,y,point,getpoint)
                         for xx in range(x,xxmax,1):
                             if self.checkupper(board,xx,y)==1:
-                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
+                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',direction,xx,y)
                                 nopoint = 1
                                 break
                             # hole=self.counthole(board,xx,y)
@@ -510,7 +559,7 @@ class Block_Controller(object):
                         #print('x,y,point,getpoint1=',x,y,point,getpoint)
                         for xx in range(x,xxmax,1):
                             if self.checkupper(board,xx,y)==1:
-                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
+                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',direction,xx,y)
                                 nopoint = 1
                                 break
                             hole=self.counthole(board,xx,y)
@@ -544,7 +593,8 @@ class Block_Controller(object):
                     0x1f:2,0x18:2,0x19:2,0x1a:2,0x1b:2,0x1c:2,0x1d:2,0x1e:2} #add 210727a
         dic_dir3 = {0x331:8,0x321:7,0x231:7,0x221:7, #for Lv2~ (Lv1:17520)
         #dic_dir3 = {0x331:8,0x321:8,0x231:8,0x221:8,  #for Lv1  (Lv1:18783)
-                    0x131:2}
+                    0x131:2,
+                    0x110:7}
 
         dic_alix = [1,1,0,1]
         dic_aliy = [1,1,1,0]
@@ -572,7 +622,7 @@ class Block_Controller(object):
                         #print('x,y,point,getpoint0=',x,y,point,getpoint)
                         for xx in range(x,xxmax,1):
                             if self.checkupper(board,xx,y)==1:
-                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
+                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',direction,xx,y)
                                 nopoint = 1
                                 break
                             # hole=self.counthole(board,xx,y)
@@ -596,7 +646,7 @@ class Block_Controller(object):
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         for xx in range(x,xxmax,1):
                             if self.checkupper(board,xx,y)==1:
-                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
+                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',direction,xx,y)
                                 nopoint = 1
                                 break
                             # hole=self.counthole(board,xx,y)
@@ -621,7 +671,7 @@ class Block_Controller(object):
                         #print('x,y,point,getpoint1=',x,y,point,getpoint)
                         for xx in range(x,xxmax,1):
                             if self.checkupper(board,xx,y)==1:
-                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
+                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',direction,xx,y)
                                 nopoint = 1
                                 break
                             # hole=self.counthole(board,xx,y)
@@ -646,7 +696,7 @@ class Block_Controller(object):
                         #print('x,y,point,getpoint1=',x,y,point,getpoint)
                         for xx in range(x,xxmax,1):
                             if self.checkupper(board,xx,y)==1:
-                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
+                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',direction,xx,y)
                                 nopoint = 1
                                 break
                             # hole=self.counthole(board,xx,y)
@@ -674,11 +724,13 @@ class Block_Controller(object):
         order = self.makehorizontalorder(blockheight)
 
         dic_dir0 = {0x13:6,0x12:6
-                    ,0x11:1} #for Lv3
-        dic_dir1 = {0x313:8,0x213:8,0x312:8,0x212:8}
+                    ,0x11:1,0x01:1} #for Lv3
+        dic_dir1 = {0x313:8,0x213:8,0x312:8,0x212:8
+                    ,0x101:1}
         dic_dir2 = {0x31:6,0x21:6
-                    ,0x11:1} #for Lv3
-        dic_dir3 = {0x111:7}
+                    ,0x11:1,0x10:1} #for Lv3
+        dic_dir3 = {0x111:7
+                    ,0x110:1,0x101:1,0x011:1,0x010:1}
 
         dic_alix = [0,1,1,1]
         dic_aliy = [1,1,1,0]
@@ -706,7 +758,7 @@ class Block_Controller(object):
                         #print('x,y,point,getpoint0=',x,y,point,getpoint)
                         for xx in range(x,xxmax,1):
                             if self.checkupper(board,xx,y)==1:
-                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
+                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',direction,xx,y)
                                 nopoint = 1
                                 break
                             # hole=self.counthole(board,xx,y)
@@ -730,7 +782,7 @@ class Block_Controller(object):
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         for xx in range(x,xxmax,1):
                             if self.checkupper(board,xx,y)==1:
-                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
+                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',direction,xx,y)
                                 nopoint = 1
                                 break
                             # hole=self.counthole(board,xx,y)
@@ -755,7 +807,7 @@ class Block_Controller(object):
                         #print('x,y,point,getpoint1=',x,y,point,getpoint)
                         for xx in range(x,xxmax,1):
                             if self.checkupper(board,xx,y)==1:
-                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
+                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',direction,xx,y)
                                 nopoint = 1
                                 break
                             # hole=self.counthole(board,xx,y)
@@ -780,7 +832,7 @@ class Block_Controller(object):
                         #print('x,y,point,getpoint1=',x,y,point,getpoint)
                         for xx in range(x,xxmax,1):
                             if self.checkupper(board,xx,y)==1:
-                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
+                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',direction,xx,y)
                                 nopoint = 1
                                 break
                             # hole=self.counthole(board,xx,y)
@@ -842,7 +894,7 @@ class Block_Controller(object):
                         #print('x,y,point,getpoint0=',x,y,point,getpoint)
                         for xx in range(x,xxmax,1):
                             if self.checkupper(board,xx,y)==1:
-                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
+                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',direction,xx,y)
                                 nopoint = 1
                                 break
                             # hole=self.counthole(board,xx,y)
@@ -866,7 +918,7 @@ class Block_Controller(object):
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         for xx in range(x,xxmax,1):
                             if self.checkupper(board,xx,y)==1:
-                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
+                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',direction,xx,y)
                                 nopoint = 1
                                 break
                             # hole=self.counthole(board,xx,y)
@@ -891,7 +943,7 @@ class Block_Controller(object):
                         #print('x,y,point,getpoint1=',x,y,point,getpoint)
                         for xx in range(x,xxmax,1):
                             if self.checkupper(board,xx,y)==1:
-                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
+                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',direction,xx,y)
                                 nopoint = 1
                                 break
                             # hole=self.counthole(board,xx,y)
@@ -918,7 +970,7 @@ class Block_Controller(object):
         blockheight = self.maxblockheight(board)
         order = self.makehorizontalorder(blockheight)
 
-        dic_dir0 = {0x113:8,0x112:8,0x111:3}
+        dic_dir0 = {0x113:8,0x112:8,0x111:4}
         dic_dir1 = {0x31:6,0x21:6,0x11:2,0x10:1,0x20:1} 
     
         dic_alix = [1,0,0,0]
@@ -947,7 +999,7 @@ class Block_Controller(object):
                         #print('x,y,point,getpoint0=',x,y,point,getpoint)
                         for xx in range(x,xxmax,1):
                             if self.checkupper(board,xx,y)==1:
-                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
+                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',direction,xx,y)
                                 nopoint = 1
                                 break
                             # hole=self.counthole(board,xx,y)
@@ -971,7 +1023,7 @@ class Block_Controller(object):
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         for xx in range(x,xxmax,1):
                             if self.checkupper(board,xx,y)==1:
-                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
+                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',direction,xx,y)
                                 nopoint = 1
                                 break
                             # hole=self.counthole(board,xx,y)
@@ -998,7 +1050,7 @@ class Block_Controller(object):
         blockheight = self.maxblockheight(board)
         order = self.makehorizontalorder(blockheight)
 
-        dic_dir0 = {0x311:8,0x211:8,0x111:3}
+        dic_dir0 = {0x311:8,0x211:8,0x111:4}
         dic_dir1 = {0x13:6,0x12:6,0x11:2,0x01:1,0x02:1}
 
         dic_alix = [1,0,0,0]
@@ -1027,7 +1079,7 @@ class Block_Controller(object):
                         #print('x,y,point,getpoint0=',x,y,point,getpoint)
                         for xx in range(x,xxmax,1):
                             if self.checkupper(board,xx,y)==1:
-                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
+                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',direction,xx,y)
                                 nopoint = 1
                                 break
                             # hole=self.counthole(board,xx,y)
@@ -1051,7 +1103,7 @@ class Block_Controller(object):
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         for xx in range(x,xxmax,1):
                             if self.checkupper(board,xx,y)==1:
-                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
+                                if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',direction,xx,y)
                                 nopoint = 1
                                 break
                             # hole=self.counthole(board,xx,y)
