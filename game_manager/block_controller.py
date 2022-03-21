@@ -234,8 +234,8 @@ class Block_Controller(object):
         width = self.board_data_width #width=10
         height = self.board_data_height #height=22
         maxheight=height-4
-        for yy in range(height-1,0,-1):
-            for xx in range(0,width-1,1):
+        for yy in range(height-1,4,-1):
+            for xx in range(0,width,1):
                 if board[yy*width+xx]!=0:
                     maxheight = yy-4
         return(maxheight)
