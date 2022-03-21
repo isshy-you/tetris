@@ -351,7 +351,7 @@ class Block_Controller(object):
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         #print('x,y,point,getpoint2=',x,y,point,getpoint)
-                        for xx in range(x,xxmax,1):
+                        for xx in range(x+1,xxmax+1,1):
                             if self.checkupper(board,xx,y)==1:
                                 if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
                                 nopoint = 1
@@ -373,7 +373,7 @@ class Block_Controller(object):
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
                         #print('x,y,point,getpoint3=',x,y,point,getpoint)
-                        for xx in range(x,xxmax,1):
+                        for xx in range(x+1,xxmax+1,1):
                             if self.checkupper(board,xx,y)==1:
                                 if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
                                 nopoint = 1
