@@ -75,7 +75,7 @@ def start():
     if len(args.resultlogjson) != 0:
         RESULT_LOG_JSON = args.resultlogjson
     else:
-        RESULT_LOG_JSON = "ish05g4_"+str(GAME_LEVEL)+"_"+str(DROP_INTERVAL)+"_"+str(INPUT_RANDOM_SEED)+".json"
+        RESULT_LOG_JSON = "ish05g6_"+str(GAME_LEVEL)+"_"+str(DROP_INTERVAL)+"_"+str(INPUT_RANDOM_SEED)+".json"
     if len(args.user_name) != 0:
         USER_NAME = args.user_name
     if args.ShapeListMax > 1:
