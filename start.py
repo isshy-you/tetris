@@ -43,11 +43,11 @@ def get_python_cmd():
 
 def start():
     ## default value
-    GAME_LEVEL = 3
+    GAME_LEVEL = 1
     GAME_TIME = 180
     IS_MODE = "default"
     IS_SAMPLE_CONTROLL = "n"
-    INPUT_RANDOM_SEED = 1
+    INPUT_RANDOM_SEED = -1
     DROP_INTERVAL = 1000          # drop interval
     RESULT_LOG_JSON = "result.json"
     USER_NAME = "window_sample"
@@ -74,8 +74,6 @@ def start():
         DROP_INTERVAL = args.drop_interval
     if len(args.resultlogjson) != 0:
         RESULT_LOG_JSON = args.resultlogjson
-    else:
-        RESULT_LOG_JSON = "ish05h3_"+str(GAME_LEVEL)+"_"+str(DROP_INTERVAL)+"_"+str(INPUT_RANDOM_SEED)+".json"
     if len(args.user_name) != 0:
         USER_NAME = args.user_name
     if args.ShapeListMax > 1:
