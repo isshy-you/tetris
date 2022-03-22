@@ -599,14 +599,14 @@ class Block_Controller(object):
                                 if self.MYDEBUG == 1 : print('### BLOCKED BY UPPER at ',xx,y)
                                 nopoint = 1
                                 break
-                            # hole=self.counthole(board,xx,y)
-                            # if (hole >=1)and(hole <=4) :
-                            #     if self.MYDEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
-                            #     getpoint -= hole*1
-                            #     if nextindex==1 and hole>=4:
-                            #         if self.MYDEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
-                            #         nopoint = 1
-                            #         break
+                            hole=self.counthole(board,xx,y)
+                            if (hole >=1)and(hole <=4) :
+                                if self.MYDEBUG == 1 : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
+                                getpoint -= hole*1
+                                if nextindex==1 and hole>=4:
+                                    if self.MYDEBUG == 1 : print("### Next index is I, keep 4-hole. ###")
+                                    nopoint = 1
+                                    break
                         if (nopoint==0):
                             point = getpoint,x+dic_alix[direction],y,dic_dir[direction]
                             if self.MYDEBUG == 1 : print("dir1=",format(pat4,'04x'),"point=",point)
