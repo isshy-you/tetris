@@ -540,7 +540,7 @@ class Block_Controller(object):
                             #         break
                         if (nopoint==0):
                             point = getpoint,x+dic_alix[direction],y,dic_dir[direction]
-                            if self.MYDEBUG == 1 : print("dir1=",format(pat4,'04x'),"point=",point)
+                            if self.MYDEBUG == 1 : print("dir1=",format(pat3,'03x'),"point=",point)
                             # if self.MYDEBUG == 1 : print('(x,y)=',x,y,'pat4=',format(pat4,'04x'))
                 nopoint = 0
                 hole = 0
@@ -566,7 +566,7 @@ class Block_Controller(object):
                             #         break
                         if (nopoint==0):
                             point = getpoint,x+dic_alix[direction],y,dic_dir[direction]
-                            if self.MYDEBUG == 1 : print("dir1=",format(pat4,'04x'),"point=",point)
+                            if self.MYDEBUG == 1 : print("dir2=",format(pat2,'02x'),"point=",point)
                             # if self.MYDEBUG == 1 : print('(x,y)=',x,y,'pat4=',format(pat4,'04x'))
                 nopoint = 0
                 hole = 0
@@ -592,7 +592,7 @@ class Block_Controller(object):
                             #         break
                         if (nopoint==0):
                             point = getpoint,x+dic_alix[direction],y,dic_dir[direction]
-                            if self.MYDEBUG == 1 : print("dir1=",format(pat4,'04x'),"point=",point)
+                            if self.MYDEBUG == 1 : print("dir3=",format(pat3,'03x'),"point=",point)
                             # if self.MYDEBUG == 1 : print('(x,y)=',x,y,'pat4=',format(pat4,'04x'))
         return point[0],point[1],point[3]
 
@@ -682,7 +682,7 @@ class Block_Controller(object):
                             #         break
                         if (nopoint==0):
                             point = getpoint,x+dic_alix[direction],y,dic_dir[direction]
-                            if self.MYDEBUG == 1 : print("dir1=",format(pat4,'04x'),"point=",point)
+                            if self.MYDEBUG == 1 : print("dir1=",format(pat3,'03x'),"point=",point)
                             # if self.MYDEBUG == 1 : print('(x,y)=',x,y,'pat4=',format(pat4,'04x'))
                 nopoint = 0
                 hole = 0
@@ -708,7 +708,7 @@ class Block_Controller(object):
                             #         break
                         if (nopoint==0):
                             point = getpoint,x+dic_alix[direction],y,dic_dir[direction]
-                            if self.MYDEBUG == 1 : print("dir1=",format(pat4,'04x'),"point=",point)
+                            if self.MYDEBUG == 1 : print("dir2=",format(pat2,'02x'),"point=",point)
                             # if self.MYDEBUG == 1 : print('(x,y)=',x,y,'pat4=',format(pat4,'04x'))
                 nopoint = 0
                 hole = 0
@@ -734,7 +734,7 @@ class Block_Controller(object):
                             #         break
                         if (nopoint==0):
                             point = getpoint,x+dic_alix[direction],y,dic_dir[direction]
-                            if self.MYDEBUG == 1 : print("dir1=",format(pat4,'04x'),"point=",point)
+                            if self.MYDEBUG == 1 : print("dir3=",format(pat3,'03x'),"point=",point)
                             # if self.MYDEBUG == 1 : print('(x,y)=',x,y,'pat4=',format(pat4,'04x'))
         return point[0],point[1],point[3]
 
@@ -989,7 +989,7 @@ class Block_Controller(object):
                             #         break
                         if (nopoint==0):
                             point = getpoint,x+dic_alix[direction],y,dic_dir[direction]
-                            if self.MYDEBUG == 1 : print("dir1=",format(pat4,'04x'),"point=",point)
+                            if self.MYDEBUG == 1 : print("dir2=",format(pat3,'03x'),"point=",point)
                             # if self.MYDEBUG == 1 : print('(x,y)=',x,y,'pat4=',format(pat4,'04x'))
         return point[0],point[1],point[3]
 
@@ -1006,8 +1006,9 @@ class Block_Controller(object):
         dic_dir0 = {0x113:8,0x112:8,0x111:4}
         dic_dir1 = {0x31:6,0x21:6,
                     0x11:2,
-                    0x10:1,0x20:1,
-                    # 0x01:1
+                    0x10:6,
+                    0x20:1,
+                    0x01:1
                     } 
     
         dic_alix = [1,0,0,0]
@@ -1092,8 +1093,9 @@ class Block_Controller(object):
         dic_dir0 = {0x311:8,0x211:8,0x111:4}
         dic_dir1 = {0x13:6,0x12:6,
                     0x11:2,
-                    0x01:1,0x02:1,
-                    # 0x10:1
+                    0x01:6,
+                    0x02:1,
+                    0x10:1
                     }
 
         dic_alix = [1,0,0,0]
