@@ -42,36 +42,36 @@ for branch in branch_list:
             if os.path.isfile(RESULT_LOG_JSON):
                 f = open(RESULT_LOG_JSON, 'r')
                 jsdic=json.load(f)
-                df = df.append(\
-                            {'branch':branch,
-                             'seed':seed,
-                             'level':GAME_LEVEL,
-                             'score':jsdic['judge_info']['score'],
-                             'block_index':jsdic['judge_info']['block_index'],
-                             'elapsed_time':jsdic['judge_info']['elapsed_time'],
-                             'line':jsdic['judge_info']['line'],
-                             'gameover_count':jsdic['judge_info']['gameover_count'],
-                             'line1':jsdic['debug_info']['line_score_stat'][0],
-                             'line2':jsdic['debug_info']['line_score_stat'][1],
-                             'line3':jsdic['debug_info']['line_score_stat'][2],
-                             'line4':jsdic['debug_info']['line_score_stat'][3]},
-                             ignore_index=True
-                            )
-                # print(  branch+',',seed,',',
-                #         GAME_LEVEL,',',
-                #         jsdic['judge_info']['score'],',',
-                #         jsdic['judge_info']['block_index'],',',
-                #         jsdic['judge_info']['elapsed_time'],',',
-                #         jsdic['judge_info']['line'],',',
-                #         jsdic['judge_info']['gameover_count'],',',
-                #         jsdic['debug_info']['line_score_stat'][0],',',
-                #         jsdic['debug_info']['line_score_stat'][1],',',
-                #         jsdic['debug_info']['line_score_stat'][2],',',
-                #         jsdic['debug_info']['line_score_stat'][3],',',
-                #         # jsdic['debug_info']['line_score']['line1'],',',
-                #         # jsdic['debug_info']['line_score']['line2'],',',
-                #         # jsdic['debug_info']['line_score']['line3'],',',
-                #         # jsdic['debug_info']['line_score']['line4'],',',
-                #         # jsdic['debug_info']['line_score']['gameover'],',',
-                #         )
+                df2 = pd.DataFrame({'branch':[branch],
+                                    'seed':seed,
+                                    'level':GAME_LEVEL,
+                                    'score':jsdic['judge_info']['score'],
+                                    'block_index':jsdic['judge_info']['block_index'],
+                                    'elapsed_time':jsdic['judge_info']['elapsed_time'],
+                                    'line':jsdic['judge_info']['line'],
+                                    'gameover_count':jsdic['judge_info']['gameover_count'],
+                                    'line1':jsdic['debug_info']['line_score_stat'][0],
+                                    'line2':jsdic['debug_info']['line_score_stat'][1],
+                                    'line3':jsdic['debug_info']['line_score_stat'][2],
+                                    'line4':jsdic['debug_info']['line_score_stat'][3]})
+                df = pd.concat([df,df2])
+                print(  branch+',',seed,',',
+                        GAME_LEVEL,',',
+                        jsdic['judge_info']['score'],',',
+                        jsdic['judge_info']['block_index'],',',
+                        jsdic['judge_info']['elapsed_time'],',',
+                        jsdic['judge_info']['line'],',',
+                        jsdic['judge_info']['gameover_count'],',',
+                        jsdic['debug_info']['line_score_stat'][0],',',
+                        jsdic['debug_info']['line_score_stat'][1],',',
+                        jsdic['debug_info']['line_score_stat'][2],',',
+                        jsdic['debug_info']['line_score_stat'][3],',',
+                        # jsdic['debug_info']['line_score']['line1'],',',
+                        # jsdic['debug_info']['line_score']['line2'],',',
+                        # jsdic['debug_info']['line_score']['line3'],',',
+                        # jsdic['debug_info']['line_score']['line4'],',',
+                        # jsdic['debug_info']['line_score']['gameover'],',',
+                        )
+print("Saving to result.csv")
+df.reset_index(drop=True, inplace=True)
 df.to_csv('result.csv')
