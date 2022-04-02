@@ -59,7 +59,7 @@ def start():
     SHAPE_LIST_MAX = 6
 
     repo = Repository('.git')
-    branch_list=['ish05c',ish05g6','ish05h3','ish06a']
+    branch_list=['ish05c','ish05g6','ish05h3','ish06a']
     # branch_list=['ish05a','ish06b']
     for br in branch_list:
         branch = repo.lookup_branch(br)
