@@ -10,7 +10,7 @@ from numpy import iinfo
 
 class Block_Controller(object):
 
-    MYDEBUG = 0
+    MYDEBUG = 1
     # init parameter
     board_backboard = 0
     board_data_width = 0
@@ -353,7 +353,8 @@ class Block_Controller(object):
                 #             if self.MYDEBUG == 1 : print("hole=",format(pat4,'04x'),"point=",point)
                 if (x<(width))and((pat2) in dic_dir0):
                     # getpoint = dic_dir0[pat2]+y*2+dic_widy[direction]-dic_aliy[direction] #for Lv2
-                    getpoint = dic_dir0[pat2]+(y*2) #for Lv2
+                    if y>=1 : getpoint = dic_dir0[pat2]+(y*2)
+                    else : getpoint = dic_dir0[pat2]
                     #getpoint = dic_dir0[pat2] #for Lv1
                     if self.MYDEBUG == 1 : print('I(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmin = x + dic_ofsx[direction]
@@ -379,7 +380,8 @@ class Block_Controller(object):
                 direction=1
                 if  (x<(width-3))and((pat4) in dic_dir1):
                     # getpoint = dic_dir1[pat4]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    getpoint = dic_dir1[pat4]+(y*2)
+                    if y>=1 : getpoint = dic_dir1[pat4]+(y*2)
+                    else : getpoint = dic_dir1[pat4]
                     if self.MYDEBUG == 1 : print('I(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmin = x + dic_ofsx[direction]
                     xxmax = x + dic_ofsx[direction] + dic_widx[direction]
@@ -408,7 +410,8 @@ class Block_Controller(object):
                 if ((pat2) in dic_dir2):
                 # if (x>0) and ((pat2) in dic_dir2):
                     # getpoint = dic_dir2[pat2]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    getpoint = dic_dir2[pat2]+(y*2)
+                    if y>=1 : getpoint = dic_dir2[pat2]+(y*2)
+                    else : getpoint = dic_dir2[pat2]
                     if self.MYDEBUG == 1 : print('I(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmin = x + dic_ofsx[direction]
                     xxmax = x + dic_ofsx[direction] + dic_widx[direction]
@@ -433,7 +436,8 @@ class Block_Controller(object):
                 direction=3
                 if (x<(width-2))and((pat3) in dic_dir3):
                     # getpoint = dic_dir3[pat3]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    getpoint = dic_dir3[pat3]+(y*2)
+                    if y>=1 : getpoint = dic_dir3[pat3]+(y*2)
+                    else : getpoint = dic_dir3[pat3]
                     if self.MYDEBUG == 1 : print('I(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmin = x + dic_ofsx[direction]
                     xxmax = x + dic_ofsx[direction] + dic_widx[direction]
@@ -500,7 +504,8 @@ class Block_Controller(object):
                 direction=0
                 if (x<(width-1))and((pat2) in dic_dir0):
                     # getpoint = dic_dir0[pat2]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    getpoint = dic_dir0[pat2]+(y*2)
+                    if y>=1 : getpoint = dic_dir0[pat2]+(y*2)
+                    else : getpoint = dic_dir0[pat2]
                     if self.MYDEBUG == 1 : print('L(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
@@ -528,7 +533,8 @@ class Block_Controller(object):
                 direction=1
                 if (x<(width-2))and((pat3) in dic_dir1):
                     # getpoint = dic_dir1[pat3]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    getpoint = dic_dir1[pat3]+(y*2)
+                    if y>=1 : getpoint = dic_dir1[pat3]+(y*2)
+                    else : getpoint = dic_dir1[pat3]
                     if self.MYDEBUG == 1 : print('L(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
@@ -554,7 +560,8 @@ class Block_Controller(object):
                 direction=2
                 if (x>=0)and(x<(width-1))and((pat2) in dic_dir2):
                     # getpoint = dic_dir2[pat2]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    getpoint = dic_dir2[pat2]+(y*2)
+                    if y>=1 : getpoint = dic_dir2[pat2]+(y*2)
+                    else : getpoint = dic_dir2[pat2]
                     if self.MYDEBUG == 1 : print('L(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
@@ -792,7 +799,8 @@ class Block_Controller(object):
                 direction=0
                 if (x<(width-1))and((pat2) in dic_dir0):
                     # getpoint = dic_dir0[pat2]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    getpoint = dic_dir0[pat2]+(y*2)
+                    if y>=1 : getpoint = dic_dir0[pat2]+(y*2)
+                    else : getpoint = dic_dir0[pat2]
                     if self.MYDEBUG == 1 : print('T(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
@@ -819,7 +827,8 @@ class Block_Controller(object):
                 direction=1
                 if (x<(width-2))and((pat3) in dic_dir1):
                     # getpoint = dic_dir1[pat3]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    getpoint = dic_dir1[pat3]+(y*2)
+                    if y>=1 : getpoint = dic_dir1[pat3]+(y*2)
+                    else : getpoint = dic_dir1[pat3]
                     if self.MYDEBUG == 1 : print('T(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
@@ -845,7 +854,8 @@ class Block_Controller(object):
                 direction=2
                 if (x<(width-1))and((pat2) in dic_dir2):
                     # getpoint = dic_dir2[pat2]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    getpoint = dic_dir2[pat2]+(y*2)
+                    if y>=1 : getpoint = dic_dir2[pat2]+(y*2)
+                    else : getpoint = dic_dir2[pat2]
                     if self.MYDEBUG == 1 : print('T(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
@@ -872,7 +882,8 @@ class Block_Controller(object):
                 direction=3
                 if (x<(width-2))and((pat3) in dic_dir3):
                     # getpoint = dic_dir3[pat3]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    getpoint = dic_dir3[pat3]+(y*2)
+                    if y>=1 : getpoint = dic_dir3[pat3]+(y*2)
+                    else : getpoint = dic_dir3[pat3]
                     if self.MYDEBUG == 1 : print('T(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
@@ -936,7 +947,8 @@ class Block_Controller(object):
                 direction=0
                 if (x<(width-1))and((pat2) in dic_dir0):
                     # getpoint = dic_dir0[pat2]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    getpoint = dic_dir0[pat2]+(y*2)
+                    if y>=1 : getpoint = dic_dir0[pat2]+(y*2)
+                    else : getpoint = dic_dir0[pat2]
                     if self.MYDEBUG == 1 : print('O(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
@@ -963,7 +975,8 @@ class Block_Controller(object):
                 direction=1
                 if (x<(width-1))and((pat3) in dic_dir1):
                     # getpoint = dic_dir1[pat3]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    getpoint = dic_dir1[pat3]+(y*2)
+                    if y>=1 : getpoint = dic_dir1[pat3]+(y*2)
+                    else : getpoint = dic_dir1[pat3]
                     if self.MYDEBUG == 1 : print('O(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
@@ -989,7 +1002,8 @@ class Block_Controller(object):
                 direction=2
                 if (x<(width-2))and((pat3) in dic_dir2):
                     # getpoint = dic_dir2[pat3]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    getpoint = dic_dir2[pat3]+(y*2)
+                    if y>=1 : getpoint = dic_dir2[pat3]+(y*2)
+                    else : getpoint = dic_dir2[pat3]
                     if self.MYDEBUG == 1 : print('O(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
@@ -1052,7 +1066,8 @@ class Block_Controller(object):
                 direction=0
                 if (x<(width-2))and((pat3) in dic_dir0):
                     # getpoint = dic_dir0[pat3]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    getpoint = dic_dir0[pat3]+(y*2)
+                    if y>=1 : getpoint = dic_dir0[pat3]+(y*2)
+                    else : getpoint = dic_dir0[pat3]
                     if self.MYDEBUG == 1 : print('S(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
@@ -1079,7 +1094,8 @@ class Block_Controller(object):
                 direction=1
                 if (x<(width-1))and((pat2) in dic_dir1):
                     # getpoint = dic_dir1[pat2]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    getpoint = dic_dir1[pat2]+(y*2)
+                    if y>=1 : getpoint = dic_dir1[pat2]+(y*2)
+                    else : getpoint = dic_dir1[pat2]
                     if self.MYDEBUG == 1 : print('S(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
@@ -1141,7 +1157,8 @@ class Block_Controller(object):
                 direction=0
                 if (x<(width-2))and((pat3) in dic_dir0):
                     # getpoint = dic_dir0[pat3]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    getpoint = dic_dir0[pat3]+(y*2)
+                    if y>=1 : getpoint = dic_dir0[pat3]+(y*2)
+                    else : getpoint = dic_dir0[pat3]
                     if self.MYDEBUG == 1 : print('Z(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
@@ -1168,7 +1185,8 @@ class Block_Controller(object):
                 direction=1
                 if (x<(width-1))and((pat2) in dic_dir1):
                     # getpoint = dic_dir1[pat2]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    getpoint = dic_dir1[pat2]+(y*2)
+                    if y>=1 : getpoint = dic_dir1[pat2]+(y*2)
+                    else : getpoint = dic_dir1[pat2]
                     if self.MYDEBUG == 1 : print('Z(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=width):
