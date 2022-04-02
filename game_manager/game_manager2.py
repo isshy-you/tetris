@@ -760,7 +760,6 @@ class Board(QFrame):
         self.msg2Statusbar.emit(status_str)
         self.update()
         self.OutputLogData(isPrintLog = False)
-        print('block_index=',block_index)
         if self.game_time == -1:
             print("game_time: {}".format(self.game_time))
             print("endless loop")
