@@ -58,14 +58,24 @@ def start():
     USER_NAME = "window_sample"
     SHAPE_LIST_MAX = 6
 
+    # ret = subprocess.run('copy .\evaluation\game_manager2.py .\game_manager\game_manager2.py', shell=True)
+    # if ret.returncode != 0:
+    #     print('error: subprocess failed.', file=sys.stderr)
+    #     sys.exit(1)
+
     repo = Repository('.git')
-    branch_list=['ish05c','ish05g6','ish05h3','ish06a']
-    # branch_list=['ish05a','ish06b']
-    for br in branch_list:
-        branch = repo.lookup_branch(br)
-        ref = repo.lookup_reference(branch.name)
-        repo.checkout(ref)
-        print('branch=',Repository('.').head.shorthand)
+    branch_list=['ish04d','ish05c','ish05g6','ish05h3','ish06a']
+    for branch_name in branch_list:
+        # branch = repo.lookup_branch(branch_name)
+        # ref = repo.lookup_reference(branch.name)
+        # repo.checkout(ref)
+        # print('branch=',Repository('.').head.shorthand)
+        cmd = 'git checkout '+branch_name+' ./game_manager/block_controller.py'
+        print('cmd : '+cmd)
+        ret = subprocess.run(cmd, shell=True)
+        if ret.returncode != 0:
+            print('error: subprocess failed.', file=sys.stderr)
+            sys.exit(1)
         for GAME_LEVEL in [1,2,3]:
             if GAME_LEVEL==1:
                 GAME_TIME = 999
@@ -112,7 +122,8 @@ def start():
                 if len(args.resultlogjson) != 0:
                     RESULT_LOG_JSON = args.resultlogjson
                 else:
-                    RESULT_LOG_JSON = "result/"+Repository('.').head.shorthand\
+                    # RESULT_LOG_JSON = "result/"+Repository('.').head.shorthand\
+                    RESULT_LOG_JSON = "result/"+branch_name\
                                         +"_"+str(GAME_LEVEL)\
                                         +"_"+str(GAME_TIME)\
                                         +"_"+str(GAME_LINE)\
@@ -149,6 +160,7 @@ def start():
                     RANDOM_SEED = INPUT_RANDOM_SEED
 
                 ## print
+                print('branch:' + branch_name)
                 print('game_level: ' + str(GAME_LEVEL))
                 print('game_time: ' + str(GAME_TIME))
                 print('game_line: ' + str(GAME_LINE))
@@ -159,7 +171,8 @@ def start():
                 print('USER_NAME: ' + str(USER_NAME))
                 print('RESULT_LOG_JSON: ' + str(RESULT_LOG_JSON))
 
-                EXEC_LOG = "result/"+Repository('.').head.shorthand\
+                # EXEC_LOG = "result/"+Repository('.').head.shorthand\
+                EXEC_LOG = "result/"+branch_name\
                             +"_"+str(GAME_LEVEL)\
                             +"_"+str(GAME_TIME)\
                             +"_"+str(GAME_LINE)\
