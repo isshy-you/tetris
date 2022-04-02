@@ -79,7 +79,7 @@ def start():
                 DROP_INTERVAL = 1        # drop interval
             elif GAME_LEVEL==3:
                 GAME_TIME = 180
-                GAME_LINE = 999999999
+                GAME_LINE = 1000
                 seed_max = 30
                 DROP_INTERVAL = 1         # drop interval
             for ii in range(1,seed_max+1,1):
