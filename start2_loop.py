@@ -60,7 +60,7 @@ def start():
 
     repo = Repository('.git')
     # branch_list=['ish04d','ish05g6','ish05h3','ish06a']
-    branch_list=['ish06a']
+    branch_list=['ish05a','ish06b']
     for br in branch_list:
         branch = repo.lookup_branch(br)
         ref = repo.lookup_reference(branch.name)
@@ -75,12 +75,12 @@ def start():
             elif GAME_LEVEL==2:
                 GAME_TIME = 999
                 GAME_LINE = 180
-                seed_max = 10
+                seed_max = 30
                 DROP_INTERVAL = 1        # drop interval
             elif GAME_LEVEL==3:
-                GAME_TIME = 999
-                GAME_LINE = 180
-                seed_max = 10
+                GAME_TIME = 180
+                GAME_LINE = 999999999
+                seed_max = 30
                 DROP_INTERVAL = 1         # drop interval
             for ii in range(1,seed_max+1,1):
                 if GAME_LEVEL==1:
@@ -159,6 +159,13 @@ def start():
                 print('USER_NAME: ' + str(USER_NAME))
                 print('RESULT_LOG_JSON: ' + str(RESULT_LOG_JSON))
 
+                EXEC_LOG = "result/"+Repository('.').head.shorthand\
+                            +"_"+str(GAME_LEVEL)\
+                            +"_"+str(GAME_TIME)\
+                            +"_"+str(GAME_LINE)\
+                            +"_"+str(DROP_INTERVAL)\
+                            +"_"+str(INPUT_RANDOM_SEED)\
+                            +".log"
                 ## start game
                 PYTHON_CMD = get_python_cmd()
                 cmd = PYTHON_CMD + ' ' + 'game_manager/game_manager2.py' \
@@ -171,7 +178,8 @@ def start():
                     + ' ' + '--mode' + ' ' + str(IS_MODE) \
                     + ' ' + '--user_name' + ' ' + str(USER_NAME) \
                     + ' ' + '--resultlogjson' + ' ' + str(RESULT_LOG_JSON) \
-                    + ' ' + '--ShapeListMax' + ' ' + str(SHAPE_LIST_MAX)
+                    + ' ' + '--ShapeListMax' + ' ' + str(SHAPE_LIST_MAX) \
+                    + ' ' + '>'+EXEC_LOG
 
                 ret = subprocess.run(cmd, shell=True)
                 if ret.returncode != 0:
