@@ -261,6 +261,7 @@ class Block_Controller(object):
         height = self.board_data_height #height=22
         blockheight = self.maxblockheight(board)
         order = self.makehorizontalorder(blockheight)
+        ypos_change = -3
 
         dic_dir0 = {0x0f:8,0x0e:8,0x0d:8,0x0c:8,0x0b:8,0x0a:8,0x09:8,0x08:8
                     ,0x07:7,0x06:7,0x05:7,0x04:7
@@ -353,7 +354,7 @@ class Block_Controller(object):
                 #             if self.MYDEBUG == 1 : print("hole=",format(pat4,'04x'),"point=",point)
                 if (x<(width))and((pat2) in dic_dir0):
                     # getpoint = dic_dir0[pat2]+y*2+dic_widy[direction]-dic_aliy[direction] #for Lv2
-                    if y>=1 : getpoint = dic_dir0[pat2]+(y*2)
+                    if y>= ypos_change : getpoint = dic_dir0[pat2]+(y*2)
                     else : getpoint = dic_dir0[pat2]
                     #getpoint = dic_dir0[pat2] #for Lv1
                     if self.MYDEBUG == 1 : print('I(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
@@ -380,7 +381,7 @@ class Block_Controller(object):
                 direction=1
                 if  (x<(width-3))and((pat4) in dic_dir1):
                     # getpoint = dic_dir1[pat4]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    if y>=1 : getpoint = dic_dir1[pat4]+(y*2)
+                    if y>= ypos_change : getpoint = dic_dir1[pat4]+(y*2)
                     else : getpoint = dic_dir1[pat4]
                     if self.MYDEBUG == 1 : print('I(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmin = x + dic_ofsx[direction]
@@ -410,7 +411,7 @@ class Block_Controller(object):
                 if ((pat2) in dic_dir2):
                 # if (x>0) and ((pat2) in dic_dir2):
                     # getpoint = dic_dir2[pat2]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    if y>=1 : getpoint = dic_dir2[pat2]+(y*2)
+                    if y>= ypos_change : getpoint = dic_dir2[pat2]+(y*2)
                     else : getpoint = dic_dir2[pat2]
                     if self.MYDEBUG == 1 : print('I(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmin = x + dic_ofsx[direction]
@@ -436,7 +437,7 @@ class Block_Controller(object):
                 direction=3
                 if (x<(width-2))and((pat3) in dic_dir3):
                     # getpoint = dic_dir3[pat3]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    if y>=1 : getpoint = dic_dir3[pat3]+(y*2)
+                    if y>= ypos_change : getpoint = dic_dir3[pat3]+(y*2)
                     else : getpoint = dic_dir3[pat3]
                     if self.MYDEBUG == 1 : print('I(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmin = x + dic_ofsx[direction]
@@ -469,6 +470,7 @@ class Block_Controller(object):
         height = self.board_data_height #height=22
         blockheight = self.maxblockheight(board)
         order = self.makehorizontalorder(blockheight)
+        ypos_change = -3
 
         dic_dir0 = {0x11:7,0x10:1,0x01:1}
         dic_dir1 = {0x133:8,0x123:7,0x132:7,0x122:7,  #for Lv2~ (Lv1:17520)
@@ -504,7 +506,7 @@ class Block_Controller(object):
                 direction=0
                 if (x<(width-1))and((pat2) in dic_dir0):
                     # getpoint = dic_dir0[pat2]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    if y>=1 : getpoint = dic_dir0[pat2]+(y*2)
+                    if y>= ypos_change : getpoint = dic_dir0[pat2]+(y*2)
                     else : getpoint = dic_dir0[pat2]
                     if self.MYDEBUG == 1 : print('L(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmax = x + dic_widx[direction]
@@ -533,7 +535,7 @@ class Block_Controller(object):
                 direction=1
                 if (x<(width-2))and((pat3) in dic_dir1):
                     # getpoint = dic_dir1[pat3]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    if y>=1 : getpoint = dic_dir1[pat3]+(y*2)
+                    if y>= ypos_change : getpoint = dic_dir1[pat3]+(y*2)
                     else : getpoint = dic_dir1[pat3]
                     if self.MYDEBUG == 1 : print('L(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmax = x + dic_widx[direction]
@@ -560,7 +562,7 @@ class Block_Controller(object):
                 direction=2
                 if (x>=0)and(x<(width-1))and((pat2) in dic_dir2):
                     # getpoint = dic_dir2[pat2]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    if y>=1 : getpoint = dic_dir2[pat2]+(y*2)
+                    if y>= ypos_change : getpoint = dic_dir2[pat2]+(y*2)
                     else : getpoint = dic_dir2[pat2]
                     if self.MYDEBUG == 1 : print('L(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmax = x + dic_widx[direction]
@@ -621,6 +623,7 @@ class Block_Controller(object):
         height = self.board_data_height #height=22
         blockheight = self.maxblockheight(board)
         order = self.makehorizontalorder(blockheight)
+        ypos_change = -3
 
         dic_dir0 = {0x11:7,0x10:1,0x01:1}
         dic_dir1 = {0x111:9,0x110:3,0x101:3,0x001:3,0x100:1,0x010:1,0x001:1}
@@ -767,6 +770,7 @@ class Block_Controller(object):
         height = self.board_data_height #height=22
         blockheight = self.maxblockheight(board)
         order = self.makehorizontalorder(blockheight)
+        ypos_change = -3
 
         dic_dir0 = {0x13:6,0x12:6,
                     0x11:2,0x10:1} #for Lv3
@@ -799,7 +803,7 @@ class Block_Controller(object):
                 direction=0
                 if (x<(width-1))and((pat2) in dic_dir0):
                     # getpoint = dic_dir0[pat2]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    if y>=1 : getpoint = dic_dir0[pat2]+(y*2)
+                    if y>= ypos_change : getpoint = dic_dir0[pat2]+(y*2)
                     else : getpoint = dic_dir0[pat2]
                     if self.MYDEBUG == 1 : print('T(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmax = x + dic_widx[direction]
@@ -827,7 +831,7 @@ class Block_Controller(object):
                 direction=1
                 if (x<(width-2))and((pat3) in dic_dir1):
                     # getpoint = dic_dir1[pat3]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    if y>=1 : getpoint = dic_dir1[pat3]+(y*2)
+                    if y>= ypos_change : getpoint = dic_dir1[pat3]+(y*2)
                     else : getpoint = dic_dir1[pat3]
                     if self.MYDEBUG == 1 : print('T(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmax = x + dic_widx[direction]
@@ -854,7 +858,7 @@ class Block_Controller(object):
                 direction=2
                 if (x<(width-1))and((pat2) in dic_dir2):
                     # getpoint = dic_dir2[pat2]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    if y>=1 : getpoint = dic_dir2[pat2]+(y*2)
+                    if y>= ypos_change : getpoint = dic_dir2[pat2]+(y*2)
                     else : getpoint = dic_dir2[pat2]
                     if self.MYDEBUG == 1 : print('T(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmax = x + dic_widx[direction]
@@ -882,7 +886,7 @@ class Block_Controller(object):
                 direction=3
                 if (x<(width-2))and((pat3) in dic_dir3):
                     # getpoint = dic_dir3[pat3]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    if y>=1 : getpoint = dic_dir3[pat3]+(y*2)
+                    if y>= ypos_change : getpoint = dic_dir3[pat3]+(y*2)
                     else : getpoint = dic_dir3[pat3]
                     if self.MYDEBUG == 1 : print('T(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmax = x + dic_widx[direction]
@@ -916,6 +920,7 @@ class Block_Controller(object):
         height = self.board_data_height #height=22
         blockheight = self.maxblockheight(board)
         order = self.makehorizontalorder(blockheight)
+        ypos_change = -3
 
         dic_dir0 = {0x11:9,
                     0x13:4,0x12:4,0x31:4,0x21:4,
@@ -947,7 +952,7 @@ class Block_Controller(object):
                 direction=0
                 if (x<(width-1))and((pat2) in dic_dir0):
                     # getpoint = dic_dir0[pat2]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    if y>=1 : getpoint = dic_dir0[pat2]+(y*2)
+                    if y>= ypos_change : getpoint = dic_dir0[pat2]+(y*2)
                     else : getpoint = dic_dir0[pat2]
                     if self.MYDEBUG == 1 : print('O(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmax = x + dic_widx[direction]
@@ -975,7 +980,7 @@ class Block_Controller(object):
                 direction=1
                 if (x<(width-1))and((pat3) in dic_dir1):
                     # getpoint = dic_dir1[pat3]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    if y>=1 : getpoint = dic_dir1[pat3]+(y*2)
+                    if y>= ypos_change : getpoint = dic_dir1[pat3]+(y*2)
                     else : getpoint = dic_dir1[pat3]
                     if self.MYDEBUG == 1 : print('O(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmax = x + dic_widx[direction]
@@ -1002,7 +1007,7 @@ class Block_Controller(object):
                 direction=2
                 if (x<(width-2))and((pat3) in dic_dir2):
                     # getpoint = dic_dir2[pat3]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    if y>=1 : getpoint = dic_dir2[pat3]+(y*2)
+                    if y>= ypos_change : getpoint = dic_dir2[pat3]+(y*2)
                     else : getpoint = dic_dir2[pat3]
                     if self.MYDEBUG == 1 : print('O(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmax = x + dic_widx[direction]
@@ -1036,6 +1041,7 @@ class Block_Controller(object):
         height = self.board_data_height #height=22
         blockheight = self.maxblockheight(board)
         order = self.makehorizontalorder(blockheight)
+        ypos_change = -3
 
         dic_dir0 = {0x113:8,0x112:8,0x111:4}
         dic_dir1 = {0x31:6,0x21:6,
@@ -1066,7 +1072,7 @@ class Block_Controller(object):
                 direction=0
                 if (x<(width-2))and((pat3) in dic_dir0):
                     # getpoint = dic_dir0[pat3]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    if y>=1 : getpoint = dic_dir0[pat3]+(y*2)
+                    if y>= ypos_change : getpoint = dic_dir0[pat3]+(y*2)
                     else : getpoint = dic_dir0[pat3]
                     if self.MYDEBUG == 1 : print('S(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmax = x + dic_widx[direction]
@@ -1094,7 +1100,7 @@ class Block_Controller(object):
                 direction=1
                 if (x<(width-1))and((pat2) in dic_dir1):
                     # getpoint = dic_dir1[pat2]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    if y>=1 : getpoint = dic_dir1[pat2]+(y*2)
+                    if y>= ypos_change : getpoint = dic_dir1[pat2]+(y*2)
                     else : getpoint = dic_dir1[pat2]
                     if self.MYDEBUG == 1 : print('S(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmax = x + dic_widx[direction]
@@ -1127,6 +1133,7 @@ class Block_Controller(object):
         height = self.board_data_height #height=22
         blockheight = self.maxblockheight(board)
         order = self.makehorizontalorder(blockheight)
+        ypos_change = -3
 
         dic_dir0 = {0x311:8,0x211:8,0x111:4}
         dic_dir1 = {0x13:6,0x12:6,
@@ -1157,7 +1164,7 @@ class Block_Controller(object):
                 direction=0
                 if (x<(width-2))and((pat3) in dic_dir0):
                     # getpoint = dic_dir0[pat3]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    if y>=1 : getpoint = dic_dir0[pat3]+(y*2)
+                    if y>= ypos_change : getpoint = dic_dir0[pat3]+(y*2)
                     else : getpoint = dic_dir0[pat3]
                     if self.MYDEBUG == 1 : print('Z(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmax = x + dic_widx[direction]
@@ -1185,7 +1192,7 @@ class Block_Controller(object):
                 direction=1
                 if (x<(width-1))and((pat2) in dic_dir1):
                     # getpoint = dic_dir1[pat2]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    if y>=1 : getpoint = dic_dir1[pat2]+(y*2)
+                    if y>= ypos_change : getpoint = dic_dir1[pat2]+(y*2)
                     else : getpoint = dic_dir1[pat2]
                     if self.MYDEBUG == 1 : print('Z(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmax = x + dic_widx[direction]
