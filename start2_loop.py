@@ -59,7 +59,8 @@ def start():
     SHAPE_LIST_MAX = 6
 
     repo = Repository('.git')
-    branch_list=['ish04d','ish05g6','ish05h3','ish06a']
+    # branch_list=['ish04d','ish05g6','ish05h3','ish06a']
+    branch_list=['ish06a']
     for br in branch_list:
         branch = repo.lookup_branch(br)
         ref = repo.lookup_reference(branch.name)
@@ -81,7 +82,7 @@ def start():
                 GAME_LINE = 180
                 seed_max = 10
                 DROP_INTERVAL = 1         # drop interval
-            for ii in range(1,seed_max-1,1):
+            for ii in range(1,seed_max+1,1):
                 if GAME_LEVEL==1:
                     INPUT_RANDOM_SEED = -1
                 else:
