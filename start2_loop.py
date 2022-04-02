@@ -69,7 +69,7 @@ def start():
             if GAME_LEVEL==1:
                 GAME_TIME = 999
                 GAME_LINE = 180
-                seed_max = 1
+                seed_max = 2
                 DROP_INTERVAL = 1        # drop interval
             elif GAME_LEVEL==2:
                 GAME_TIME = 999
@@ -81,7 +81,7 @@ def start():
                 GAME_LINE = 180
                 seed_max = 10
                 DROP_INTERVAL = 1         # drop interval
-            for ii in range(0,seed_max,1):
+            for ii in range(1,seed_max-1,1):
                 if GAME_LEVEL==1:
                     INPUT_RANDOM_SEED = -1
                 else:
