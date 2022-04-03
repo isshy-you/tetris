@@ -10,7 +10,7 @@ from numpy import iinfo
 
 class Block_Controller(object):
 
-    MYDEBUG = 1
+    MYDEBUG = 0
     # init parameter
     board_backboard = 0
     board_data_width = 0
