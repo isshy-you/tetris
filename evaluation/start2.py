@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import os
 import subprocess
 from argparse import ArgumentParser
 from pygit2 import Repository
@@ -130,7 +131,7 @@ def start():
     print('USER_NAME: ' + str(USER_NAME))
     print('RESULT_LOG_JSON: ' + str(RESULT_LOG_JSON))
 
-    os.mkdir('result', exist_ok=True)
+    os.makedirs('result', exist_ok=True)
     EXEC_LOG = "result/"+Repository('.').head.shorthand\
                 +"_"+str(GAME_LEVEL)\
                 +"_"+str(GAME_TIME)\

@@ -59,11 +59,6 @@ def start():
     USER_NAME = "window_sample"
     SHAPE_LIST_MAX = 6
 
-    # ret = subprocess.run('copy .\evaluation\game_manager2.py .\game_manager\game_manager2.py', shell=True)
-    # if ret.returncode != 0:
-    #     print('error: subprocess failed.', file=sys.stderr)
-    #     sys.exit(1)
-
     repo = Repository('.git')
     branch_list=['ish04d','ish05c','ish05g6','ish05h3','ish06a']
     for branch_name in branch_list:
@@ -172,7 +167,7 @@ def start():
                 print('USER_NAME: ' + str(USER_NAME))
                 print('RESULT_LOG_JSON: ' + str(RESULT_LOG_JSON))
 
-                os.mkdir('result', exist_ok=True)
+                os.makedirs('result', exist_ok=True)
                 # EXEC_LOG = "result/"+Repository('.').head.shorthand\
                 EXEC_LOG = "result/"+branch_name\
                             +"_"+str(GAME_LEVEL)\
