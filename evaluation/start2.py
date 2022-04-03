@@ -47,6 +47,8 @@ def get_python_cmd():
     return "python"
 
 def start():
+    ## define
+    EXEC_LOG_ON = 1    
     ## default value
     GAME_LEVEL = 3
     GAME_TIME = 180
@@ -132,13 +134,6 @@ def start():
     print('RESULT_LOG_JSON: ' + str(RESULT_LOG_JSON))
 
     os.makedirs('result', exist_ok=True)
-    EXEC_LOG = "result/"+Repository('.').head.shorthand\
-                +"_"+str(GAME_LEVEL)\
-                +"_"+str(GAME_TIME)\
-                +"_"+str(GAME_LINE)\
-                +"_"+str(DROP_INTERVAL)\
-                +"_"+str(INPUT_RANDOM_SEED)\
-                +".log"
     ## start game
     PYTHON_CMD = get_python_cmd()
     cmd = PYTHON_CMD + ' ' + 'game_manager/game_manager2.py' \
@@ -151,8 +146,18 @@ def start():
         + ' ' + '--mode' + ' ' + str(IS_MODE) \
         + ' ' + '--user_name' + ' ' + str(USER_NAME) \
         + ' ' + '--resultlogjson' + ' ' + str(RESULT_LOG_JSON) \
-        + ' ' + '--ShapeListMax' + ' ' + str(SHAPE_LIST_MAX)\
-        + ' ' + '>'+EXEC_LOG
+        + ' ' + '--ShapeListMax' + ' ' + str(SHAPE_LIST_MAX)
+
+    if EXEC_LOG_ON==1:
+        # EXEC_LOG = "result/"+Repository('.').head.shorthand\
+        EXEC_LOG = "result/"+Repository('.').head.shorthand\
+                    +"_"+str(GAME_LEVEL)\
+                    +"_"+str(GAME_TIME)\
+                    +"_"+str(GAME_LINE)\
+                    +"_"+str(DROP_INTERVAL)\
+                    +"_"+str(INPUT_RANDOM_SEED)\
+                    +".log"
+        cmd = cmd + ' ' + '>'+EXEC_LOG
     ret = subprocess.run(cmd, shell=True)
     if ret.returncode != 0:
         print('error: subprocess failed.', file=sys.stderr)
