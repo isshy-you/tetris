@@ -7,7 +7,7 @@ import subprocess
 from argparse import ArgumentParser
 from pygit2 import Repository
 
-def get_option(game_level, game_time, game_line, mode, random_seed, drop_interval, resultlogjson, user_name, ShapeListMax):
+def get_option(game_level, game_time, game_block, mode, random_seed, drop_interval, resultlogjson, user_name, ShapeListMax):
     argparser = ArgumentParser()
     argparser.add_argument('-l', '--game_level', type=int,
                            default=game_level,
@@ -15,8 +15,8 @@ def get_option(game_level, game_time, game_line, mode, random_seed, drop_interva
     argparser.add_argument('-t', '--game_time', type=int,
                            default=game_time,
                            help='Specify game time(s), if specify -1, do endless loop')
-    argparser.add_argument('-n', '--game_line', type=int,
-                           default=game_line,
+    argparser.add_argument('-n', '--game_block', type=int,
+                           default=game_block,
                            help='Specify game lines, if specify -1, do endless loop')
     argparser.add_argument('-m', '--mode', type=str,
                            default=mode,
@@ -52,7 +52,7 @@ def start():
     ## default value
     GAME_LEVEL = 3
     GAME_TIME = 180
-    GAME_LINE = 1000
+    GAME_BLOCK = 1000
     IS_MODE = "default"
     IS_SAMPLE_CONTROLL = "n"
     INPUT_RANDOM_SEED = 1
@@ -62,9 +62,16 @@ def start():
     SHAPE_LIST_MAX = 6
 
     ## update value if args are given
+    result_name = Repository('.').head.shorthand\
+                +"_"+f'{GAME_LEVEL:1}'\
+                +"_"+f'{GAME_TIME:03}'\
+                +"_"+f'{GAME_BLOCK:04}'\
+                +"_"+f'{DROP_INTERVAL:03}'\
+                +"_"+f'{INPUT_RANDOM_SEED:+03}'\
+                +"_"+f'{0:03}'
     args = get_option(GAME_LEVEL,
                       GAME_TIME,
-                      GAME_LINE,
+                      GAME_BLOCK,
                       IS_MODE,
                       INPUT_RANDOM_SEED,
                       DROP_INTERVAL,
@@ -75,8 +82,8 @@ def start():
         GAME_LEVEL = args.game_level
     if args.game_time >= 0 or args.game_time == -1:
         GAME_TIME = args.game_time
-    if args.game_line >= 0 or args.game_line == -1:
-        GAME_LINE = args.game_line
+    if args.game_block >= 0 or args.game_block == -1:
+        GAME_BLOCK = args.game_block
     if args.mode in ("keyboard", "gamepad", "sample", "train", "predict", "train_sample", "predict_sample"):
         IS_MODE = args.mode
     if args.random_seed >= 0:
@@ -86,13 +93,7 @@ def start():
     if len(args.resultlogjson) != 0:
         RESULT_LOG_JSON = args.resultlogjson
     else:
-        RESULT_LOG_JSON = "result/"+Repository('.').head.shorthand\
-                            +"_"+str(GAME_LEVEL)\
-                            +"_"+str(GAME_TIME)\
-                            +"_"+str(GAME_LINE)\
-                            +"_"+str(DROP_INTERVAL)\
-                            +"_"+str(INPUT_RANDOM_SEED)\
-                            +".json"
+        RESULT_LOG_JSON = "result/"+result_name+".json"
     if len(args.user_name) != 0:
         USER_NAME = args.user_name
     if args.ShapeListMax > 1:
@@ -125,7 +126,7 @@ def start():
     ## print
     print('game_level: ' + str(GAME_LEVEL))
     print('game_time: ' + str(GAME_TIME))
-    print('game_line: ' + str(GAME_LINE))
+    print('game_block: ' + str(GAME_BLOCK))
     print('RANDOM_SEED: ' + str(RANDOM_SEED))
     print('IS_MODE :' + str(IS_MODE))
     print('OBSTACLE_HEIGHT: ' + str(OBSTACLE_HEIGHT))
@@ -138,7 +139,7 @@ def start():
     PYTHON_CMD = get_python_cmd()
     cmd = PYTHON_CMD + ' ' + 'game_manager/game_manager2.py' \
         + ' ' + '--game_time' + ' ' + str(GAME_TIME) \
-        + ' ' + '--game_line' + ' ' + str(GAME_LINE) \
+        + ' ' + '--game_block' + ' ' + str(GAME_BLOCK) \
         + ' ' + '--seed' + ' ' + str(RANDOM_SEED) \
         + ' ' + '--obstacle_height' + ' ' + str(OBSTACLE_HEIGHT) \
         + ' ' + '--obstacle_probability' + ' ' + str(OBSTACLE_PROBABILITY) \
@@ -150,13 +151,7 @@ def start():
 
     if EXEC_LOG_ON==1:
         # EXEC_LOG = "result/"+Repository('.').head.shorthand\
-        EXEC_LOG = "result/"+Repository('.').head.shorthand\
-                    +"_"+str(GAME_LEVEL)\
-                    +"_"+str(GAME_TIME)\
-                    +"_"+str(GAME_LINE)\
-                    +"_"+str(DROP_INTERVAL)\
-                    +"_"+str(INPUT_RANDOM_SEED)\
-                    +".log"
+        EXEC_LOG = "result/"+result_name+".log"
         cmd = cmd + ' ' + '>'+EXEC_LOG
     ret = subprocess.run(cmd, shell=True)
     if ret.returncode != 0:
