@@ -15,13 +15,13 @@ import time
 import json
 import pprint
 
-def get_option(game_time, game_line, mode, drop_interval, random_seed, obstacle_height, obstacle_probability, resultlogjson, user_name, ShapeListMax):
+def get_option(game_time, game_block, mode, drop_interval, random_seed, obstacle_height, obstacle_probability, resultlogjson, user_name, ShapeListMax):
     argparser = ArgumentParser()
     argparser.add_argument('--game_time', type=int,
                            default=game_time,
                            help='Specify game time(s)')
-    argparser.add_argument('--game_line', type=int,
-                           default=game_line,
+    argparser.add_argument('--game_block', type=int,
+                           default=game_block,
                            help='Specify game lines')
     argparser.add_argument('--mode', type=str,
                            default=mode,
@@ -67,7 +67,7 @@ class Game_Manager(QMainWindow):
         self.lastShape = Shape.shapeNone
 
         self.game_time = -1
-        self.game_line = -1
+        self.game_block = -1
         self.block_index = 0
         self.mode = "default"
         self.drop_interval = 1000
@@ -78,7 +78,7 @@ class Game_Manager(QMainWindow):
         self.resultlogjson = ""
         self.user_name = ""
         args = get_option(self.game_time,
-                          self.game_line,
+                          self.game_block,
                           self.mode,
                           self.drop_interval,
                           self.random_seed,
@@ -89,8 +89,8 @@ class Game_Manager(QMainWindow):
                           self.ShapeListMax)
         if args.game_time >= 0:
             self.game_time = args.game_time
-        if args.game_line >= 0:
-            self.game_line = args.game_line
+        if args.game_block >= 0:
+            self.game_block = args.game_block
         if args.mode in ("keyboard", "gamepad", "sample", "train", "predict", "train_sample", "predict_sample"):
             self.mode = args.mode
         if args.drop_interval >= 0:
@@ -124,7 +124,7 @@ class Game_Manager(QMainWindow):
         random_seed_Nextshape = self.random_seed
         self.tboard = Board(self, self.gridSize,
                             self.game_time,
-                            self.game_line,
+                            self.game_block,
                             random_seed_Nextshape,
                             self.obstacle_height,
                             self.obstacle_probability,
@@ -698,12 +698,12 @@ class SidePanel(QFrame):
 class Board(QFrame):
     msg2Statusbar = pyqtSignal(str)
 
-    def __init__(self, parent, gridSize, game_time, game_line, random_seed, obstacle_height, obstacle_probability, ShapeListMax):
+    def __init__(self, parent, gridSize, game_time, game_block, random_seed, obstacle_height, obstacle_probability, ShapeListMax):
         super().__init__(parent)
         self.setFixedSize(gridSize * BOARD_DATA.width, gridSize * BOARD_DATA.height)
         self.gridSize = gridSize
         self.game_time = game_time
-        self.game_line = game_line
+        self.game_block = game_block
         self.initBoard(random_seed, obstacle_height, obstacle_probability, ShapeListMax)
 
     def initBoard(self, random_seed_Nextshape, obstacle_height, obstacle_probability, ShapeListMax):
@@ -764,7 +764,8 @@ class Board(QFrame):
             print("game_time: {}".format(self.game_time))
             print("endless loop")
         # elif self.game_time >= 0 and elapsed_time > self.game_time - 0.5:
-        elif self.game_time >= 0 and ((elapsed_time >= self.game_time) or (block_index >= self.game_line)):
+        elif ((self.game_time >= 0) and (elapsed_time >= self.game_time))\
+             or ((self.game_block>=0) and (block_index >= self.game_block)):
             # finish game.
             print("game finish!! elapsed time: " + elapsed_time_str + "/game_time: " + str(self.game_time))
             print("")
