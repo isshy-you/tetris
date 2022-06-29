@@ -27,9 +27,9 @@
   - [参考](#%E5%8F%82%E8%80%83)
   - [今後の課題](#%E4%BB%8A%E5%BE%8C%E3%81%AE%E8%AA%B2%E9%A1%8C)
     - [次のブロックのランダム性](#%E6%AC%A1%E3%81%AE%E3%83%96%E3%83%AD%E3%83%83%E3%82%AF%E3%81%AE%E3%83%A9%E3%83%B3%E3%83%80%E3%83%A0%E6%80%A7)
-    - [対戦モード実装](#%E5%AF%BE%E6%88%A6%E3%83%A2%E3%83%BC%E3%83%89%E5%AE%9F%E8%A3%85)
     - [AI実装](#ai%E5%AE%9F%E8%A3%85)
     - [自動評価](#%E8%87%AA%E5%8B%95%E8%A9%95%E4%BE%A1)
+    - [対戦](#%E5%AF%BE%E6%88%A6)
   - [LICENSE](#license)
   - [Finnaly](#finnaly)
 
@@ -40,7 +40,8 @@
 プログラミング学習を目的とした、ブロックを操作してスコアを競うゲームです。<br>
 [FAQはこちら。](https://github.com/seigot/tetris/blob/master/doc/files/FAQ.md)<br>
 [tutorialはこちら。](https://github.com/seigot/tetris_game_tutorial)<br>
-[tetris_score_serverはこちら](https://github.com/seigot/tetris_score_server)
+[tetris_score_serverはこちら](https://github.com/seigot/tetris_score_server)  
+[tetris_battle_serverはこちら](https://github.com/seigot/tetris_battle_server)  
 
 ## 実行環境準備
 
@@ -162,14 +163,14 @@ python start.py -m sample
 
 実行時、オプションを与えることで、難易度（レベル）を指定できます。<br>
 
-|     |  level1  |  level2  |  level3  | 
-| --- | --- | --- | --- | 
-|  実行方法  | python start.py | python start.py -l2  | python start.py -l3 | 
-|  制限時間  |  180秒  |  180秒  |  180秒  | 
-|  ブロックの順番  |  固定(1-7まで順番に繰り返し)  |  ランダム  |  ランダム  | 
-|  フィールドの初期ブロック  |  なし  |  なし  |  あり  | 
-|  フレーム更新頻度  |  約1秒  |  約1秒  |  約1秒  | 
-|  備考  |  -  |  -  |  -  | 
+|     |  level1  |  level2  |  level3  |  level3+α  | 
+| --- | --- | --- | --- | --- | 
+|  実行方法  | python start.py | python start.py -l2  | python start.py -l3 | python start.py -l3 -d1 | 
+|  制限時間  |  180秒  |  180秒  |  180秒  |  180秒  | 
+|  ブロックの順番  |  固定(1-7まで順番に繰り返し)  |  ランダム  |  ランダム  |  ランダム  |
+|  フィールドの初期ブロック  |  なし  |  なし  |  あり  |  あり  | 
+|  フレーム更新頻度  |  約1秒  |  約1秒  |  約1秒  |  約0.001秒  | 
+|  備考  |  -  |  -  |  -  |  -  | 
 
 [各レベルの参考スコア](doc/files/reference_score.md)
 
@@ -274,14 +275,16 @@ git push                                                   # 変更を反映
 nextShapeIndex = np_randomShape.random.randint(1, 8)
 ```
 
-### 対戦モード実装
-準備中
-
 ### AI実装
-準備中
+[AIについて（準備中）](doc/files/ai.md)
 
 ### 自動評価
-準備中
+スコアアタック用サーバ  
+https://github.com/seigot/tetris_score_server
+
+### 対戦
+対戦用サーバ  
+https://github.com/seigot/tetris_battle_server
 
 ## LICENSE
 
