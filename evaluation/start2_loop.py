@@ -64,7 +64,6 @@ def start():
 
     repo = Repository('.git')
     branch_list=['ish04d','ish05c','ish05g6','ish05h3','ish06a']
-    # branch_list=['ish05h3']
 
     for branch_name in branch_list:
         # branch = repo.lookup_branch(branch_name)
