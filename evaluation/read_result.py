@@ -37,4 +37,4 @@ for ii,file in enumerate(path.glob('*.json')):
 
 print("Saving to result.csv")
 df.reset_index(drop=True, inplace=True)
-df.to_csv('result/result.csv')
+df.to_csv('result/result.csv',index = False)
