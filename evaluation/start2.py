@@ -70,7 +70,7 @@ def start():
     PREDICT_WEIGHT = "outputs/latest/best_weight.pt"
 
     ## update value if args are given
-    result_name = Repository('.').head.shorthand.replace('/','_')\
+    result_name = Repository('.').head.shorthand.replace('/','-')\
                 +"_"+f'{GAME_LEVEL:1}'\
                 +"_"+f'{GAME_TIME:03}'\
                 +"_"+f'{BLOCK_NUM_MAX:04}'\
