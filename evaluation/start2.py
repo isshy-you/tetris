@@ -164,7 +164,6 @@ def start():
         + ' ' + '--user_name' + ' ' + str(USER_NAME) \
         + ' ' + '--resultlogjson' + ' ' + str(RESULT_LOG_JSON) \
         + ' ' + '--ShapeListMax' + ' ' + str(SHAPE_LIST_MAX) \
-        + ' ' + '--ShapeListMax' + ' ' + str(SHAPE_LIST_MAX) \
         + ' ' + '--train_yaml' + ' ' + str(TRAIN_YAML) \
         + ' ' + '--predict_weight' + ' ' + str(PREDICT_WEIGHT) \
         + ' ' + '--BlockNumMax' + ' ' + str(BLOCK_NUM_MAX)
