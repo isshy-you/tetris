@@ -59,7 +59,8 @@ def get_python_cmd():
 def read_option_from_excel():
     # os.chdir('C:/Users/yuich/Source/tetris/evaluation')
     excel_file_name = './evaluation/loop_exec_option.xlsx'
-    df = pd.read_excel(excel_file_name)
+    excel_sheet_name = 'list'
+    df = pd.read_excel(excel_file_name, sheet_name=excel_sheet_name)
     return(df)
 
 def start():
@@ -131,7 +132,7 @@ def start():
                     +"_"+f'{GAME_TIME:03}'\
                     +"_"+f'{BLOCK_NUM_MAX:04}'\
                     +"_"+f'{DROP_INTERVAL:03}'\
-                    +"_"+f'{INPUT_RANDOM_SEED:+03}'\
+                    +"_"+f'{INPUT_RANDOM_SEED:+05}'\
                     +"_"+f'{num+1:03}'
         if GAME_LEVEL==1:
             INPUT_RANDOM_SEED = -1
@@ -144,12 +145,12 @@ def start():
                         IS_MODE,
                         INPUT_RANDOM_SEED,
                         DROP_INTERVAL,
-                        '', # RESULT_LOG_JSON,
-                TRAIN_YAML,
-                PREDICT_WEIGHT,
-                USER_NAME,
-                SHAPE_LIST_MAX,
-                BLOCK_NUM_MAX)
+                        '', # RESULT_LOG_JSON
+                        TRAIN_YAML,
+                        PREDICT_WEIGHT,
+                        USER_NAME,
+                        SHAPE_LIST_MAX,
+                        BLOCK_NUM_MAX)
         if args.game_level >= 0:
             GAME_LEVEL = args.game_level
         if args.game_time >= 0 or args.game_time == -1:
@@ -164,7 +165,7 @@ def start():
             RESULT_LOG_JSON = args.resultlogjson
         else:
             # RESULT_LOG_JSON = "result/"+Repository('.').head.shorthand\
-            RESULT_LOG_JSON = "result/"+result_name+".json"
+            RESULT_LOG_JSON = 'result/'+result_name+'.json'
         if len(args.user_name) != 0:
             USER_NAME = args.user_name
         if args.ShapeListMax > 1:
@@ -237,6 +238,8 @@ def start():
             EXEC_LOG = "result/"+result_name+".log"
             cmd = cmd + ' ' + '>'+EXEC_LOG
 
+        print(cmd)
+        os.makedirs('./result', exist_ok=True)
         ret = subprocess.run(cmd, shell=True)
         if ret.returncode != 0:
             print('error: subprocess failed.', file=sys.stderr)
