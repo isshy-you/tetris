@@ -63,6 +63,13 @@ def read_option_from_excel():
     df = pd.read_excel(excel_file_name, sheet_name=excel_sheet_name)
     return(df)
 
+def exec_cmd(cmd):
+    print('cmd : '+cmd)
+    ret = subprocess.run(cmd, shell=True)
+    if ret.returncode != 0:
+        print('error: subprocess failed.', file=sys.stderr)
+        sys.exit(1)
+
 def start():
     ## define
     EXEC_LOG_ON = 1    
@@ -100,16 +107,21 @@ def start():
         BLOCK_NUM_MAX = df.at[num,'BLOCK_NUM_MAX']
         TRAIN_YAML = df.at[num,'TRAIN_YAML']
         PREDICT_WEIGHT = df.at[num,'PREDICT_WEIGHT']
+        REPOSITORY = df.at[num,'REPOSITORY']
         # branch = repo.lookup_branch(branch_name)
         # ref = repo.lookup_reference(branch.name)
         # repo.checkout(ref)
         # print('branch=',Repository('.').head.shorthand)
-        cmd = 'git checkout '+branch_name+' ./game_manager/block_controller.py'
-        print('cmd : '+cmd)
-        ret = subprocess.run(cmd, shell=True)
-        if ret.returncode != 0:
-            print('error: subprocess failed.', file=sys.stderr)
-            sys.exit(1)
+
+        cmd = 'git remote remove eva'
+        exec_cmd(cmd)
+        cmd = 'git remote add eva ' + REPOSITORY
+        exec_cmd(cmd)
+        cmd = 'git fetch eva'
+        exec_cmd(cmd)
+        cmd = 'git checkout eva/'+branch_name+' ./game_manager/block_controller.py'
+        exec_cmd(cmd)
+
         # for GAME_LEVEL in [1,2,3]:
         if GAME_LEVEL==1:
             GAME_TIME = 999
@@ -238,12 +250,10 @@ def start():
             EXEC_LOG = "result/"+result_name+".log"
             cmd = cmd + ' ' + '>'+EXEC_LOG
 
-        print(cmd)
         os.makedirs('./result', exist_ok=True)
-        ret = subprocess.run(cmd, shell=True)
-        if ret.returncode != 0:
-            print('error: subprocess failed.', file=sys.stderr)
-            sys.exit(1)
+        print(cmd)
+        exec_cmd(cmd)
+
         #p = subprocess.Popen(cmd, shell=True)
         #try:
         #    p.wait()
@@ -252,11 +262,7 @@ def start():
         #    p.terminate()
 
     cmd = 'git restore ./game_manager/block_controller.py'
-    print('cmd : '+cmd)
-    ret = subprocess.run(cmd, shell=True)
-    if ret.returncode != 0:
-        print('error: subprocess failed.', file=sys.stderr)
-        sys.exit(1)
+    exec_cmd(cmd)
 
 if __name__ == '__main__':
     start()
