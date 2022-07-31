@@ -121,6 +121,11 @@ def start():
         exec_cmd(cmd)
         cmd = 'git checkout eva/'+branch_name+' ./game_manager/block_controller.py'
         exec_cmd(cmd)
+        cmd = 'git checkout eva/'+branch_name+' ./game_manager/machine_learning'
+        try:
+            exec_cmd(cmd)
+        except:
+            print('<<< no machine_learning >>>')
 
         # for GAME_LEVEL in [1,2,3]:
         if GAME_LEVEL==1:
@@ -140,6 +145,7 @@ def start():
             DROP_INTERVAL = 1         # drop interval
         # for num in range(1,seed_max+1,1):
         result_name = branch_name.replace('/','-').replace('_','-')\
+                    +"_"+IS_MODE.replace('_','')\
                     +"_"+f'{GAME_LEVEL:1}'\
                     +"_"+f'{GAME_TIME:03}'\
                     +"_"+f'{BLOCK_NUM_MAX:04}'\
@@ -167,7 +173,7 @@ def start():
             GAME_LEVEL = args.game_level
         if args.game_time >= 0 or args.game_time == -1:
             GAME_TIME = args.game_time
-        if args.mode in ("keyboard", "gamepad", "sample", "train", "predict", "train_sample", "predict_sample"):
+        if args.mode in ("keyboard", "gamepad", "sample", "train", "predict", "train_sample", "predict_sample", "train_sample2", "predict_sample2"):
             IS_MODE = args.mode
         if args.random_seed >= 0:
             INPUT_RANDOM_SEED = args.random_seed
@@ -240,9 +246,9 @@ def start():
             + ' ' + '--mode' + ' ' + str(IS_MODE) \
             + ' ' + '--user_name' + ' ' + str(USER_NAME) \
             + ' ' + '--resultlogjson' + ' ' + str(RESULT_LOG_JSON) \
-            + ' ' + '--ShapeListMax' + ' ' + str(SHAPE_LIST_MAX) \
             + ' ' + '--train_yaml' + ' ' + str(TRAIN_YAML) \
             + ' ' + '--predict_weight' + ' ' + str(PREDICT_WEIGHT) \
+            + ' ' + '--ShapeListMax' + ' ' + str(SHAPE_LIST_MAX) \
             + ' ' + '--BlockNumMax' + ' ' + str(BLOCK_NUM_MAX)
 
         if EXEC_LOG_ON==1:
@@ -254,6 +260,7 @@ def start():
         print(cmd)
         exec_cmd(cmd)
 
+
         #p = subprocess.Popen(cmd, shell=True)
         #try:
         #    p.wait()
@@ -262,6 +269,14 @@ def start():
         #    p.terminate()
 
     cmd = 'git restore ./game_manager/block_controller.py'
+    exec_cmd(cmd)
+    cmd = 'git restore ./game_manager/machine_learning'
+    try:
+        exec_cmd(cmd)
+    except:
+        print('<<< no machine_learning >>>')
+
+    cmd = PYTHON_CMD + ' ' + 'evaluation/read_result.py'
     exec_cmd(cmd)
 
 if __name__ == '__main__':

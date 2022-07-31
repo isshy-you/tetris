@@ -9,17 +9,18 @@ from pathlib import Path
 #                             )
 path = Path('./result/')
 for ii,file in enumerate(path.glob('*.json')):
-    branch,level,time,block,interval,seed,num = file.stem.split('_')
+    branch,mode,level,time,block,interval,seed,num = file.stem.split('_')
     f = open(file, 'r')
     print('reading : '+str(file))
     jsdic=json.load(f)
-    df2 = pd.DataFrame({'branch':[branch],
+    df2 = pd.DataFrame({'num':num,
+                        'branch':[branch],
+                        'mode':[mode],
                         'level':level,
                         'time':time,
                         'block':block,
                         'interval':interval,
                         'seed':seed,
-                        'num':num,
                         'score':jsdic['judge_info']['score'],
                         'block_index':jsdic['judge_info']['block_index'],
                         'elapsed_time':jsdic['judge_info']['elapsed_time'],
