@@ -30,6 +30,7 @@ pip install numpy
 pip install torch torchvision torchaudio
 pip install omegaconf
 pip install hydra-core --upgrade
+pip install tensorboardX
 ```
 に加えて、
 以下、追加で必要
@@ -70,7 +71,7 @@ result/result.csv に *.json をまとめた CSV を生成して終了
 
 最後に以下のプログラムを実行している。
 
-いつでも使用可能。今ある result/*｡json すべてを集計。
+いつでも使用可能。今ある result/*.json すべてを集計。
 ```pwrsh
 python ./evaluation/read_result.py
 ```
