@@ -114,7 +114,10 @@ def start():
         # print('branch=',Repository('.').head.shorthand)
 
         cmd = 'git remote remove eva'
-        exec_cmd(cmd)
+        try:
+            exec_cmd(cmd)
+        except:
+            print("<<< no remote 'eva' >>>")
         cmd = 'git remote add eva ' + REPOSITORY
         exec_cmd(cmd)
         cmd = 'git fetch eva'
