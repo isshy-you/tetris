@@ -92,7 +92,7 @@ def start():
         GAME_LEVEL = args.game_level
     if args.game_time >= 0 or args.game_time == -1:
         GAME_TIME = args.game_time
-    if args.mode in ("keyboard", "gamepad", "sample", "train", "predict", "train_sample", "predict_sample"):
+    if args.mode in ("keyboard", "gamepad", "sample", "train", "predict", "train_sample", "predict_sample", "train_sample2", "predict_sample2"):
         IS_MODE = args.mode
     if args.random_seed >= 0:
         INPUT_RANDOM_SEED = args.random_seed
@@ -141,12 +141,12 @@ def start():
     print('game_level: ' + str(GAME_LEVEL))
     print('game_time: ' + str(GAME_TIME))
     print('RANDOM_SEED: ' + str(RANDOM_SEED))
-    print('BLOCK_NUM_MAX: ' + str(BLOCK_NUM_MAX))
     print('IS_MODE :' + str(IS_MODE))
     print('OBSTACLE_HEIGHT: ' + str(OBSTACLE_HEIGHT))
     print('OBSTACLE_PROBABILITY: ' + str(OBSTACLE_PROBABILITY))
     print('USER_NAME: ' + str(USER_NAME))
     print('SHAPE_LIST_MAX: ' + str(SHAPE_LIST_MAX))
+    print('BLOCK_NUM_MAX: ' + str(BLOCK_NUM_MAX))
     print('RESULT_LOG_JSON: ' + str(RESULT_LOG_JSON))
     print('TRAIN_YAML: ' + str(TRAIN_YAML))
     print('PREDICT_WEIGHT: ' + str(PREDICT_WEIGHT))
@@ -163,9 +163,9 @@ def start():
         + ' ' + '--mode' + ' ' + str(IS_MODE) \
         + ' ' + '--user_name' + ' ' + str(USER_NAME) \
         + ' ' + '--resultlogjson' + ' ' + str(RESULT_LOG_JSON) \
-        + ' ' + '--ShapeListMax' + ' ' + str(SHAPE_LIST_MAX) \
         + ' ' + '--train_yaml' + ' ' + str(TRAIN_YAML) \
         + ' ' + '--predict_weight' + ' ' + str(PREDICT_WEIGHT) \
+        + ' ' + '--ShapeListMax' + ' ' + str(SHAPE_LIST_MAX) \
         + ' ' + '--BlockNumMax' + ' ' + str(BLOCK_NUM_MAX)
 
     if EXEC_LOG_ON==1:
