@@ -20,6 +20,18 @@ Comming soon...
 
 # Installation
 
+ルールベース
+```pwrsh
+pip install pyqt5
+pip install numpy
+```
+ＡＩ
+```pwrsh
+pip install torch torchvision torchaudio
+pip install omegaconf
+pip install hydra-core --upgrade
+```
+に加えて、
 以下、追加で必要
 ```pwrsh
 pip install pandas
