@@ -80,14 +80,14 @@ def start():
     IS_MODE = "default"
     IS_SAMPLE_CONTROLL = "n"
     INPUT_RANDOM_SEED = 1
-    DROP_INTERVAL = 1        # drop interval
+    DROP_INTERVAL = 1000        # drop interval
     RESULT_LOG_JSON = "result.json"
     USER_NAME = "window_sample"
     SHAPE_LIST_MAX = 6
     BLOCK_NUM_MAX = 1000
     TRAIN_YAML = "config/default.yaml"
     PREDICT_WEIGHT = "outputs/latest/best_weight.pt"
-    branch_list=['master','master_seigot','ish05h3']
+    # branch_list=['master','master_seigot','ish05h3']
 
     # set current directory .git
     # repo = Repository('.git')
@@ -114,7 +114,10 @@ def start():
         # print('branch=',Repository('.').head.shorthand)
 
         cmd = 'git remote remove eva'
-        exec_cmd(cmd)
+        try:
+            exec_cmd(cmd)
+        except:
+            print("<<< no remote 'eva' >>>")
         cmd = 'git remote add eva ' + REPOSITORY
         exec_cmd(cmd)
         cmd = 'git fetch eva'
@@ -127,21 +130,26 @@ def start():
         except:
             print('<<< no machine_learning >>>')
 
+        ## set field parameter for level 1
+        RANDOM_SEED = 0            # random seed for field
+        OBSTACLE_HEIGHT = 0        # obstacle height (blocks)
+        OBSTACLE_PROBABILITY = 0   # obstacle probability (percent)
+
         # for GAME_LEVEL in [1,2,3]:
         if GAME_LEVEL==1:
-            GAME_TIME = 999
+            RANDOM_SEED = 0
             BLOCK_NUM_MAX = 180
-            seed_max = 1
-            DROP_INTERVAL = 1        # drop interval
+            # seed_max = 1
+            # DROP_INTERVAL = 1        # drop interval
         elif GAME_LEVEL==2:
-            GAME_TIME = 999
+            RANDOM_SEED = -1
             BLOCK_NUM_MAX = 180
-            seed_max = 1
-            DROP_INTERVAL = 1        # drop interval
+            # seed_max = 1
+            # DROP_INTERVAL = 1        # drop interval
         elif GAME_LEVEL==3:
-            GAME_TIME = 30
+            # GAME_TIME = 30
             BLOCK_NUM_MAX = -1
-            seed_max = 1
+            # seed_max = 1
             DROP_INTERVAL = 1         # drop interval
         # for num in range(1,seed_max+1,1):
         result_name = branch_name.replace('/','-').replace('_','-')\
@@ -201,9 +209,7 @@ def start():
         OBSTACLE_PROBABILITY = 0   # obstacle probability (percent)
 
         ## update field parameter level
-        if GAME_LEVEL == 0:   # level0
-            GAME_TIME = -1
-        elif GAME_LEVEL == 1: # level1
+        if GAME_LEVEL == 1: # level1
             RANDOM_SEED = 0
         elif GAME_LEVEL == 2: # level2
             RANDOM_SEED = -1
@@ -257,7 +263,7 @@ def start():
             cmd = cmd + ' ' + '>'+EXEC_LOG
 
         os.makedirs('./result', exist_ok=True)
-        print(cmd)
+        # print(cmd)
         exec_cmd(cmd)
 
 
