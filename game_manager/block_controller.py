@@ -4,10 +4,6 @@
 from datetime import datetime
 import pprint
 import copy
-import random
-
-from numpy import iinfo
-
 class Block_Controller(object):
 
     MYDEBUG = 0
