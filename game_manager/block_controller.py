@@ -6,7 +6,6 @@ import pprint
 import copy
 class Block_Controller(object):
 
-    MYDEBUG = 0
     # init parameter
     board_backboard = 0
     board_data_width = 0
@@ -23,6 +22,7 @@ class Block_Controller(object):
     #    nextMove : nextMove structure which includes next shape position and the other.
     def GetNextMove(self, nextMove, GameStatus):
 
+        self.MYDEBUG = 0
         t1 = datetime.now()
         DEBUG = 0 #OFF
         # print GameStatus
