@@ -525,7 +525,8 @@ class lib_tetris:
                 direction=3
                 if (x<(self.width-2))and((pat3) in self.dic_pat_dir[1][direction]):
                     # getpoint = self.dic_pat_dir[1][direction][pat3]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    getpoint = self.dic_pat_dir[1][direction][pat3]+(y*2)
+                    if y>= ypos_change : getpoint = self.dic_pat_dir[1][direction][pat3]+(y*2)
+                    else : getpoint = self.dic_pat_dir[1][direction][pat3]
                     if (self.MYDEBUG) : print('L(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=self.width):
@@ -581,7 +582,8 @@ class lib_tetris:
                 direction=0
                 if (x<(self.width-1))and((pat2) in self.dic_pat_dir[2][direction]):
                     # getpoint = self.dic_pat_dir[2][direction][pat2]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    getpoint = self.dic_pat_dir[2][direction][pat2]+(y*2)
+                    if y>= ypos_change : getpoint = self.dic_pat_dir[2][direction][pat2]+(y*2)
+                    else : getpoint = self.dic_pat_dir[2][direction][pat2]
                     if (self.MYDEBUG) : print('J(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=self.width):
@@ -608,7 +610,8 @@ class lib_tetris:
                 direction=1
                 if (x<(self.width-2))and((pat3) in self.dic_pat_dir[2][direction]):
                     # getpoint = self.dic_pat_dir[2][direction][pat3]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    getpoint = self.dic_pat_dir[2][direction][pat3]+(y*2)
+                    if y>= ypos_change : getpoint = self.dic_pat_dir[2][direction][pat3]+(y*2)
+                    else : getpoint = self.dic_pat_dir[2][direction][pat3]
                     if (self.MYDEBUG) : print('J(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=self.width):
@@ -634,7 +637,8 @@ class lib_tetris:
                 direction=2
                 if (x<(self.width-1))and((pat2) in self.dic_pat_dir[2][direction]):
                     # getpoint = self.dic_pat_dir[2][direction][pat2]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    getpoint = self.dic_pat_dir[2][direction][pat2]+(y*2)
+                    if y>= ypos_change : getpoint = self.dic_pat_dir[2][direction][pat2]+(y*2)
+                    else : getpoint = self.dic_pat_dir[2][direction][pat2]
                     if (self.MYDEBUG) : print('J(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=self.width):
@@ -661,7 +665,8 @@ class lib_tetris:
                 direction=3
                 if (x<(self.width-2))and((pat3) in self.dic_pat_dir[2][direction]):
                     # getpoint = self.dic_pat_dir[2][direction][pat3]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    getpoint = self.dic_pat_dir[2][direction][pat3]+(y*2)
+                    if y>= ypos_change : getpoint = self.dic_pat_dir[2][direction][pat3]+(y*2)
+                    else : getpoint = self.dic_pat_dir[2][direction][pat3]
                     if (self.MYDEBUG) : print('J(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=self.width):
