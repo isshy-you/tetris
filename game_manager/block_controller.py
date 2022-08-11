@@ -55,7 +55,7 @@ class Block_Controller(object):
 
         # isshy=lib_tetris_isshy()
         # add additional code by isshy-you
-        self.MYDEBUG=True
+        self.MYDEBUG=False
         if self.CurrentShape_index==1:
             EvalValue,x0,direction0 = isshy.calcEvaluationValueIndex1(GameStatus,self.board_backboard, self.NextShape_index)
         elif self.CurrentShape_index==2:
