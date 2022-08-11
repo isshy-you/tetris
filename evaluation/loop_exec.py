@@ -122,9 +122,10 @@ def start():
         exec_cmd(cmd)
         cmd = 'git fetch eva'
         exec_cmd(cmd)
-        cmd = 'git checkout eva/'+branch_name+' ./game_manager/block_controller.py'
-        exec_cmd(cmd)
-        cmd = 'git checkout eva/'+branch_name+' ./game_manager/machine_learning'
+        # cmd = 'git checkout eva/'+branch_name+' ./game_manager/block_controller.py'
+        cmd = 'git checkout eva/'+branch_name+' ./game_manager'
+        # exec_cmd(cmd)
+        # cmd = 'git checkout eva/'+branch_name+' ./game_manager/machine_learning'
         try:
             exec_cmd(cmd)
         except:
@@ -274,9 +275,10 @@ def start():
         #    print("KeyboardInterrupt, call p.terminate()")
         #    p.terminate()
 
-    cmd = 'git restore ./game_manager/block_controller.py'
-    exec_cmd(cmd)
-    cmd = 'git restore ./game_manager/machine_learning'
+    cmd = 'git restore ./game_manager'
+    # cmd = 'git restore ./game_manager/block_controller.py'
+    # exec_cmd(cmd)
+    # cmd = 'git restore ./game_manager/machine_learning'
     try:
         exec_cmd(cmd)
     except:
