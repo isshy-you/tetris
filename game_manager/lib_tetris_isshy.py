@@ -288,61 +288,6 @@ class lib_tetris:
         order = self.makehorizontalorder(blockheight)
         ypos_change = -3
 
-        dic_dir1 = { 0x3333:8,0x2222:8,0x1111:8
-                    # ,0x2333:8,0x3233:8,0x3323:8,0x3332:8
-                    # ,0x2233:8,0x2323:8,0x2332:8,0x3232:8,0x3322:8
-                    # ,0x2223:8,0x2232:8,0x2322:8,0x3222:8
-                    ,0x1333:2,0x3133:2,0x3313:2,0x3331:2
-                    ,0x1233:2,0x2133:2,0x2313:2,0x2331:2
-                    ,0x1323:2,0x3123:2,0x3213:2,0x3231:2
-                    ,0x1332:2,0x3132:2,0x3312:2,0x3321:2
-                    ,0x1223:2,0x2123:2,0x2213:2,0x2231:2
-                    ,0x1232:2,0x2132:2,0x2312:2,0x2321:2
-                    ,0x1322:2,0x3122:2,0x3212:2,0x3221:2
-                    ,0x1222:2,0x2122:2,0x2212:2,0x2221:2
-                    }
-        dic_dir2 = {0xf0:8,0x70:7,0x30:3,0x10:1
-                    ,0x80:8,0x90:8,0xa0:8,0xb0:8,0xc0:8,0xd0:8,0xe0:8
-                    ,0x60:7,0x50:7,0x4:7
-                    ,0x20:3}
-        #dic_dir2 = {0xF1:7,0x71:5,0x31:2}
-        dic_dir3 = { 0xf0f:9,0xe0f:9,0xd0f:9,0xc0f:9,0xb0f:9,0xa0f:9,0x90f:9,0x80f:9
-                    ,0xf0e:9,0xe0e:9,0xd0e:9,0xc0e:9,0xb0e:9,0xa0e:9,0x90e:9,0x80e:9
-                    ,0xf0d:9,0xe0d:9,0xd0d:9,0xc0d:9,0xb0d:9,0xa0d:9,0x90d:9,0x80d:9
-                    ,0xf0c:9,0xe0c:9,0xd0c:9,0xc0c:9,0xb0c:9,0xa0c:9,0x90c:9,0x80c:9
-                    ,0xf0b:9,0xe0b:9,0xd0b:9,0xc0b:9,0xb0b:9,0xa0b:9,0x90b:9,0x80b:9
-                    ,0xf0a:9,0xe0a:9,0xd0a:9,0xc0a:9,0xb0a:9,0xa0a:9,0x90a:9,0x80a:9
-                    ,0xf09:9,0xe09:9,0xd09:9,0xc09:9,0xb09:9,0xa09:9,0x909:9,0x809:9
-                    ,0xf08:9,0xe08:9,0xd08:9,0xc08:9,0xb08:9,0xa08:9,0x908:9,0x808:9
-                    ,0xf07:7,0xf06:7,0xf05:7,0xf04:7
-                    ,0xe07:7,0xe06:7,0xe05:7,0xe04:7
-                    ,0xd07:7,0xd06:7,0xd05:7,0xd04:7
-                    ,0xc07:7,0xc06:7,0xc05:7,0xc04:7
-                    ,0xb07:7,0xb06:7,0xb05:7,0xb04:7
-                    ,0xa07:7,0xa06:7,0xa05:7,0xa04:7
-                    ,0x907:7,0x906:7,0x905:7,0x904:7
-                    ,0x807:7,0x806:7,0x805:7,0x804:7
-                    ,0x70f:7,0x60f:7,0x50f:7,0x40f:7
-                    ,0x70e:7,0x60e:7,0x50e:7,0x40e:7
-                    ,0x70d:7,0x60d:7,0x50d:7,0x40d:7
-                    ,0x70c:7,0x60c:7,0x50c:7,0x40c:7
-                    ,0x70b:7,0x60b:7,0x50b:7,0x40b:7
-                    ,0x70a:7,0x60a:7,0x50a:7,0x40a:7
-                    ,0x709:7,0x609:7,0x509:7,0x409:7
-                    ,0x708:7,0x608:7,0x508:7,0x408:7
-                    ,0xf03:5,0xe03:5,0xd03:5,0xc03:5,0xb03:5,0xa03:5,0x903:5,0x803:5
-                    ,0xf02:5,0xe02:5,0xd02:5,0xc02:5,0xb02:5,0xa02:5,0x902:5,0x802:5
-                    ,0x30f:5,0x30e:5,0x30d:5,0x30c:5,0x30b:5,0x30a:5,0x309:5,0x308:5
-                    ,0x20f:5,0x20e:5,0x20d:5,0x20c:5,0x20b:5,0x20a:5,0x209:5,0x208:5
-                    ,0x707:6,0x706:6,0x705:6,0x704:6
-                    ,0x607:6,0x606:6,0x605:6,0x604:6
-                    ,0x507:6,0x506:6,0x505:6,0x504:6
-                    ,0x407:6,0x406:6,0x405:6,0x404:6
-                    ,0x303:3,0x302:3,0x203:3,0x202:3
-                    ,0x301:2,0x201:2,0x102:2,0x103:2
-                    ,0x101:1,0x100:1,0x001:1}
-        #dic_dir3 = {0xf1f:6,0xf17:6,0x71f:6,0x31f:5,0xf13:5}
-
         dic_alix = [0,2,1,1]
         dic_aliy = [1,0,1,1]
         dic_ofsx = [0,0,1,1]
@@ -400,10 +345,10 @@ class lib_tetris:
                 nopoint = 0
                 hole = 0
                 direction=1
-                if  (x<(self.width-3))and((pat4) in dic_dir1):
-                    # getpoint = dic_dir1[pat4]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    if y>= ypos_change : getpoint = dic_dir1[pat4]+(y*2)
-                    else : getpoint = dic_dir1[pat4]
+                if  (x<(self.width-3))and((pat4) in self.dic_pat_dir[0][direction]):
+                    # getpoint = self.dic_pat_dir[0][direction][pat4]+y*2+dic_widy[direction]-dic_aliy[direction]
+                    if y>= ypos_change : getpoint = self.dic_pat_dir[0][direction][pat4]+(y*2)
+                    else : getpoint = self.dic_pat_dir[0][direction][pat4]
                     if (self.MYDEBUG) : print('I(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmin = x + dic_ofsx[direction]
                     xxmax = x + dic_ofsx[direction] + dic_widx[direction]
@@ -429,11 +374,11 @@ class lib_tetris:
                 nopoint = 0
                 hole = 0
                 direction=2
-                if ((pat2) in dic_dir2):
-                # if (x>0) and ((pat2) in dic_dir2):
-                    # getpoint = dic_dir2[pat2]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    if y>= ypos_change : getpoint = dic_dir2[pat2]+(y*2)
-                    else : getpoint = dic_dir2[pat2]
+                if ((pat2) in self.dic_pat_dir[0][direction]):
+                # if (x>0) and ((pat2) in self.dic_pat_dir[0][direction]):
+                    # getpoint = self.dic_pat_dir[0][direction][pat2]+y*2+dic_widy[direction]-dic_aliy[direction]
+                    if y>= ypos_change : getpoint = self.dic_pat_dir[0][direction][pat2]+(y*2)
+                    else : getpoint = self.dic_pat_dir[0][direction][pat2]
                     if (self.MYDEBUG) : print('I(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmin = x + dic_ofsx[direction]
                     xxmax = x + dic_ofsx[direction] + dic_widx[direction]
@@ -456,10 +401,10 @@ class lib_tetris:
                 nopoint = 0
                 hole = 0
                 direction=3
-                if (x<(self.width-2))and((pat3) in dic_dir3):
-                    # getpoint = dic_dir3[pat3]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    if y>= ypos_change : getpoint = dic_dir3[pat3]+(y*2)
-                    else : getpoint = dic_dir3[pat3]
+                if (x<(self.width-2))and((pat3) in self.dic_pat_dir[0][direction]):
+                    # getpoint = self.dic_pat_dir[0][direction][pat3]+y*2+dic_widy[direction]-dic_aliy[direction]
+                    if y>= ypos_change : getpoint = self.dic_pat_dir[0][direction][pat3]+(y*2)
+                    else : getpoint = self.dic_pat_dir[0][direction][pat3]
                     if (self.MYDEBUG) : print('I(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmin = x + dic_ofsx[direction]
                     xxmax = x + dic_ofsx[direction] + dic_widx[direction]
@@ -493,18 +438,6 @@ class lib_tetris:
         order = self.makehorizontalorder(blockheight)
         ypos_change = -3
 
-        dic_dir0 = {0x11:7,0x10:1,0x01:1}
-        dic_dir1 = {0x133:8,0x123:7,0x132:7,0x122:7,  #for Lv2~ (Lv1:17520)
-        #dic_dir1 = {0x133:8,0x123:8,0x132:8,0x122:8,   #for Lv1  (Lv1:18783)
-                    0x131:4,0x121:4,
-                    0x130:3,0x120:3,
-                    0x033:2,0x032:2,0x023:2,0x022:2,
-                    0x031:1,0x021:1}
-        dic_dir2 = {0x71:6,0x61:6,0x51:6,0x41:6,
-                    0x70:1,0x60:1,0x50:1,0x40:1, #for Lv3
-                    0xf1:2,0xe1:2,0xd1:2,0xc1:2,0xb1:2,0xa1:2,0x91:2,0x81:2} #add 210727a
-        dic_dir3 = {0x111:9,0x110:3,0x101:3,0x011:3,0x100:1,0x010:1,0x001:1}
-
         dic_alix = [0,1,1,1]
         dic_aliy = [1,1,1,1]
         dic_ofsx = [0,0,0,0]
@@ -525,10 +458,10 @@ class lib_tetris:
                 nopoint = 0
                 hole = 0
                 direction=0
-                if (x<(self.width-1))and((pat2) in dic_dir0):
-                    # getpoint = dic_dir0[pat2]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    if y>= ypos_change : getpoint = dic_dir0[pat2]+(y*2)
-                    else : getpoint = dic_dir0[pat2]
+                if (x<(self.width-1))and((pat2) in self.dic_pat_dir[1][direction]):
+                    # getpoint = self.dic_pat_dir[1][direction][pat2]+y*2+dic_widy[direction]-dic_aliy[direction]
+                    if y>= ypos_change : getpoint = self.dic_pat_dir[1][direction][pat2]+(y*2)
+                    else : getpoint = self.dic_pat_dir[1][direction][pat2]
                     if (self.MYDEBUG) : print('L(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=self.width):
@@ -554,10 +487,10 @@ class lib_tetris:
                 nopoint = 0
                 hole = 0
                 direction=1
-                if (x<(self.width-2))and((pat3) in self.dic_pat_dir[0][direction]):
-                    # getpoint = self.dic_pat_dir[0][direction][pat3]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    if y>= ypos_change : getpoint = self.dic_pat_dir[0][direction][pat3]+(y*2)
-                    else : getpoint = self.dic_pat_dir[0][direction][pat3]
+                if (x<(self.width-2))and((pat3) in self.dic_pat_dir[1][direction]):
+                    # getpoint = self.dic_pat_dir[1][direction][pat3]+y*2+dic_widy[direction]-dic_aliy[direction]
+                    if y>= ypos_change : getpoint = self.dic_pat_dir[1][direction][pat3]+(y*2)
+                    else : getpoint = self.dic_pat_dir[1][direction][pat3]
                     if (self.MYDEBUG) : print('L(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=self.width):
@@ -581,10 +514,10 @@ class lib_tetris:
                 nopoint = 0
                 hole = 0
                 direction=2
-                if (x>=0)and(x<(self.width-1))and((pat2) in self.dic_pat_dir[0][direction]):
-                    # getpoint = self.dic_pat_dir[0][direction][pat2]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    if y>= ypos_change : getpoint = self.dic_pat_dir[0][direction][pat2]+(y*2)
-                    else : getpoint = self.dic_pat_dir[0][direction][pat2]
+                if (x>=0)and(x<(self.width-1))and((pat2) in self.dic_pat_dir[1][direction]):
+                    # getpoint = self.dic_pat_dir[1][direction][pat2]+y*2+dic_widy[direction]-dic_aliy[direction]
+                    if y>= ypos_change : getpoint = self.dic_pat_dir[1][direction][pat2]+(y*2)
+                    else : getpoint = self.dic_pat_dir[1][direction][pat2]
                     if (self.MYDEBUG) : print('L(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=self.width):
@@ -609,9 +542,9 @@ class lib_tetris:
                 nopoint = 0
                 hole = 0
                 direction=3
-                if (x<(self.width-2))and((pat3) in self.dic_pat_dir[0][direction]):
-                    # getpoint = self.dic_pat_dir[0][direction][pat3]+y*2+dic_widy[direction]-dic_aliy[direction]
-                    getpoint = self.dic_pat_dir[0][direction][pat3]+(y*2)
+                if (x<(self.width-2))and((pat3) in self.dic_pat_dir[1][direction]):
+                    # getpoint = self.dic_pat_dir[1][direction][pat3]+y*2+dic_widy[direction]-dic_aliy[direction]
+                    getpoint = self.dic_pat_dir[1][direction][pat3]+(y*2)
                     if (self.MYDEBUG) : print('L(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
                     xxmax = x + dic_widx[direction]
                     if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=self.width):
