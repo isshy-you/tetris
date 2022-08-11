@@ -73,13 +73,13 @@ def exec_cmd(cmd):
 def start():
     ## define
     EXEC_LOG_ON = 1    
-    SEED_FIX = 0
+    SEED_FIX = 1
     ## default value
     GAME_LEVEL = 3
     GAME_TIME = 180
     IS_MODE = "default"
     IS_SAMPLE_CONTROLL = "n"
-    INPUT_RANDOM_SEED = 1
+    INPUT_RANDOM_SEED = -1
     DROP_INTERVAL = 1000        # drop interval
     RESULT_LOG_JSON = "result.json"
     USER_NAME = "window_sample"
@@ -132,26 +132,26 @@ def start():
             print('<<< no machine_learning >>>')
 
         ## set field parameter for level 1
-        RANDOM_SEED = 0            # random seed for field
-        OBSTACLE_HEIGHT = 0        # obstacle height (blocks)
-        OBSTACLE_PROBABILITY = 0   # obstacle probability (percent)
+        # RANDOM_SEED = 0            # random seed for field
+        # OBSTACLE_HEIGHT = 0        # obstacle height (blocks)
+        # OBSTACLE_PROBABILITY = 0   # obstacle probability (percent)
 
         # for GAME_LEVEL in [1,2,3]:
-        if GAME_LEVEL==1:
-            RANDOM_SEED = 0
-            BLOCK_NUM_MAX = 180
-            # seed_max = 1
-            # DROP_INTERVAL = 1        # drop interval
-        elif GAME_LEVEL==2:
-            RANDOM_SEED = -1
-            BLOCK_NUM_MAX = 180
-            # seed_max = 1
-            # DROP_INTERVAL = 1        # drop interval
-        elif GAME_LEVEL==3:
-            # GAME_TIME = 30
-            BLOCK_NUM_MAX = -1
-            # seed_max = 1
-            DROP_INTERVAL = 1         # drop interval
+        # if GAME_LEVEL==1:
+        #     RANDOM_SEED = 0
+        #     BLOCK_NUM_MAX = 180
+        #     # seed_max = 1
+        #     # DROP_INTERVAL = 1        # drop interval
+        # elif GAME_LEVEL==2:
+        #     RANDOM_SEED = -1
+        #     BLOCK_NUM_MAX = 180
+        #     # seed_max = 1
+        #     # DROP_INTERVAL = 1        # drop interval
+        # elif GAME_LEVEL==3:
+        #     # GAME_TIME = 30
+        #     BLOCK_NUM_MAX = -1
+        #     # seed_max = 1
+        #     DROP_INTERVAL = 1         # drop interval
         # for num in range(1,seed_max+1,1):
         result_name = branch_name.replace('/','-').replace('_','-')\
                     +"_"+IS_MODE.replace('_','')\
@@ -204,16 +204,15 @@ def start():
         if args.predict_weight != None:
             PREDICT_WEIGHT = args.predict_weight
 
-        ## set field parameter for level 1
-        RANDOM_SEED = 0            # random seed for field
-        OBSTACLE_HEIGHT = 0        # obstacle height (blocks)
-        OBSTACLE_PROBABILITY = 0   # obstacle probability (percent)
-
         ## update field parameter level
         if GAME_LEVEL == 1: # level1
-            RANDOM_SEED = 0
+            RANDOM_SEED = 0            # random seed for field
+            OBSTACLE_HEIGHT = 0        # obstacle height (blocks)
+            OBSTACLE_PROBABILITY = 0   # obstacle probability (percent)
         elif GAME_LEVEL == 2: # level2
             RANDOM_SEED = -1
+            OBSTACLE_HEIGHT = 0        # obstacle height (blocks)
+            OBSTACLE_PROBABILITY = 0   # obstacle probability (percent)
         elif GAME_LEVEL == 3: # level3
             RANDOM_SEED = -1
             OBSTACLE_HEIGHT = 10
@@ -223,7 +222,7 @@ def start():
             sys.exit(1)
 
         ## update random seed
-        if INPUT_RANDOM_SEED >= 0:
+        if INPUT_RANDOM_SEED > 0:
             RANDOM_SEED = INPUT_RANDOM_SEED
 
         ## print
