@@ -196,48 +196,38 @@ class lib_tetris:
             return(self.makehorizontalorder4())
 
     def makehorizontalorder1(self): #[0,1,2,3,4,5,6,6,8,9]
-        #self.width = self.board_data_self.width #self.width=10
-        #height = self.board_data_height #height=22
         #order = list(range(self.width))
         #for ii in range(0,self.width,1):
         #    order[ii]=ii
         return([0,1,2,3,4,5,6,7,8,9])
 
     def makehorizontalorder2(self): #[9,8,7,6,5,4,3,2,1,0]
-        #self.width = self.board_data_self.width #self.width=10
-        #height = self.board_data_height #height=22
         #order = list(range(self.width))
         #for ii in range(0,self.width,1):
         #    order[ii]=self.width-ii-1
         return([9,8,7,6,5,4,3,2,1,0])
 
     def makehorizontalorder3(self): #[0,9,1,8,2,7,3,6,4,5]
-        # self.width = self.board_data_self.width #self.width=10
-        # height = self.board_data_height #height=22
-        order = list(range(self.width+1))
-        for ii in range(0,self.width+1,1):
-            if int(ii/2)==(ii/2) :
-                order[ii] = int(ii/2)-1
-            else:
-                order[ii] = self.width-1-int(ii/2)
-        if ((self.MYDEBUG)):print('order3=',order)
-        return(order)
+        # order = list(range(self.width+1))
+        # for ii in range(0,self.width+1,1):
+        #     if int(ii/2)==(ii/2) :
+        #         order[ii] = int(ii/2)-1
+        #     else:
+        #         order[ii] = self.width-1-int(ii/2)
+        # if ((self.MYDEBUG)):print('order3=',order)
+        return([0,9,1,8,2,7,3,6,4,5])
 
     def makehorizontalorder4(self): #[5,4,6,3,7,2,8,1,9,0]
-        # self.width = self.board_data_self.width #self.width=10
-        # height = self.board_data_height #height=22
-        order = list(range(self.width+1))
-        for ii in range(0,self.width+1,1):
-            if int(ii/2)==(ii/2) :
-                order[self.width-ii] = int(ii/2)-1
-            else:
-                order[self.width-ii] = self.width-1-int(ii/2)
-        if ((self.MYDEBUG)):print('order4=',order)
-        return(order)
+        # order = list(range(self.width+1))
+        # for ii in range(0,self.width+1,1):
+        #     if int(ii/2)==(ii/2) :
+        #         order[self.width-ii] = int(ii/2)-1
+        #     else:
+        #         order[self.width-ii] = self.width-1-int(ii/2)
+        # if ((self.MYDEBUG)):print('order4=',order)
+        return([5,4,6,3,7,2,8,1,9,0])
 
-    def checkupper(self,board,xpos,ypos):
-        # self.width = self.board_data_self.width #self.width=10
-        # height = self.board_data_height #height=22
+    def checkupper(self,board,xpos,ypos): 
         block=0
         for yy in range(ypos,0,-1):
             if board[(yy) * self.width + (xpos)] != 0:
@@ -246,11 +236,9 @@ class lib_tetris:
         return(block)
 
     def counthole(self,board,xpos,ypos):
-        self.width = self.board_data_self.width #self.width=10
-        height = self.board_data_height #height=22
         hole=0
-        if (height-1<ypos+3): return(0)
-        for yy in range(ypos,height,1):
+        if (self.height-1<ypos+3): return(0)
+        for yy in range(ypos,self.height,1):
             #if (yy < height):
             if board[(yy) * self.width + (xpos)] == 0:
                 hole += 1
@@ -259,8 +247,6 @@ class lib_tetris:
         return(hole)
 
     def maxblockheight(self,board):
-        # self.width = self.board_data_self.width #self.width=10
-        # height = self.board_data_height #height=22
         # maxheight=height-4
         # for yy in range(height-1,4,-1):
         #     for xx in range(0,self.width,1):
@@ -271,10 +257,6 @@ class lib_tetris:
                 if board[yy*self.width+xx]!=0:
                     if ((self.MYDEBUG)):print('blockheight=',yy-4)
                     return(yy-4)
-                    # if yy > 4 : 
-                    #     return(yy-4)
-                    # else:
-                    #     return(0)
         return(0)
 
     #type-I(0)
@@ -289,16 +271,16 @@ class lib_tetris:
         ypos_change = -3
 
         dic_alix = [0,2,1,1]
-        dic_aliy = [1,0,1,1]
+        # dic_aliy = [1,0,1,1]
         dic_ofsx = [0,0,1,1]
         dic_widx = [1,4,1,1]
-        dic_widy = [4,1,4,4]
+        # dic_widy = [4,1,4,4]
 
         dic_dir = [0,1,0,0]
 
-        x_start = 0
-        x_end = self.width-1
-        x_step = 1
+        # x_start = 0
+        # x_end = self.width-1
+        # x_step = 1
         point = [-1,-1,-1,-1] #point,x,y,direction
         for y in range(self.height - 3,blockheight , -1):
         # for y in range(self.height - 3, blockheight ,-1):
@@ -439,16 +421,16 @@ class lib_tetris:
         ypos_change = -3
 
         dic_alix = [0,1,1,1]
-        dic_aliy = [1,1,1,1]
-        dic_ofsx = [0,0,0,0]
+        # dic_aliy = [1,1,1,1]
+        # dic_ofsx = [0,0,0,0]
         dic_widx = [2,3,2,3]
-        dic_widy = [3,2,3,2]
+        # dic_widy = [3,2,3,2]
 
         dic_dir = [0,1,2,3]
 
-        x_start = 0
-        x_end = self.width-1
-        x_step = 1
+        # x_start = 0
+        # x_end = self.width-1
+        # x_step = 1
         point = [-1,-1,-1,-1] #point,x,y,direction
         for y in range(self.height - 3,blockheight , -1):
             for x in order:
@@ -580,15 +562,15 @@ class lib_tetris:
         ypos_change = -3
 
         dic_alix = [1,1,0,1]
-        dic_aliy = [1,1,1,0]
+        # dic_aliy = [1,1,1,0]
         dic_widx = [2,3,2,3]
-        dic_widy = [3,2,3,2]
+        # dic_widy = [3,2,3,2]
 
         dic_dir = [0,1,2,3]
 
-        x_start = 0
-        x_end = self.width-1
-        x_step = 1
+        # x_start = 0
+        # x_end = self.width-1
+        # x_step = 1
         point = [-1,-1,-1,-1] #point,x,y,direction
         for y in range(self.height - 3,blockheight , -1):
             for x in order:
@@ -716,15 +698,15 @@ class lib_tetris:
         ypos_change = -3
 
         dic_alix = [0,1,1,1]
-        dic_aliy = [1,1,1,0]
+        # dic_aliy = [1,1,1,0]
         dic_widx = [2,3,2,3]
-        dic_widy = [3,2,3,2]
+        # dic_widy = [3,2,3,2]
 
         dic_dir = [0,1,2,3]
 
-        x_start = 0
-        x_end = self.width-1
-        x_step = 1
+        # x_start = 0
+        # x_end = self.width-1
+        # x_step = 1
         point = [-1,-1,-1,-1] #point,x,y,direction
         for y in range(self.height - 3,blockheight , -1):
             for x in order:
@@ -856,15 +838,15 @@ class lib_tetris:
         ypos_change = -3
 
         dic_alix = [0,0,1,0]
-        dic_aliy = [1,1,1,0]
+        # dic_aliy = [1,1,1,0]
         dic_widx = [2,2,2,0]
-        dic_widy = [2,2,2,0]
+        # dic_widy = [2,2,2,0]
 
         dic_dir = [0,1,2,3]
 
-        x_start = 0
-        x_end = self.width-1
-        x_step = 1
+        # x_start = 0
+        # x_end = self.width-1
+        # x_step = 1
         point = [-1,-1,-1,-1] #point,x,y,direction
         for y in range(self.height - 3,blockheight , -1):
             for x in order:
@@ -967,15 +949,15 @@ class lib_tetris:
         ypos_change = -3
     
         dic_alix = [1,0,0,0]
-        dic_aliy = [1,1,0,0]
+        # dic_aliy = [1,1,0,0]
         dic_widx = [3,2,0,0]
-        dic_widy = [2,3,0,0]
+        # dic_widy = [2,3,0,0]
 
         dic_dir = [0,1,2,3]
 
-        x_start = 0
-        x_end = self.width-1
-        x_step = 1
+        # x_start = 0
+        # x_end = self.width-1
+        # x_step = 1
         point = [-1,-1,-1,-1] #point,x,y,direction
         for y in range(self.height - 3,blockheight , -1):
             for x in order:
@@ -1051,15 +1033,15 @@ class lib_tetris:
         ypos_change = -3
 
         dic_alix = [1,0,0,0]
-        dic_aliy = [1,1,0,0]
+        # dic_aliy = [1,1,0,0]
         dic_widx = [3,2,0,0]
-        dic_widy = [2,3,0,0]
+        # dic_widy = [2,3,0,0]
 
         dic_dir = [0,1,2,3]
 
-        x_start = 0
-        x_end = self.width-1
-        x_step = 1
+        # x_start = 0
+        # x_end = self.width-1
+        # x_step = 1
         point = [-1,-1,-1,-1] #point,x,y,direction
         for y in range(self.height - 3,blockheight , -1):
             for x in order:
@@ -1124,9 +1106,6 @@ class lib_tetris:
         return point[0],point[1],point[3]
 
     def calcBoardPat(self,board,x,y):
-
-        # self.width = self.board_data_self.width #self.width=10
-        # height = self.board_data_height #height=22
 
         pat0=0
         if x > (self.width-1) :
