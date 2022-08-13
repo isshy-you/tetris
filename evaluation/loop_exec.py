@@ -275,6 +275,9 @@ def start():
     cmd = 'git checkout HEAD ./game_manager'
     exec_cmd(cmd)
 
+    cmd = 'git remote remove eva'
+    exec_cmd(cmd)
+
     cmd = PYTHON_CMD + ' ' + 'evaluation/read_result.py'
     exec_cmd(cmd)
 
