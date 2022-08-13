@@ -30,7 +30,7 @@ for ii,file in enumerate(path.glob('*.json')):
                         'line2':jsdic['debug_info']['line_score_stat'][1],
                         'line3':jsdic['debug_info']['line_score_stat'][2],
                         'line4':jsdic['debug_info']['line_score_stat'][3]})
-    print(df2)
+    # print(df2)
     if ii==0 :
         df = df2
     else:
