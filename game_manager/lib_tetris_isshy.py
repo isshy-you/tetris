@@ -118,7 +118,7 @@ class lib_tetris:
                         0x101:1}
         # Dir2
         self.dic_3_2={  0x31:6,0x21:6,
-                        0x53:3,0x52:2,
+                        # 0x53:3,0x52:2,
                         0x11:2,0x01:1} #for Lv3
         # Dir3
         self.dic_3_3={  0x111:7,
