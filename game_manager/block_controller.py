@@ -31,6 +31,7 @@ class Block_Controller(object):
         print("=================================================>")
         del GameStatus["field_info"]["withblock"]
         # pprint.pprint(GameStatus, width = 61, compact = True)
+        if self.MYDEBUG: print('[board] index =',GameStatus["block_info"]["currentShape"]["index"])
         if self.MYDEBUG: pprint.pprint(GameStatus["field_info"]["backboard"], width = 31, compact = True)
 
         # get data from GameStatus

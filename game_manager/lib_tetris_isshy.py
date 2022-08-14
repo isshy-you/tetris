@@ -418,7 +418,7 @@ class lib_tetris:
                 #             if (self.MYDEBUG) : print("hole=",format(pat4,'04x'),"point=",point)
                 for direction in self.dic_dir[self.index]:
                     nopoint = 0
-                    # hole = 0
+                    hole = 0
                     if (x<(self.width-self.dic_pat[self.index][direction]-self.dic_alix[self.index][direction]))\
                         and (pat[self.dic_pat[self.index][direction]] in self.dic_pat_dir[self.index][direction]):
                         # if self.MYDEBUG:
@@ -431,16 +431,18 @@ class lib_tetris:
                         if (self.MYDEBUG) :
                             print('(index,dir,x,y)=',self.index,direction,x,y,'pat=',format(pat[self.dic_pat[self.index][direction]],'04x'),'gp=',getpoint)
                         xxmin = x + self.dic_ofsx[self.index][direction]
-                        xxmax = x + self.dic_ofsx[self.index][direction] + self.dic_widx[self.index][direction]
+                        xxmax = xxmin + self.dic_widx[self.index][direction]
                         if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=self.width):
                             for xx in range(xxmin,xxmax,1):
                                 if self.checkupper(board,xx,y)==1:
                                     if (self.MYDEBUG) : print('### BLOCKED BY UPPER at ',direction,xx,y)
                                     nopoint = 1
                                     break
-                                #hole=self.counthole(board,xx,y)
-                                #if (hole <=1):
-                                #    if (self.MYDEBUG) : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
+                                print('widy,aliy=',self.dic_widy[self.index][direction],self.dic_aliy[self.index][direction])
+                                hole = self.counthole(board,xx,y+self.dic_widy[self.index][direction]-self.dic_aliy[self.index][direction]+1)
+                                if (hole > 0):
+                                    if (self.MYDEBUG) : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
+                                    getpoint = getpoint -int(hole/2)
                                 #    nopoint = 1
                                 #    break
                             if (nopoint==0):
