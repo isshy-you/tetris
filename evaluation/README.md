@@ -54,9 +54,19 @@ cd tetris
 isshy-youのtetris/evaluation だけを持ってくる
 ```pwrsh
 git remote add isshy-you https://github.com/isshy-you/tetris.git
+```
+```pwrsh
 git fetch isshy-you
+```
+最新版に更新(evaluatonのみ)(通常はこれ)
+```pwrsh
 git checkout isshy-you/feature/evaluation ./evaluation/
 ```
+最新版に不具合があったら、安定版のつもりのリリースタグで更新(evaluatonのみ)
+```pwrsh
+git checkout eva_220813 ./evaluation/
+```
+
 評価リストを編集（Libre Office 可）
 ./evaluation/loop_exec_option.xlsx
 
