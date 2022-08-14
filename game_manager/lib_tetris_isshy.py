@@ -421,15 +421,15 @@ class lib_tetris:
                     # hole = 0
                     if (x<(self.width-self.dic_pat[self.index][direction]-self.dic_alix[self.index][direction]))\
                         and (pat[self.dic_pat[self.index][direction]] in self.dic_pat_dir[self.index][direction]):
-                        if self.MYDEBUG:
-                            print('index,direction,patno,pat=',self.index,direction,self.dic_pat[self.index][direction],pat[self.dic_pat[self.index][direction]])
+                        # if self.MYDEBUG:
+                        #     print('index,direction,patno,pat=',self.index,direction,self.dic_pat[self.index][direction],pat[self.dic_pat[self.index][direction]])
                         basepoint = self.dic_pat_dir[self.index][direction][pat[self.dic_pat[self.index][direction]]]
                         if y>= ypos_change :
                             getpoint = basepoint+(y*2)
                         else :
                             getpoint = basepoint
                         if (self.MYDEBUG) :
-                            print('I(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
+                            print('(index,dir,x,y)=',self.index,direction,x,y,'pat=',format(pat[self.dic_pat[self.index][direction]],'04x'),'gp=',getpoint)
                         xxmin = x + self.dic_ofsx[self.index][direction]
                         xxmax = x + self.dic_ofsx[self.index][direction] + self.dic_widx[self.index][direction]
                         if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=self.width):
@@ -445,7 +445,7 @@ class lib_tetris:
                                 #    break
                             if (nopoint==0):
                                 point = getpoint,x+self.dic_alix[self.index][direction],y,direction
-                                if (self.MYDEBUG) : print("dir0=",format(pat2,'02x'),"point=",point)
+                                if (self.MYDEBUG) : print("pat=",format(pat[self.dic_pat[self.index][direction]],'04x'),"point=",point)
 
             #if (self.MYDEBUG) : print("x,y,pat=",x,y,format(pat4,'04x'),"point=",point)
         return point[0],point[1],point[3]
