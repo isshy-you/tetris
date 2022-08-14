@@ -419,7 +419,8 @@ class lib_tetris:
                 for direction in self.dic_dir[self.index]:
                     nopoint = 0
                     # hole = 0
-                    if (x<(self.width))and(pat[self.dic_pat[self.index][direction]] in self.dic_pat_dir[self.index][direction]):
+                    if (x<(self.width-self.dic_pat[self.index][direction]-self.dic_alix[self.index][direction]))\
+                        and (pat[self.dic_pat[self.index][direction]] in self.dic_pat_dir[self.index][direction]):
                         if self.MYDEBUG:
                             print('index,direction,patno,pat=',self.index,direction,self.dic_pat[self.index][direction],pat[self.dic_pat[self.index][direction]])
                         basepoint = self.dic_pat_dir[self.index][direction][pat[self.dic_pat[self.index][direction]]]
