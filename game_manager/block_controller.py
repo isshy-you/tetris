@@ -71,7 +71,8 @@ class Block_Controller(object):
         #     EvalValue,x0,direction0 = isshy.calcEvaluationValueIndex6(GameStatus,self.board_backboard, self.NextShape_index)
         # elif self.CurrentShape_index==7:
         #     EvalValue,x0,direction0 = isshy.calcEvaluationValueIndex7(GameStatus,self.board_backboard, self.NextShape_index)
-        if EvalValue > 0 :
+        # if EvalValue > 0 :
+        if True :
             #strategy = (direction0,x0,1,self.board_data_height-1)
             strategy = (direction0,x0,1,1)
             if (self.MYDEBUG) : print("<<< isshy-you:(EvalValue,shape,strategy(dir,x,y_ope,y_mov))=(",EvalValue,self.CurrentShape_index,strategy,")")
