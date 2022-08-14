@@ -3,18 +3,18 @@
 
 class lib_tetris:
     def __init__(self):
-        self.MYDEBUG = False
+        self.MYDEBUG = True
 
         # Type-I(0)
         # Dir0
-        self.dic_0_0={  0x0f:8,0x0e:8,0x0d:8,0x0c:8,0x0b:8,0x0a:8,0x09:8,0x08:8
+        dic_0_0={  0x0f:8,0x0e:8,0x0d:8,0x0c:8,0x0b:8,0x0a:8,0x09:8,0x08:8
                         ,0x07:6,0x06:6,0x05:6,0x04:6
                         ,0x03:3,0x02:3
                         ,0x01:2
                         ,0x00:1
                         }
         # Dir1
-        self.dic_0_1={  0x3333:8,0x2222:8,0x1111:8
+        dic_0_1={  0x3333:8,0x2222:8,0x1111:8
                         ,0x2333:7,0x3233:7,0x3323:7,0x3332:7                    # ish06e01
                         ,0x2233:7,0x2323:7,0x3223:7,0x3232:7,0x3322:7,0x2332:7  # ish06e01
                         ,0x2223:7,0x2232:7,0x2322:7,0x3222:7                    # ish06e01
@@ -27,14 +27,14 @@ class lib_tetris:
                         ,0x1322:3,0x3122:3,0x3212:3,0x3221:3
                         ,0x1222:3,0x2122:3,0x2212:3,0x2221:3}
         # Dir2
-        self.dic_0_2={  0xf0:8,0x80:8,0x90:8,0xa0:8,0xb0:8,0xc0:8,0xd0:8,0xe0:8
+        dic_0_2={  0xf0:8,0x80:8,0x90:8,0xa0:8,0xb0:8,0xc0:8,0xd0:8,0xe0:8
                         ,0x70:6,0x60:6,0x50:6,0x40:6
                         ,0x30:3,0x20:3
                         ,0x10:2
                         ,0x00:1
                         }
         # Dir3
-        self.dic_0_3={  0xf0f:9,0xe0f:9,0xd0f:9,0xc0f:9,0xb0f:9,0xa0f:9,0x90f:9,0x80f:9
+        dic_0_3={  0xf0f:9,0xe0f:9,0xd0f:9,0xc0f:9,0xb0f:9,0xa0f:9,0x90f:9,0x80f:9
                         ,0xf0e:9,0xe0e:9,0xd0e:9,0xc0e:9,0xb0e:9,0xa0e:9,0x90e:9,0x80e:9
                         ,0xf0d:9,0xe0d:9,0xd0d:9,0xc0d:9,0xb0d:9,0xa0d:9,0x90d:9,0x80d:9
                         ,0xf0c:9,0xe0c:9,0xd0c:9,0xc0c:9,0xb0c:9,0xa0c:9,0x90c:9,0x80c:9
@@ -70,137 +70,258 @@ class lib_tetris:
                         ,0x301:3,0x201:3,0x102:3,0x103:3
                         ,0x101:2,0x100:2,0x001:2}
 
+        dic_alix_0 = [0,2,1,1]
+        dic_aliy_0 = [1,0,1,1] # not use
+        dic_ofsx_0 = [0,0,1,1] # not use
+        dic_widx_0 = [1,4,1,1]
+        dic_widy_0 = [4,1,4,4] # not use
+
+        dic_dir_0 = [0,1,0,0]
+        dic_pat_0 = [0,2,0,1] # pat2:0,pat3:1,pat4:2
+
         # TYPE-L(1)
         # Dir0
-        self.dic_1_0=   {0x11:7,0x10:1,0x01:1}
+        dic_1_0=   {0x11:7,0x10:1,0x01:1}
         # Dir1
-        self.dic_1_1=   {0x133:8,0x123:7,0x132:7,0x122:7,  #for Lv2~ (Lv1:17520)
+        dic_1_1=   {0x133:8,0x123:7,0x132:7,0x122:7,  #for Lv2~ (Lv1:17520)
                         # {0x133:8,0x123:8,0x132:8,0x122:8,   #for Lv1  (Lv1:18783)
                         0x131:4,0x121:4,
                         0x130:2,0x120:2,
                         0x033:2,0x032:2,0x023:2,0x022:2,
                         0x031:1,0x021:1}
         # Dir2
-        self.dic_1_2=   {0x71:6,0x61:6,0x51:6,0x41:6,
+        dic_1_2=   {0x71:6,0x61:6,0x51:6,0x41:6,
                         0x70:1,0x60:1,0x50:1,0x40:1, #for Lv3
                         0xf1:2,0xe1:2,0xd1:2,0xc1:2,0xb1:2,0xa1:2,0x91:2,0x81:2} #add 210727a
         # Dir3
-        self.dic_1_3=   {0x111:9,0x110:3,0x101:3,0x011:3
+        dic_1_3=   {0x111:9,0x110:3,0x101:3,0x011:3
                         ,0x331:4,0x321:4,0x231:4,0x221:4
                         ,0x100:1,0x010:1,0x001:1
                         ,0x311:2,0x211:2,0x131:2,0x121:2,0x113:2,0x112:2}  
 
+        dic_alix_1 = [0,1,1,1]
+        dic_aliy_1 = [1,1,1,1]
+        dic_ofsx_1 = [0,0,0,0]
+        dic_widx_1 = [2,3,2,3]
+        dic_widy_1 = [3,2,3,2]
+
+        dic_dir_1 = [0,1,2,3]
+        dic_pat_1 = [0,1,0,1] # pat2:0,pat3:1,pat4:2
+
         # TYPE-J(2)
         # Dir0
-        self.dic_2_0=   {0x11:7,0x10:1,0x01:1}
+        dic_2_0=   {0x11:7,0x10:1,0x01:1}
         # Dir1
-        self.dic_2_1=   {0x111:9,0x110:3,0x101:3,0x011:3
+        dic_2_1=   {0x111:9,0x110:3,0x101:3,0x011:3
                         ,0x331:4,0x321:4,0x231:4,0x221:4
                         ,0x100:1,0x010:1,0x001:1
                         ,0x311:2,0x211:2,0x131:2,0x121:2,0x113:2,0x112:2}  
         # Dir2
-        self.dic_2_2=   {0x17:6,0x16:6,0x15:6,0x14:6,
+        dic_2_2=   {0x17:6,0x16:6,0x15:6,0x14:6,
                         0x07:1,0x06:1,0x05:1,0x04:1,
                         0x1f:2,0x1e:2,0x1d:2,0x1c:2,0x1b:2,0x1a:2,0x19:2,0x18:2} #add 210727a
         # Dir3
-        self.dic_2_3=   {0x331:8,0x321:8,0x231:8,0x221:8, #for Lv2~ (Lv1:17520)
+        dic_2_3=   {0x331:8,0x321:8,0x231:8,0x221:8, #for Lv2~ (Lv1:17520)
                         # {0x331:8,0x321:8,0x231:8,0x221:8,  #for Lv1  (Lv1:18783)
                         0x131:4,0x121:4,0x031:3,0x021:3,
                         0x033:2,0x032:2,0x023:2,0x022:2,
                         0x031:1,0x021:1}
 
+        dic_alix_2 = [1,1,0,1]
+        dic_aliy_2 = [1,1,1,0] # not use
+        dic_ofsx_2 = [0,0,0,0] # not use
+        dic_widx_2 = [2,3,2,3] # not use
+        dic_widy_2 = [3,2,3,2]
+
+        dic_dir_2 = [0,1,2,3]
+        dic_pat_2 = [0,1,0,1] # pat2:0,pat3:1,pat4:2
+
         # TYPE-T(3)
         # Dir0
-        self.dic_3_0={  0x13:6,0x12:6,
+        dic_3_0={  0x13:6,0x12:6,
                         0x11:2,0x10:1} #for Lv3
         # Dir1
-        self.dic_3_1={  0x313:8,0x213:8,0x312:8,0x212:8,
+        dic_3_1={  0x313:8,0x213:8,0x312:8,0x212:8,
                         0x515:2,
                         0x101:2}
         # Dir2
-        self.dic_3_2={  0x31:6,0x21:6,
+        dic_3_2={  0x31:6,0x21:6,
                         0x53:3,0x52:2,
                         0x11:2,0x01:1} #for Lv3
         # Dir3
-        self.dic_3_3={  0x111:7,
+        dic_3_3={  0x111:7,
                         0x110:2,0x101:2,0x011:2,
                         0x331:3,0x321:3,0x231:3,0x221:3,
                         0x313:3,0x213:3,0x312:3,0x212:3,
                         0x133:3,0x123:3,0x132:3,0x122:3,
                         0x100:1,0x010:1,0x001:1}
 
+        dic_alix_3 = [0,1,1,1]
+        dic_aliy_3 = [1,1,1,0] # not use
+        dic_ofsx_3 = [0,0,0,0] # not use
+        dic_widx_3 = [2,3,2,3]
+        dic_widy_3 = [3,2,3,2] # not use
+
+        dic_dir_3 = [0,1,2,3]
+        dic_pat_3 = [0,1,0,1] # pat2:0,pat3:1,pat4:2
+
         # TYPE-O(4)
         # DIr0
-        self.dic_4_0={  0x11:9,
+        dic_4_0={  0x11:9,
                         0x13:4,0x12:4,0x31:4,0x21:4,
                         0x17:3,0x16:3,0x15:3,0x14:3,0x71:3,0x61:3,0x51:3,0x41:3}
         # Dir1
-        self.dic_4_1={  0x11f:8,0x11e:8,0x11d:8,0x11c:8,0x11b:8,0x11a:8,0x119:8,0x118:8,\
+        dic_4_1={  0x11f:8,0x11e:8,0x11d:8,0x11c:8,0x11b:8,0x11a:8,0x119:8,0x118:8,\
                         0x117:8,0x116:8,0x115:8,0x114:8}
         # Dir2
-        self.dic_4_2={  0xf11:8,0xe11:8,0xd11:8,0xc11:8,0xb11:8,0xa11:8,0x911:8,0x811:8,\
+        dic_4_2={  0xf11:8,0xe11:8,0xd11:8,0xc11:8,0xb11:8,0xa11:8,0x911:8,0x811:8,\
                         0x711:8,0x611:8,0x511:8,0x411:8}
+
+        dic_alix_4 = [0,0,1,0]
+        dic_aliy_4 = [1,1,1,0] # not use
+        dic_ofsx_4 = [0,0,0,0] # not use
+        dic_widx_4 = [2,2,2,0]
+        dic_widy_4 = [2,2,2,0] # not use
+
+        dic_dir_4 = [0,1,2]
+        dic_pat_4 = [0,1,1] # pat2:0,pat3:1,pat4:2
 
         # TYPE-S(5)
         # Dir0
-        self.dic_5_0={  0x113:8,0x112:8,0x111:4}
+        dic_5_0={  0x113:8,0x112:8,0x111:4}
         # Dir1
-        self.dic_5_1={  0x31:6,0x21:6,
+        dic_5_1={  0x31:6,0x21:6,
                         0x11:2,
                         0x10:5,
                         # 0x20:1,
                         0x01:1
                     } 
 
+        dic_alix_5 = [1,0,0,0]
+        dic_aliy_5 = [1,1,0,0] # not use
+        dic_ofsx_5 = [0,0,0,0] # not use
+        dic_widx_5 = [3,2,0,0]
+        dic_widy_5 = [2,3,0,0] # not use
+
+        dic_dir_5 = [0,1]
+        dic_pat_5 = [1,0] # pat2:0,pat3:1,pat4:2
+
         # TYPE-Z(6)
         # Dir0
-        self.dic_6_0={  0x311:8,0x211:8,0x111:4}
+        dic_6_0={  0x311:8,0x211:8,0x111:4}
         # Dir1
-        self.dic_6_1={  0x13:6,0x12:6,
+        dic_6_1={  0x13:6,0x12:6,
                         0x11:2,
                         0x01:5,
                         # 0x02:1,
                         0x10:1
                     }
 
+        dic_alix_6 = [1,0,0,0]
+        dic_aliy_6 = [1,1,0,0] # not use
+        dic_ofsx_6 = [0,0,0,0] # not use
+        dic_widx_6 = [3,2,0,0]
+        dic_widy_6 = [2,3,0,0] # not use
+
+        dic_dir_6 = [0,1]
+        dic_pat_6 = [1,0] # pat2:0,pat3:1,pat4:2
+
         self.dic_pat_dir=[]
-        self.dic_0=[]
-        self.dic_1=[]
-        self.dic_2=[]
-        self.dic_3=[]
-        self.dic_4=[]
-        self.dic_5=[]
-        self.dic_6=[]
-        self.dic_0.append(self.dic_0_0)
-        self.dic_0.append(self.dic_0_1)
-        self.dic_0.append(self.dic_0_2)
-        self.dic_0.append(self.dic_0_3)
-        self.dic_1.append(self.dic_1_0)
-        self.dic_1.append(self.dic_1_1)
-        self.dic_1.append(self.dic_1_2)
-        self.dic_1.append(self.dic_1_3)
-        self.dic_2.append(self.dic_2_0)
-        self.dic_2.append(self.dic_2_1)
-        self.dic_2.append(self.dic_2_2)
-        self.dic_2.append(self.dic_2_3)
-        self.dic_3.append(self.dic_3_0)
-        self.dic_3.append(self.dic_3_1)
-        self.dic_3.append(self.dic_3_2)
-        self.dic_3.append(self.dic_3_3)
-        self.dic_4.append(self.dic_4_0)
-        self.dic_4.append(self.dic_4_1)
-        self.dic_4.append(self.dic_4_2)
-        self.dic_5.append(self.dic_5_0)
-        self.dic_5.append(self.dic_5_1)
-        self.dic_6.append(self.dic_6_0)
-        self.dic_6.append(self.dic_6_1)
-        self.dic_pat_dir.append(self.dic_0) # TYPE-I
-        self.dic_pat_dir.append(self.dic_1) # TYPE-L
-        self.dic_pat_dir.append(self.dic_2) # TYPE-J
-        self.dic_pat_dir.append(self.dic_3) # TYPE-T
-        self.dic_pat_dir.append(self.dic_4) # TYPE-O
-        self.dic_pat_dir.append(self.dic_5) # TYPE-S
-        self.dic_pat_dir.append(self.dic_6) # TYPE-Z
+        dic_0=[]
+        dic_1=[]
+        dic_2=[]
+        dic_3=[]
+        dic_4=[]
+        dic_5=[]
+        dic_6=[]
+        dic_0.append(dic_0_0)
+        dic_0.append(dic_0_1)
+        dic_0.append(dic_0_2)
+        dic_0.append(dic_0_3)
+        dic_1.append(dic_1_0)
+        dic_1.append(dic_1_1)
+        dic_1.append(dic_1_2)
+        dic_1.append(dic_1_3)
+        dic_2.append(dic_2_0)
+        dic_2.append(dic_2_1)
+        dic_2.append(dic_2_2)
+        dic_2.append(dic_2_3)
+        dic_3.append(dic_3_0)
+        dic_3.append(dic_3_1)
+        dic_3.append(dic_3_2)
+        dic_3.append(dic_3_3)
+        dic_4.append(dic_4_0)
+        dic_4.append(dic_4_1)
+        dic_4.append(dic_4_2)
+        dic_5.append(dic_5_0)
+        dic_5.append(dic_5_1)
+        dic_6.append(dic_6_0)
+        dic_6.append(dic_6_1)
+        self.dic_pat_dir.append(dic_0) # TYPE-I
+        self.dic_pat_dir.append(dic_1) # TYPE-L
+        self.dic_pat_dir.append(dic_2) # TYPE-J
+        self.dic_pat_dir.append(dic_3) # TYPE-T
+        self.dic_pat_dir.append(dic_4) # TYPE-O
+        self.dic_pat_dir.append(dic_5) # TYPE-S
+        self.dic_pat_dir.append(dic_6) # TYPE-Z
+
+        self.dic_alix=[]
+        self.dic_aliy=[]
+        self.dic_ofsx=[]
+        self.dic_widx=[]
+        self.dic_widy=[]
+        self.dic_dir =[]
+        self.dic_alix.append(dic_alix_0)
+        self.dic_alix.append(dic_alix_1)
+        self.dic_alix.append(dic_alix_2)
+        self.dic_alix.append(dic_alix_3)
+        self.dic_alix.append(dic_alix_4)
+        self.dic_alix.append(dic_alix_5)
+        self.dic_alix.append(dic_alix_6)
+        self.dic_aliy.append(dic_aliy_0)
+        self.dic_aliy.append(dic_aliy_1)
+        self.dic_aliy.append(dic_aliy_2)
+        self.dic_aliy.append(dic_aliy_3)
+        self.dic_aliy.append(dic_aliy_4)
+        self.dic_aliy.append(dic_aliy_5)
+        self.dic_aliy.append(dic_aliy_6)
+        self.dic_ofsx.append(dic_ofsx_0)
+        self.dic_ofsx.append(dic_ofsx_1)
+        self.dic_ofsx.append(dic_ofsx_2)
+        self.dic_ofsx.append(dic_ofsx_3)
+        self.dic_ofsx.append(dic_ofsx_4)
+        self.dic_ofsx.append(dic_ofsx_5)
+        self.dic_ofsx.append(dic_ofsx_6)
+        self.dic_widx.append(dic_widx_0)
+        self.dic_widx.append(dic_widx_1)
+        self.dic_widx.append(dic_widx_2)
+        self.dic_widx.append(dic_widx_3)
+        self.dic_widx.append(dic_widx_4)
+        self.dic_widx.append(dic_widx_5)
+        self.dic_widx.append(dic_widx_6)
+        self.dic_widy.append(dic_widy_0)
+        self.dic_widy.append(dic_widy_1)
+        self.dic_widy.append(dic_widy_2)
+        self.dic_widy.append(dic_widy_3)
+        self.dic_widy.append(dic_widy_4)
+        self.dic_widy.append(dic_widy_5)
+        self.dic_widy.append(dic_widy_6)
+        self.dic_dir.append(dic_dir_0)
+        self.dic_dir.append(dic_dir_1)
+        self.dic_dir.append(dic_dir_2)
+        self.dic_dir.append(dic_dir_3)
+        self.dic_dir.append(dic_dir_4)
+        self.dic_dir.append(dic_dir_5)
+        self.dic_dir.append(dic_dir_6)
+
+        self.dic_pat=[]
+        self.dic_pat.append(dic_pat_0)
+        self.dic_pat.append(dic_pat_1)
+        self.dic_pat.append(dic_pat_2)
+        self.dic_pat.append(dic_pat_3)
+        self.dic_pat.append(dic_pat_4)
+        self.dic_pat.append(dic_pat_5)
+        self.dic_pat.append(dic_pat_6)
 
     def makehorizontalorder(self,maxheight):
         if maxheight < 10 :
@@ -268,15 +389,69 @@ class lib_tetris:
         for yy in range(0,self.height,1):
             for xx in range(0,self.width,1):
                 if board[yy*self.width+xx]!=0:
-                    if ((self.MYDEBUG)):print('blockheight=',yy-4)
                     return(yy-4)
-        return(0)
+        return(self.height-4)
+
+    def calcEvaluationValue(self,GameStatus,board,nextindex):
+        self.width  = GameStatus["field_info"]["width"] # width=10
+        self.height = GameStatus["field_info"]["height"] # height=22
+        self.index  = GameStatus["block_info"]["currentShape"]["index"] - 1 # 0:I,1:L,2:J,3:T,4:O,5:S,6:Z
+        blockheight = self.maxblockheight(board)
+        if ((self.MYDEBUG)):print('blockheight=',blockheight)
+        order = self.makehorizontalorder(blockheight)
+        ypos_change = -3
+        point = [-1,-1,-1,-1] #point,x,y,direction
+        for y in range(self.height - 3,blockheight , -1):
+            for x in order:
+                pat4 = self.calcBoardPat(board,x,y)
+                pat3 = pat4 >> 4
+                pat2 = pat4 >> 8
+                pat=[pat2,pat3,pat4]
+                #check over 4 hole
+                # if self.checkupper(board,x+dic_alix[direction],y)!=1 :
+                #     hole=self.counthole(board,x+dic_alix[direction],y)
+                #     if (hole >= 4):
+                #         getpoint = 10+hole-4+y*2
+                #         if (((point[0]<getpoint))):
+                #             if (self.MYDEBUG) : print("### FOUND THE HOLE(",hole,")",x,y,format(pat4,'04x'))
+                #             point=getpoint,x,y,direction
+                #             if (self.MYDEBUG) : print("hole=",format(pat4,'04x'),"point=",point)
+                for direction in self.dic_dir[self.index]:
+                    nopoint = 0
+                    # hole = 0
+                    if (x<(self.width))and(pat[self.dic_pat[self.index][direction]] in self.dic_pat_dir[self.index][direction]):
+                        if self.MYDEBUG:
+                            print('index,direction,patno,pat=',self.index,direction,self.dic_pat[self.index][direction],pat[self.dic_pat[self.index][direction]])
+                        basepoint = self.dic_pat_dir[self.index][direction][pat[self.dic_pat[self.index][direction]]]
+                        if y>= ypos_change :
+                            getpoint = basepoint+(y*2)
+                        else :
+                            getpoint = basepoint
+                        if (self.MYDEBUG) :
+                            print('I(dir,x,y)=',direction,x,y,'pat4=',format(pat4,'04x'),'gp=',getpoint)
+                        xxmin = x + self.dic_ofsx[self.index][direction]
+                        xxmax = x + self.dic_ofsx[self.index][direction] + self.dic_widx[self.index][direction]
+                        if (((point[0]==getpoint)and(point[2]<y))or(point[0]<getpoint))and(xxmax<=self.width):
+                            for xx in range(xxmin,xxmax,1):
+                                if self.checkupper(board,xx,y)==1:
+                                    if (self.MYDEBUG) : print('### BLOCKED BY UPPER at ',direction,xx,y)
+                                    nopoint = 1
+                                    break
+                                #hole=self.counthole(board,xx,y)
+                                #if (hole <=1):
+                                #    if (self.MYDEBUG) : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
+                                #    nopoint = 1
+                                #    break
+                            if (nopoint==0):
+                                point = getpoint,x+self.dic_alix[self.index][direction],y,direction
+                                if (self.MYDEBUG) : print("dir0=",format(pat2,'02x'),"point=",point)
+
+            #if (self.MYDEBUG) : print("x,y,pat=",x,y,format(pat4,'04x'),"point=",point)
+        return point[0],point[1],point[3]
 
     #type-I(0)
     def calcEvaluationValueIndex1(self,GameStatus,board,nextindex):
-        print(self.MYDEBUG)
         if (self.MYDEBUG) : print('block_type-I -> ',nextindex)
-        direction = 0
         self.width = GameStatus["field_info"]["width"] #width=10
         self.height = GameStatus["field_info"]["height"] #height=22
         blockheight = self.maxblockheight(board)
@@ -1254,6 +1429,11 @@ if __name__ == '__main__':
     print(isshy.dic_pat_dir[6][1]) #dir1
 
     print('TYPE-I,dir0,pat0',isshy.dic_pat_dir[0][0][0])
+    print('TYPE-I,dir0,pat0',isshy.dic_pat_dir[1][0][0])
     print('TYPE-I,dir1,pat1',isshy.dic_pat_dir[0][1][0x1333])
     print('TYPE-Z,dir0,pat0',isshy.dic_pat_dir[6][0][0x211])
     print('TYPE-Z,dir1,pat1',isshy.dic_pat_dir[6][1][0x12])
+
+    print('dic_widx_2',isshy.dic_widx[2])
+
+    print('dic_pat',isshy.dic_pat[1])

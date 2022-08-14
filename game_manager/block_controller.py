@@ -8,7 +8,6 @@ import lib_tetris_isshy
 
 class Block_Controller(object):
 
-    MYDEBUG = 0
     # init parameter
     board_backboard = 0
     board_data_width = 0
@@ -25,13 +24,14 @@ class Block_Controller(object):
     # output
     #    nextMove : nextMove structure which includes next shape position and the other.
     def GetNextMove(self, nextMove, GameStatus):
-
+        self.MYDEBUG=isshy.MYDEBUG
+ 
         t1 = datetime.now()
-        DEBUG = 0 #OFF
         # print GameStatus
         print("=================================================>")
         del GameStatus["field_info"]["withblock"]
-        pprint.pprint(GameStatus, width = 61, compact = True)
+        # pprint.pprint(GameStatus, width = 61, compact = True)
+        if self.MYDEBUG: pprint.pprint(GameStatus["field_info"]["backboard"], width = 31, compact = True)
 
         # get data from GameStatus
         # current shape info
@@ -51,25 +51,25 @@ class Block_Controller(object):
 
         # search best nextMove -->
         strategy = None
-        LatestEvalValue = -100000
+        LatestEvalValue = -1
 
         # isshy=lib_tetris_isshy()
         # add additional code by isshy-you
-        self.MYDEBUG=False
-        if self.CurrentShape_index==1:
-            EvalValue,x0,direction0 = isshy.calcEvaluationValueIndex1(GameStatus,self.board_backboard, self.NextShape_index)
-        elif self.CurrentShape_index==2:
-            EvalValue,x0,direction0 = isshy.calcEvaluationValueIndex2(GameStatus,self.board_backboard, self.NextShape_index)
-        elif self.CurrentShape_index==3:
-            EvalValue,x0,direction0 = isshy.calcEvaluationValueIndex3(GameStatus,self.board_backboard, self.NextShape_index)
-        elif self.CurrentShape_index==4:
-            EvalValue,x0,direction0 = isshy.calcEvaluationValueIndex4(GameStatus,self.board_backboard, self.NextShape_index)
-        elif self.CurrentShape_index==5:
-            EvalValue,x0,direction0 = isshy.calcEvaluationValueIndex5(GameStatus,self.board_backboard, self.NextShape_index)
-        elif self.CurrentShape_index==6:
-            EvalValue,x0,direction0 = isshy.calcEvaluationValueIndex6(GameStatus,self.board_backboard, self.NextShape_index)
-        elif self.CurrentShape_index==7:
-            EvalValue,x0,direction0 = isshy.calcEvaluationValueIndex7(GameStatus,self.board_backboard, self.NextShape_index)
+        EvalValue,x0,direction0 = isshy.calcEvaluationValue(GameStatus,self.board_backboard, self.NextShape_index)
+        # if self.CurrentShape_index==1:
+        #     EvalValue,x0,direction0 = isshy.calcEvaluationValueIndex1(GameStatus,self.board_backboard, self.NextShape_index)
+        # elif self.CurrentShape_index==2:
+        #     EvalValue,x0,direction0 = isshy.calcEvaluationValueIndex2(GameStatus,self.board_backboard, self.NextShape_index)
+        # elif self.CurrentShape_index==3:
+        #     EvalValue,x0,direction0 = isshy.calcEvaluationValueIndex3(GameStatus,self.board_backboard, self.NextShape_index)
+        # elif self.CurrentShape_index==4:
+        #     EvalValue,x0,direction0 = isshy.calcEvaluationValueIndex4(GameStatus,self.board_backboard, self.NextShape_index)
+        # elif self.CurrentShape_index==5:
+        #     EvalValue,x0,direction0 = isshy.calcEvaluationValueIndex5(GameStatus,self.board_backboard, self.NextShape_index)
+        # elif self.CurrentShape_index==6:
+        #     EvalValue,x0,direction0 = isshy.calcEvaluationValueIndex6(GameStatus,self.board_backboard, self.NextShape_index)
+        # elif self.CurrentShape_index==7:
+        #     EvalValue,x0,direction0 = isshy.calcEvaluationValueIndex7(GameStatus,self.board_backboard, self.NextShape_index)
         if EvalValue > 0 :
             #strategy = (direction0,x0,1,self.board_data_height-1)
             strategy = (direction0,x0,1,1)
@@ -78,6 +78,7 @@ class Block_Controller(object):
             LatestEvalValue = 19
         else:
             if (self.MYDEBUG) : print("<<< isshy-you:GiveUp")
+            exit()
 
         if LatestEvalValue < 19:
             # sample code
