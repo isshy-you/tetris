@@ -429,7 +429,7 @@ class lib_tetris:
                         if self.index != 1 and y>= self.height-10 :
                             getpoint = basepoint + (y * 2)
                         elif y>= ypos_change:
-                            getpoint = basepoint + (y * 3)
+                            getpoint = basepoint + (y * 2)
                         else :
                             getpoint = basepoint
                         if (self.MYDEBUG) :
