@@ -82,23 +82,23 @@ class Block_Controller(object):
             if (self.MYDEBUG) : print("<<< isshy-you:GiveUp")
             exit()
 
-        if LatestEvalValue < 19:
-            # sample code
-            # search with current block Shape
-            for direction0 in CurrentShapeDirectionRange:
-                # search with x range
-                x0Min, x0Max = self.getSearchXRange(self.CurrentShape_class, direction0)
-                for x0 in range(x0Min, x0Max):
-                    # get board data, as if dropdown block
-                    board = self.getBoard(self.board_backboard, self.CurrentShape_class, direction0, x0)
+        # if LatestEvalValue < 19:
+        #     # sample code
+        #     # search with current block Shape
+        #     for direction0 in CurrentShapeDirectionRange:
+        #         # search with x range
+        #         x0Min, x0Max = self.getSearchXRange(self.CurrentShape_class, direction0)
+        #         for x0 in range(x0Min, x0Max):
+        #             # get board data, as if dropdown block
+        #             board = self.getBoard(self.board_backboard, self.CurrentShape_class, direction0, x0)
 
-                    # evaluate board
-                    EvalValue = self.calcEvaluationValueSample(board)
-                    # update best move
-                    if EvalValue > LatestEvalValue:
-                        if (self.MYDEBUG) : print(">>> SAMPLE   :(EvalValue,index,strategy(dir,x,y_ope,y_mov))=(",EvalValue,self.CurrentShape_index,(direction0, x0, 1, 1),")")
-                        strategy = (direction0, x0, 1, 1)
-                        LatestEvalValue = EvalValue
+        #             # evaluate board
+        #             EvalValue = self.calcEvaluationValueSample(board)
+        #             # update best move
+        #             if EvalValue > LatestEvalValue:
+        #                 if (self.MYDEBUG) : print(">>> SAMPLE   :(EvalValue,index,strategy(dir,x,y_ope,y_mov))=(",EvalValue,self.CurrentShape_index,(direction0, x0, 1, 1),")")
+        #                 strategy = (direction0, x0, 1, 1)
+        #                 LatestEvalValue = EvalValue
 
         # search best nextMove <--
 
