@@ -426,12 +426,10 @@ class lib_tetris:
                         # if self.MYDEBUG:
                         #     print('index,direction,patno,pat=',self.index,direction,self.dic_pat[self.index][direction],pat[self.dic_pat[self.index][direction]])
                         basepoint = self.dic_pat_dir[self.index][direction][pat[self.dic_pat[self.index][direction]]]
-                        if self.index != 1 and y>= self.height-10 :
-                            getpoint = basepoint + (y * 2)
-                        elif y>= ypos_change:
-                            getpoint = basepoint + (y * 2)
-                        else :
-                            getpoint = basepoint
+                        # if y >= ypos_change:
+                        getpoint = basepoint + (y * 2)
+                        # else :
+                        #     getpoint = basepoint
                         if (self.MYDEBUG) :
                             print('[calc](index,dir,x,y)=',self.index,direction,x,y,'pat=',format(pat[self.dic_pat[self.index][direction]],'04x'),'gp=',getpoint)
                         xxmin = x + self.dic_ofsx[self.index][direction]
