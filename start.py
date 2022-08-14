@@ -57,7 +57,7 @@ def start():
     IS_MODE = "default"
     IS_SAMPLE_CONTROLL = "n"
     INPUT_RANDOM_SEED = -1
-    DROP_INTERVAL = 1         # drop interval
+    DROP_INTERVAL = 1        # drop interval
     RESULT_LOG_JSON = "result.json"
     USER_NAME = "window_sample"
     SHAPE_LIST_MAX = 6
