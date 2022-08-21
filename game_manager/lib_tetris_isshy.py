@@ -444,7 +444,7 @@ class lib_tetris:
                                 hole = self.counthole(self.board,xx,y+self.dic_widy[self.index][direction]-self.dic_aliy[self.index][direction]+1)
                                 if (hole > 0):
                                     if (self.MYDEBUG) : print("### find HOLE ###",hole,self.index_next)
-                                    if hole >= 3 and self.index_next==0:
+                                    if hole >= 2 and self.index_next==0:
                                         getpoint = getpoint -int(hole)
                                         if (self.MYDEBUG) : print("### use next block==0 ###")
                                     else:
