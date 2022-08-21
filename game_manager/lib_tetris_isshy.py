@@ -445,6 +445,7 @@ class lib_tetris:
                                 if (hole > 0):
                                     if hole >= 4 and self.index_next==0:
                                         getpoint = getpoint -int(hole)
+                                        if (self.MYDEBUG) : print("### use next block==0 ###")
                                     else:
                                         getpoint = getpoint -int(hole/4)
                                     if (self.MYDEBUG) : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
