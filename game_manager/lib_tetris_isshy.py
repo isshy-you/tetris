@@ -443,7 +443,7 @@ class lib_tetris:
                                 # print('widy,aliy=',self.dic_widy[self.index][direction],self.dic_aliy[self.index][direction])
                                 hole = self.counthole(self.board,xx,y+self.dic_widy[self.index][direction]-self.dic_aliy[self.index][direction]+1)
                                 if (hole > 0):
-                                    if hole >= 4 and self.index_next==1:
+                                    if hole >= 4 and self.index_next==0:
                                         getpoint = getpoint -int(hole)
                                     else:
                                         getpoint = getpoint -int(hole/4)
