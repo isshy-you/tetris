@@ -443,8 +443,11 @@ class lib_tetris:
                                 # print('widy,aliy=',self.dic_widy[self.index][direction],self.dic_aliy[self.index][direction])
                                 hole = self.counthole(self.board,xx,y+self.dic_widy[self.index][direction]-self.dic_aliy[self.index][direction]+1)
                                 if (hole > 0):
+                                    if hole >= 4 and self.index_next==1:
+                                        getpoint = getpoint -int(hole)
+                                    else:
+                                        getpoint = getpoint -int(hole/4)
                                     if (self.MYDEBUG) : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
-                                    getpoint = getpoint -int(hole/4)
                                 #    nopoint = 1
                                 #    break
                             if (nopoint==0):
