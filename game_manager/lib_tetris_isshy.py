@@ -3,7 +3,7 @@
 
 class lib_tetris:
     def __init__(self):
-        self.MYDEBUG = True
+        self.MYDEBUG = False
 
         # Type-I(0)
         # Dir0
