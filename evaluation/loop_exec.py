@@ -65,21 +65,24 @@ def read_option_from_excel():
 
 def exec_cmd(cmd):
     print('cmd : '+cmd)
-    ret = subprocess.run(cmd, shell=True)
-    if ret.returncode != 0:
-        print('error: subprocess failed.', file=sys.stderr)
-        sys.exit(1)
+    try:
+        subprocess.run(cmd, shell=True)
+    except:
+        print('ERROR:'+cmd)
+    # if ret.returncode != 0:
+    #     print('error: subprocess failed.', file=sys.stderr)
+    #     sys.exit(1)
 
 def start():
     ## define
     EXEC_LOG_ON = 1    
-    SEED_FIX = 0
+    SEED_FIX = 1
     ## default value
     GAME_LEVEL = 3
     GAME_TIME = 180
     IS_MODE = "default"
     IS_SAMPLE_CONTROLL = "n"
-    INPUT_RANDOM_SEED = 1
+    INPUT_RANDOM_SEED = -1
     DROP_INTERVAL = 1000        # drop interval
     RESULT_LOG_JSON = "result.json"
     USER_NAME = "window_sample"
@@ -114,43 +117,39 @@ def start():
         # print('branch=',Repository('.').head.shorthand)
 
         cmd = 'git remote remove eva'
-        try:
-            exec_cmd(cmd)
-        except:
-            print("<<< no remote 'eva' >>>")
+        exec_cmd(cmd)
         cmd = 'git remote add eva ' + REPOSITORY
         exec_cmd(cmd)
         cmd = 'git fetch eva'
         exec_cmd(cmd)
         cmd = 'git checkout eva/'+branch_name+' ./game_manager/block_controller.py'
         exec_cmd(cmd)
+        cmd = 'git checkout eva/'+branch_name+' ./game_manager/lib_tetris_isshy.py'
+        exec_cmd(cmd)
         cmd = 'git checkout eva/'+branch_name+' ./game_manager/machine_learning'
-        try:
-            exec_cmd(cmd)
-        except:
-            print('<<< no machine_learning >>>')
+        exec_cmd(cmd)
 
         ## set field parameter for level 1
-        RANDOM_SEED = 0            # random seed for field
-        OBSTACLE_HEIGHT = 0        # obstacle height (blocks)
-        OBSTACLE_PROBABILITY = 0   # obstacle probability (percent)
+        # RANDOM_SEED = 0            # random seed for field
+        # OBSTACLE_HEIGHT = 0        # obstacle height (blocks)
+        # OBSTACLE_PROBABILITY = 0   # obstacle probability (percent)
 
         # for GAME_LEVEL in [1,2,3]:
-        if GAME_LEVEL==1:
-            RANDOM_SEED = 0
-            BLOCK_NUM_MAX = 180
-            # seed_max = 1
-            # DROP_INTERVAL = 1        # drop interval
-        elif GAME_LEVEL==2:
-            RANDOM_SEED = -1
-            BLOCK_NUM_MAX = 180
-            # seed_max = 1
-            # DROP_INTERVAL = 1        # drop interval
-        elif GAME_LEVEL==3:
-            # GAME_TIME = 30
-            BLOCK_NUM_MAX = -1
-            # seed_max = 1
-            DROP_INTERVAL = 1         # drop interval
+        # if GAME_LEVEL==1:
+        #     RANDOM_SEED = 0
+        #     BLOCK_NUM_MAX = 180
+        #     # seed_max = 1
+        #     # DROP_INTERVAL = 1        # drop interval
+        # elif GAME_LEVEL==2:
+        #     RANDOM_SEED = -1
+        #     BLOCK_NUM_MAX = 180
+        #     # seed_max = 1
+        #     # DROP_INTERVAL = 1        # drop interval
+        # elif GAME_LEVEL==3:
+        #     # GAME_TIME = 30
+        #     BLOCK_NUM_MAX = -1
+        #     # seed_max = 1
+        #     DROP_INTERVAL = 1         # drop interval
         # for num in range(1,seed_max+1,1):
         result_name = branch_name.replace('/','-').replace('_','-')\
                     +"_"+IS_MODE.replace('_','')\
@@ -203,16 +202,15 @@ def start():
         if args.predict_weight != None:
             PREDICT_WEIGHT = args.predict_weight
 
-        ## set field parameter for level 1
-        RANDOM_SEED = 0            # random seed for field
-        OBSTACLE_HEIGHT = 0        # obstacle height (blocks)
-        OBSTACLE_PROBABILITY = 0   # obstacle probability (percent)
-
         ## update field parameter level
         if GAME_LEVEL == 1: # level1
-            RANDOM_SEED = 0
+            RANDOM_SEED = 0            # random seed for field
+            OBSTACLE_HEIGHT = 0        # obstacle height (blocks)
+            OBSTACLE_PROBABILITY = 0   # obstacle probability (percent)
         elif GAME_LEVEL == 2: # level2
             RANDOM_SEED = -1
+            OBSTACLE_HEIGHT = 0        # obstacle height (blocks)
+            OBSTACLE_PROBABILITY = 0   # obstacle probability (percent)
         elif GAME_LEVEL == 3: # level3
             RANDOM_SEED = -1
             OBSTACLE_HEIGHT = 10
@@ -222,7 +220,7 @@ def start():
             sys.exit(1)
 
         ## update random seed
-        if INPUT_RANDOM_SEED >= 0:
+        if INPUT_RANDOM_SEED > 0:
             RANDOM_SEED = INPUT_RANDOM_SEED
 
         ## print
@@ -274,13 +272,11 @@ def start():
         #    print("KeyboardInterrupt, call p.terminate()")
         #    p.terminate()
 
-    cmd = 'git restore ./game_manager/block_controller.py'
+    cmd = 'git checkout HEAD ./game_manager'
     exec_cmd(cmd)
-    cmd = 'git restore ./game_manager/machine_learning'
-    try:
-        exec_cmd(cmd)
-    except:
-        print('<<< no machine_learning >>>')
+
+    cmd = 'git remote remove eva'
+    exec_cmd(cmd)
 
     cmd = PYTHON_CMD + ' ' + 'evaluation/read_result.py'
     exec_cmd(cmd)
