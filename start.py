@@ -5,7 +5,7 @@ import sys
 import subprocess
 from argparse import ArgumentParser
 
-def get_option(game_level, game_time, mode, random_seed, drop_interval, resultlogjson, user_name):
+def get_option(game_level, game_time, mode, random_seed, drop_interval, resultlogjson, train_yaml, predict_weight, user_name, ShapeListMax, BlockNumMax):
     argparser = ArgumentParser()
     argparser.add_argument('-l', '--game_level', type=int,
                            default=game_level,
@@ -15,7 +15,7 @@ def get_option(game_level, game_time, mode, random_seed, drop_interval, resultlo
                            help='Specify game time(s), if specify -1, do endless loop')
     argparser.add_argument('-m', '--mode', type=str,
                            default=mode,
-                           help='Specify mode (keyboard/gamepad/sample/train) if necessary')
+                           help='Specify mode (keyboard/gamepad/sample/train/predict/train_sample/predict_sample/train_sample2/predict_sample2) if necessary')
     argparser.add_argument('-r', '--random_seed', type=int,
                            default=random_seed,
                            help='Specify random seed if necessary') 
@@ -25,9 +25,21 @@ def get_option(game_level, game_time, mode, random_seed, drop_interval, resultlo
     argparser.add_argument('-f', '--resultlogjson', type=str,
                            default=resultlogjson,
                            help='Specigy result log file path if necessary')
+    argparser.add_argument('--train_yaml', type=str,
+                           default=train_yaml,
+                           help='yaml file for machine learning')
+    argparser.add_argument('--predict_weight', type=str,
+                           default=predict_weight,
+                           help='weight file for machine learning')
     argparser.add_argument('-u', '--user_name', type=str,
                            default=user_name,
                            help='Specigy user name if necessary')
+    argparser.add_argument('--ShapeListMax', type=int,
+                           default=ShapeListMax,
+                           help='Specigy ShapeListMax if necessary')
+    argparser.add_argument('--BlockNumMax', type=int,
+                           default=BlockNumMax,
+                           help='Specigy BlockNumMax if necessary')
     return argparser.parse_args()
 
 def get_python_cmd():
@@ -48,6 +60,10 @@ def start():
     DROP_INTERVAL = 1000          # drop interval
     RESULT_LOG_JSON = "result.json"
     USER_NAME = "window_sample"
+    SHAPE_LIST_MAX = 6
+    BLOCK_NUM_MAX = -1
+    TRAIN_YAML = "config/default.yaml"
+    PREDICT_WEIGHT = "outputs/latest/best_weight.pt"
 
     ## update value if args are given
     args = get_option(GAME_LEVEL,
@@ -56,12 +72,16 @@ def start():
                       INPUT_RANDOM_SEED,
                       DROP_INTERVAL,
                       RESULT_LOG_JSON,
-                      USER_NAME)
+                      TRAIN_YAML,
+                      PREDICT_WEIGHT,
+                      USER_NAME,
+                      SHAPE_LIST_MAX,
+                      BLOCK_NUM_MAX)
     if args.game_level >= 0:
         GAME_LEVEL = args.game_level
     if args.game_time >= 0 or args.game_time == -1:
         GAME_TIME = args.game_time
-    if args.mode in ("keyboard", "gamepad", "sample", "train"):
+    if args.mode in ("keyboard", "gamepad", "sample", "train", "predict", "train_sample", "predict_sample", "train_sample2", "predict_sample2"):
         IS_MODE = args.mode
     if args.random_seed >= 0:
         INPUT_RANDOM_SEED = args.random_seed
@@ -71,6 +91,14 @@ def start():
         RESULT_LOG_JSON = args.resultlogjson
     if len(args.user_name) != 0:
         USER_NAME = args.user_name
+    if args.ShapeListMax > 1:
+        SHAPE_LIST_MAX = args.ShapeListMax
+    if args.BlockNumMax > 1:
+        BLOCK_NUM_MAX = args.BlockNumMax
+    if len(args.train_yaml) != 0:
+        TRAIN_YAML = args.train_yaml
+    if args.predict_weight != None:
+        PREDICT_WEIGHT = args.predict_weight
 
     ## set field parameter for level 1
     RANDOM_SEED = 0            # random seed for field
@@ -104,7 +132,11 @@ def start():
     print('OBSTACLE_HEIGHT: ' + str(OBSTACLE_HEIGHT))
     print('OBSTACLE_PROBABILITY: ' + str(OBSTACLE_PROBABILITY))
     print('USER_NAME: ' + str(USER_NAME))
+    print('SHAPE_LIST_MAX: ' + str(SHAPE_LIST_MAX))
+    print('BLOCK_NUM_MAX: ' + str(BLOCK_NUM_MAX))
     print('RESULT_LOG_JSON: ' + str(RESULT_LOG_JSON))
+    print('TRAIN_YAML: ' + str(TRAIN_YAML))
+    print('PREDICT_WEIGHT: ' + str(PREDICT_WEIGHT))
 
     ## start game
     PYTHON_CMD = get_python_cmd()
@@ -116,7 +148,11 @@ def start():
         + ' ' + '--drop_interval' + ' ' + str(DROP_INTERVAL) \
         + ' ' + '--mode' + ' ' + str(IS_MODE) \
         + ' ' + '--user_name' + ' ' + str(USER_NAME) \
-        + ' ' + '--resultlogjson' + ' ' + str(RESULT_LOG_JSON)
+        + ' ' + '--resultlogjson' + ' ' + str(RESULT_LOG_JSON) \
+        + ' ' + '--train_yaml' + ' ' + str(TRAIN_YAML) \
+        + ' ' + '--predict_weight' + ' ' + str(PREDICT_WEIGHT) \
+        + ' ' + '--ShapeListMax' + ' ' + str(SHAPE_LIST_MAX) \
+        + ' ' + '--BlockNumMax' + ' ' + str(BLOCK_NUM_MAX)
 
     ret = subprocess.run(cmd, shell=True)
     if ret.returncode != 0:

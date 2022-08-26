@@ -117,12 +117,23 @@ class BoardData(object):
         self.obstacle_probability = 0
         self.random_seed = 0
         self.nextShapeIndexCnt = 1
+        self.tryMoveNextCnt = 0
+        self.ShapeListMax = 2
+        # ShapeList
+        #  ShapeNumber 0: currentShape
+        #  ShapeNumber 1: nextShape
+        #  ShapeNumber 2: next nextShape
+        #  ...
+        self.ShapeList = []
 
     def init_randomseed(self, num):
         self.random_seed = int(num % (2**32-1))
         np_randomShape.random.seed(self.random_seed)
         np_randomObstacle.random.seed(self.random_seed)
         np_randomObstaclePiece.random.seed(self.random_seed)
+
+    def init_shape_parameter(self, ShapeListMax):
+        self.ShapeListMax = ShapeListMax
 
     def init_obstacle_parameter(self, height, probability):
         self.obstacle_height = height
@@ -145,6 +156,25 @@ class BoardData(object):
     def getValue(self, x, y):
         return self.backBoard[x + y * BoardData.width]
 
+    def getShapeListLength(self):
+        length = len(self.ShapeList)
+        return length
+
+    def getShapeData(self, ShapeNumber):
+
+        ShapeClass = self.ShapeList[ShapeNumber]
+        ShapeIdx = ShapeClass.shape
+
+        ShapeRange = (0, 1, 2, 3)
+        if ShapeIdx in (Shape.shapeI, Shape.shapeZ, Shape.shapeS):
+            ShapeRange = (0, 1)
+        elif ShapeIdx == Shape.shapeO:
+            ShapeRange = (0,)
+        else:
+            ShapeRange = (0, 1, 2, 3)
+
+        return ShapeClass, ShapeIdx, ShapeRange
+
     def getCurrentShapeCoord(self):
         return self.currentShape.getCoords(self.currentDirection, self.currentX, self.currentY)
 
@@ -162,18 +192,28 @@ class BoardData(object):
 
     def createNewPiece(self):
         if self.nextShape == None:
-            self.nextShape = Shape(self.getNewShapeIndex()) # initial next shape data
+            self.ShapeList.insert(len(self.ShapeList), 0)
+            # initialize next shape data
+            for i in range(self.ShapeListMax-1):
+                self.ShapeList.insert(len(self.ShapeList), Shape(self.getNewShapeIndex()))
+            self.nextShape = self.ShapeList[1]
 
         minX, maxX, minY, maxY = self.nextShape.getBoundingOffsets(0)
         result = False
-        if self.tryMoveCurrent(0, 5, -minY):
+
+        # check if nextShape can appear
+        if self.tryMoveNext(0, 5, -minY):
             self.currentX = 5
             self.currentY = -minY
             self.currentDirection = 0
-            self.currentShape = self.nextShape
-            self.nextShape = Shape(self.getNewShapeIndex())
+            # get nextShape
+            self.ShapeList.pop(0)
+            self.ShapeList.insert(len(self.ShapeList), Shape(self.getNewShapeIndex()))
+            self.currentShape = self.ShapeList[0]
+            self.nextShape = self.ShapeList[1]
             result = True
         else:
+            # cannnot appear
             self.currentShape = Shape()
             self.currentX = -1
             self.currentY = -1
@@ -184,6 +224,18 @@ class BoardData(object):
 
     def tryMoveCurrent(self, direction, x, y):
         return self.tryMove(self.currentShape, direction, x, y)
+
+    def tryMoveNext(self, direction, x, y):
+        ret = self.tryMove(self.nextShape, direction, x, y)
+        if ret == False:
+            # if tryMove returns False 2 times, do reset.
+            self.tryMoveNextCnt += 1
+            if self.tryMoveNextCnt >= 2:
+                self.tryMoveNextCnt = 0
+                ret = True
+            else:
+                ret = False
+        return ret
 
     def tryMove(self, shape, direction, x, y):
         for x, y in shape.getCoords(direction, x, y):
@@ -224,7 +276,7 @@ class BoardData(object):
         if self.tryMoveCurrent(self.currentDirection, self.currentX - 1, self.currentY):
             self.currentX -= 1
         else:
-            print("failed to moveLeft..")
+            #print("failed to moveLeft..")
             return False
         return True
 
@@ -232,7 +284,7 @@ class BoardData(object):
         if self.tryMoveCurrent(self.currentDirection, self.currentX + 1, self.currentY):
             self.currentX += 1
         else:
-            print("failed to moveRight..")
+            #print("failed to moveRight..")
             return False
         return True
 
@@ -241,7 +293,7 @@ class BoardData(object):
             self.currentDirection += 1
             self.currentDirection %= 4
         else:
-            print("failed to rotateRight..")
+            #print("failed to rotateRight..")
             return False
         return True
 
@@ -250,7 +302,7 @@ class BoardData(object):
             self.currentDirection -= 1
             self.currentDirection %= 4
         else:
-            print("failed to rotateLeft..")
+            #print("failed to rotateLeft..")
             return False
         return True
 
@@ -292,18 +344,14 @@ class BoardData(object):
         obstacle_probability = self.obstacle_probability
 
         for y in range(BoardData.height):
-            line_obstacle_cnt = 0
             for x in range(BoardData.width):
 
                 if y < (BoardData.height - obstacle_height):
-                    continue
-                if line_obstacle_cnt >= (BoardData.width - 1):
                     continue
 
                 # create obstacle
                 tmp_num = np_randomObstacle.random.randint(1, 100)
                 if tmp_num <= obstacle_probability:
                     self.backBoard[x + y * BoardData.width] = np_randomObstaclePiece.random.randint(1, 8)
-                    line_obstacle_cnt += 1
 
 BOARD_DATA = BoardData()

@@ -18,13 +18,14 @@ winget --version
 ## v1.1.13405 等と出力されれば、Windows Package Manager(winget)がある
 ```
 
-gitをインストールする
+gitをインストールする。
 
 ```
 winget install Git.Git
+## もし y/n と出る場合は、y と入力する。y=yes という意味である。
 ```
 
-powershell上で以下を実行して結果が表示されればOK
+新しくpowershellを起動し、以下を実行して結果が表示されればOK
 
 ```
 git --version
@@ -63,7 +64,7 @@ python
 
 ![Screenshot](../pics/python3.9.msstore.png)
 
-powershell上で以下を実行して結果が表示されればOK
+新しくpowershellを起動し、以下を実行して結果が表示されればOK
 
 ```
 python --version
@@ -132,6 +133,32 @@ cd work
 git clone https://github.com/seigot/tetris
 cd tetris
 python start.py  # ここでtetrisが表示されればOK
+```
+
+### `python start.py`実行後にtetrisが表示されない場合
+
+実行環境の違いにより`python start.py`実行後にtetrisが表示されないことがたまにある。  
+この場合はwarningやエラーログが出力されるはずなので、以下の実行成功時のログと比較すると解決に近づくと思われる。
+
+```
+# （例）実行成功時のログ
+$ python start.py
+game_level: 1
+game_time: 180
+RANDOM_SEED: 0
+IS_MODE :default
+OBSTACLE_HEIGHT: 0
+OBSTACLE_PROBABILITY: 0
+USER_NAME: window_sample
+SHAPE_LIST_MAX: 6
+BLOCK_NUM_MAX: -1
+RESULT_LOG_JSON: result.json
+TRAIN_YAML: config/default.yaml
+PREDICT_WEIGHT: outputs/latest/best_weight.pt
+Python 3.7.1
+CompletedProcess(args='python --version', returncode=0, stderr='')
+=================================================>
+...(以降、tetrisデバッグ情報が表示される)
 ```
 
 ## option. エディタのインストール
