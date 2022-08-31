@@ -474,16 +474,16 @@ class lib_tetris:
                 for yy in range(y,y+4,1):
                     if yy < self.height:
                         if (board[yy * self.width + xx]!=0):
-                            if yy==0: patx[xx-x]+=8
-                            elif yy==1: patx[xx-x]+=4
-                            elif yy==2: patx[xx-x]+=2
-                            elif yy==3: patx[xx-x]+=1
+                            if yy==y+0: patx[xx-x]+=8
+                            elif yy==y+1: patx[xx-x]+=4
+                            elif yy==y+2: patx[xx-x]+=2
+                            elif yy==y+3: patx[xx-x]+=1
                             # patx[xx-x] += 2**(3-yy+y)
                     else:
-                        if yy==0: patx[xx-x]+=8
-                        elif yy==1: patx[xx-x]+=4
-                        elif yy==2: patx[xx-x]+=2
-                        elif yy==3: patx[xx-x]+=1
+                        if yy==y+0: patx[xx-x]+=8
+                        elif yy==y+1: patx[xx-x]+=4
+                        elif yy==y+2: patx[xx-x]+=2
+                        elif yy==y+3: patx[xx-x]+=1
                         # patx[xx-x] += 2**(3-yy+y)
             else:
                 patx[xx-x] = 15
