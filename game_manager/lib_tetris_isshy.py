@@ -323,43 +323,31 @@ class lib_tetris:
         self.dic_pat.append(dic_pat_5)
         self.dic_pat.append(dic_pat_6)
 
+        self.horder=[]
+        order0=[]
+        order1=[]
+        order2=[]
+        order3=[]
+        width = 10
+        for ii in range(width):
+            order0.append(ii)
+            order1.append(width-ii-1)
+            if ii%2==0 :
+                order2.append(ii//2)
+                order3.append((width-ii-1)//2)
+            else:
+                order2.append(width-1-ii//2)
+                order3.append(width-1-(width-ii-1)//2)
+        self.horder.append(order0)
+        self.horder.append(order1)
+        self.horder.append(order2)
+        self.horder.append(order3)
+
     def makehorizontalorder(self,maxheight):
-        if maxheight < 10 :
-            return(self.makehorizontalorder3())
+        if maxheight < 16 :
+            return(self.horder[2])
         else :
-            return(self.makehorizontalorder4())
-
-    def makehorizontalorder1(self): #[0,1,2,3,4,5,6,6,8,9]
-        #order = list(range(self.width))
-        #for ii in range(0,self.width,1):
-        #    order[ii]=ii
-        return([0,1,2,3,4,5,6,7,8,9])
-
-    def makehorizontalorder2(self): #[9,8,7,6,5,4,3,2,1,0]
-        #order = list(range(self.width))
-        #for ii in range(0,self.width,1):
-        #    order[ii]=self.width-ii-1
-        return([9,8,7,6,5,4,3,2,1,0])
-
-    def makehorizontalorder3(self): #[0,9,1,8,2,7,3,6,4,5]
-        # order = list(range(self.width+1))
-        # for ii in range(0,self.width+1,1):
-        #     if int(ii/2)==(ii/2) :
-        #         order[ii] = int(ii/2)-1
-        #     else:
-        #         order[ii] = self.width-1-int(ii/2)
-        # if ((self.MYDEBUG)):print('order3=',order)
-        return([0,9,1,8,2,7,3,6,4,5])
-
-    def makehorizontalorder4(self): #[5,4,6,3,7,2,8,1,9,0]
-        # order = list(range(self.width+1))
-        # for ii in range(0,self.width+1,1):
-        #     if int(ii/2)==(ii/2) :
-        #         order[self.width-ii] = int(ii/2)-1
-        #     else:
-        #         order[self.width-ii] = self.width-1-int(ii/2)
-        # if ((self.MYDEBUG)):print('order4=',order)
-        return([5,4,6,3,7,2,8,1,9,0])
+            return(self.horder[3])
 
     def checkupper(self,board,xpos,ypos): 
         block=0
@@ -381,11 +369,6 @@ class lib_tetris:
         return(hole)
 
     def maxblockheight(self,board):
-        # maxheight=height-4
-        # for yy in range(height-1,4,-1):
-        #     for xx in range(0,self.width,1):
-        #         if board[yy*self.width+xx]!=0:
-        #             maxheight = yy-4
         for yy in range(0,self.height,1):
             for xx in range(0,self.width,1):
                 if board[yy*self.width+xx]!=0:
@@ -472,7 +455,7 @@ class lib_tetris:
         for xx in range(x,x+4,1):
             if xx < self.width:
                 for yy in range(y,y+4,1):
-                    if yy < self.height:
+                    if (yy < self.height) :
                         if (board[yy * self.width + xx]!=0):
                             if yy==y+0: patx[xx-x]+=8
                             elif yy==y+1: patx[xx-x]+=4
@@ -489,8 +472,6 @@ class lib_tetris:
                 patx[xx-x] = 15
         pat = patx[0]*4096+patx[1]*256+patx[2]*16+patx[3]
         return(pat)
-
-
 
 if __name__ == '__main__':
     isshy=lib_tetris()
