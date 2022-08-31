@@ -468,117 +468,22 @@ class lib_tetris:
         return point[0],point[1],point[3]
 
     def calcBoardPat(self,board,x,y):
-
-        pat0=0
-        if x > (self.width-1) :
-            pat0=15 #right
-        elif x < 0:
-            pat0=15 #left
-        else:
-            if (board[y * self.width + x]!=0)and(y>=0):
-                pat0 += 8
-            if (board[(y+1) * self.width + x]!=0)and(y>=-1):
-                    pat0 += 4
-            if (board[(y+2) * self.width + x]!=0)and(y>=-2):
-                    pat0 += 2
-            if  y > (self.height-4):
-                    pat0 += 1 #bottom
-            elif board[(y+3) * self.width + x]!=0 :
-                    pat0 += 1
-
-        pat1=0
-        if x > (self.width-2) :
-            pat1=15 #right
-        else:
-            if (board[y * self.width + (x + 1)]!=0)and(y>=0):
-                pat1 += 8
-            if (board[(y+1) * self.width + (x + 1)]!=0)and(y>=-1):
-                pat1 += 4
-            if (board[(y+2) * self.width + (x + 1)]!=0)and(y>=-2):
-                pat1 += 2
-            if  y > (self.height-4):
-                pat1 += 1 #bottom
-            elif board[(y+3) * self.width + (x + 1)]!=0 :
-                pat1 += 1
-
-        pat2=0
-        if x > (self.width-3) :
-            pat2=15 #right
-        else:
-            if (board[(y+0) * self.width + (x + 2)]!=0)and(y>=0):
-                pat2 += 8
-            if (board[(y+1) * self.width + (x + 2)]!=0)and(y>=-1):
-                pat2 += 4
-            if (board[(y+2) * self.width + (x + 2)]!=0)and(y>=-2):
-                pat2 += 2
-            if  y > (self.height-4):
-                pat2 += 1 #bottom
-            elif board[(y+3) * self.width + (x + 2)]!=0 :
-                pat2 += 1
-                #print("pat2+=1:::",pat2)
-
-        pat3=0
-        if x > (self.width-4) :
-            pat3=15 #right
-        else:
-            if  (board[(y+0) * self.width + (x + 3)]!=0)and(y>=0):
-                pat3 += 8
-            if  (board[(y+1) * self.width + (x + 3)]!=0)and(y>=-1):
-                pat3 += 4
-            if  (board[(y+2) * self.width + (x + 3)]!=0)and(y>=-2):
-                pat3 += 2
-            if  y > (self.height-4):
-                pat3 += 1 #bottom
-            elif board[(y+3) * self.width + (x + 3)]!=0 :
-                pat3 += 1
-
-        pat = pat0*4096+pat1*256+pat2*16+pat3
-        #DEBUG
-        #print("(index,x,y,pat)=(",self.CurrentShape_index,x,y,format(pat,'04x'),")")
-
-        return pat
+        patx=[0,0,0,0]
+        for xx in range(x,x+4,1):
+            if xx < self.width:
+                for yy in range(y,y+4,1):
+                    if yy < self.height:
+                        if (board[yy * self.width + xx]!=0):
+                            # print(xx,yy,2**(3-yy+y))
+                            patx[xx-x] += 2**(3-yy+y)
+                    else:
+                        # print(xx,yy,2**(3-yy+y))
+                        patx[xx-x] += 2**(3-yy+y)
+            else:
+                patx[xx-x] = 15
+        pat = patx[0]*4096+patx[1]*256+patx[2]*16+patx[3]
+        return(pat)
 
 
 if __name__ == '__main__':
     isshy=lib_tetris()
-    # test for dic
-    # TYPE-I
-    print(isshy.dic_pat_dir[0][0]) #dir0
-    print(isshy.dic_pat_dir[0][1]) #dir1
-    print(isshy.dic_pat_dir[0][2]) #dir2
-    print(isshy.dic_pat_dir[0][3]) #dir3
-    # TYPE-L
-    print(isshy.dic_pat_dir[1][0]) #dir0
-    print(isshy.dic_pat_dir[1][1]) #dir1
-    print(isshy.dic_pat_dir[1][2]) #dir2
-    print(isshy.dic_pat_dir[1][3]) #dir3
-    # TYPE-J
-    print(isshy.dic_pat_dir[2][0]) #dir0
-    print(isshy.dic_pat_dir[2][1]) #dir1
-    print(isshy.dic_pat_dir[2][2]) #dir2
-    print(isshy.dic_pat_dir[2][3]) #dir3
-    # TYPE-T
-    print(isshy.dic_pat_dir[3][0]) #dir0
-    print(isshy.dic_pat_dir[3][1]) #dir1
-    print(isshy.dic_pat_dir[3][2]) #dir2
-    print(isshy.dic_pat_dir[3][3]) #dir3
-    # TYPE-O
-    print(isshy.dic_pat_dir[4][0]) #dir0
-    print(isshy.dic_pat_dir[4][1]) #dir1
-    print(isshy.dic_pat_dir[4][2]) #dir2
-    # TYPE-S
-    print(isshy.dic_pat_dir[5][0]) #dir0
-    print(isshy.dic_pat_dir[5][1]) #dir1
-    # TYPE-Z
-    print(isshy.dic_pat_dir[6][0]) #dir0
-    print(isshy.dic_pat_dir[6][1]) #dir1
-
-    print('TYPE-I,dir0,pat0',isshy.dic_pat_dir[0][0][0])
-    print('TYPE-I,dir0,pat0',isshy.dic_pat_dir[1][0][0])
-    print('TYPE-I,dir1,pat1',isshy.dic_pat_dir[0][1][0x1333])
-    print('TYPE-Z,dir0,pat0',isshy.dic_pat_dir[6][0][0x211])
-    print('TYPE-Z,dir1,pat1',isshy.dic_pat_dir[6][1][0x12])
-
-    print('dic_widx_2',isshy.dic_widx[2])
-
-    print('dic_pat',isshy.dic_pat[1])
