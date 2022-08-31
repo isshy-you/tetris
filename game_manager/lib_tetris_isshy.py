@@ -323,25 +323,29 @@ class lib_tetris:
         self.dic_pat.append(dic_pat_5)
         self.dic_pat.append(dic_pat_6)
 
-        self.horder=[]
-        order0=[]
-        order1=[]
-        order2=[]
-        order3=[]
-        width = 10
-        for ii in range(width):
-            order0.append(ii)
-            order1.append(width-ii-1)
-            if ii%2==0 :
-                order2.append(ii//2)
-                order3.append((width-ii-1)//2)
-            else:
-                order2.append(width-1-ii//2)
-                order3.append(width-1-(width-ii-1)//2)
-        self.horder.append(order0)
-        self.horder.append(order1)
-        self.horder.append(order2)
-        self.horder.append(order3)
+        # self.horder=[]
+        # order0=[]
+        # order1=[]
+        # order2=[]
+        # order3=[]
+        # width = 10
+        # for ii in range(width):
+        #     order0.append(ii)
+        #     order1.append(width-ii-1)
+        #     if ii%2==0 :
+        #         order2.append(ii//2)
+        #         order3.append((width-ii-1)//2)
+        #     else:
+        #         order2.append(width-1-ii//2)
+        #         order3.append(width-1-(width-ii-1)//2)
+        # self.horder.append(order0)
+        # self.horder.append(order1)
+        # self.horder.append(order2)
+        # self.horder.append(order3)
+        self.horder[0]=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+        self.horder[1]=[9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+        self.horder[2]=[0, 9, 1, 8, 2, 7, 3, 6, 4, 5]
+        self.horder[3]=[4, 5, 3, 6, 2, 7, 1, 8, 0, 9]        
 
     def makehorizontalorder(self,maxheight):
         if maxheight < 16 :
