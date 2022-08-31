@@ -467,20 +467,35 @@ class lib_tetris:
             #if (self.MYDEBUG) : print("x,y,pat=",x,y,format(pat4,'04x'),"point=",point)
         return point[0],point[1],point[3]
 
-    def calcBoardPat(self,board,x,y):
+    def calcBoardPat2(self,board,x,y):
         patx=[0,0,0,0]
         for xx in range(x,x+4,1):
             if xx < self.width:
                 for yy in range(y,y+4,1):
                     if yy < self.height:
                         if (board[yy * self.width + xx]!=0):
-                            # print(xx,yy,2**(3-yy+y))
                             patx[xx-x] += 2**(3-yy+y)
                     else:
-                        # print(xx,yy,2**(3-yy+y))
                         patx[xx-x] += 2**(3-yy+y)
             else:
                 patx[xx-x] = 15
+        pat = patx[0]*4096+patx[1]*256+patx[2]*16+patx[3]
+        return(pat)
+
+    def calcBoardPat(self,board,x,y):
+        patx=[0,0,0,0]
+        for xx in range(4):
+        # for xx in range(x,x+4,1):
+            if x+xx < self.width:
+                for yy in range(4):
+                # for yy in range(y,y+4,1):
+                    if y+yy < self.height:
+                        if (board[yy * self.width + xx]!=0):
+                            patx[x+xx] += 2**(y+yy)
+                    else:
+                        patx[x+xx] += 2**(y+yy)
+            else:
+                patx[x+xx] = 15
         pat = patx[0]*4096+patx[1]*256+patx[2]*16+patx[3]
         return(pat)
 
