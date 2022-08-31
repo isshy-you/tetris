@@ -323,7 +323,7 @@ class lib_tetris:
         self.dic_pat.append(dic_pat_5)
         self.dic_pat.append(dic_pat_6)
 
-        # self.horder=[]
+        self.horder=[[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0]]
         # order0=[]
         # order1=[]
         # order2=[]
