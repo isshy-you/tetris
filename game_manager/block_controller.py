@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-from datetime import datetime
+# from datetime import datetime
+import time
 import pprint
 import copy
 import lib_tetris_isshy
@@ -26,7 +27,7 @@ class Block_Controller(object):
     def GetNextMove(self, nextMove, GameStatus):
         self.MYDEBUG=isshy.MYDEBUG
  
-        t1 = datetime.now()
+        t1 = time.time()
         # print GameStatus
         print("=================================================>")
         del GameStatus["field_info"]["withblock"]
@@ -53,14 +54,16 @@ class Block_Controller(object):
         EvalValue,x0,direction0 = isshy.calcEvaluationValue(GameStatus)
         strategy = (direction0,x0,1,1)
         if (self.MYDEBUG) : print("<<< isshy-you:(EvalValue,shape,strategy(dir,x,y_ope,y_mov))=(",EvalValue,GameStatus["block_info"]["currentShape"]["index"],strategy,")")
-
-        processtime = datetime.now()-t1
-        print("=== processing time ===(", processtime,")")
+        processtime = time.time()-t1
+        time.sleep(0.397)
+        print("=== block index     === (", GameStatus["block_info"]["currentShape"]["index"],")")
+        print("=== processing time === (", processtime,") under usec(",processtime<0.001,")")
         nextMove["strategy"]["direction"] = strategy[0]
         nextMove["strategy"]["x"] = strategy[1]
         nextMove["strategy"]["y_operation"] = strategy[2]
         nextMove["strategy"]["y_moveblocknum"] = strategy[3]
-        print("=== nextMove:",nextMove)
+        # print("=== nextMove:",nextMove)
+        print("=== nextMove        === dir(",strategy[0],") xpos(",strategy[1],")")
         return nextMove
 
 BLOCK_CONTROLLER = Block_Controller()
