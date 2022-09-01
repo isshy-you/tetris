@@ -26,10 +26,11 @@ class Block_Controller(object):
     #    nextMove : nextMove structure which includes next shape position and the other.
     def GetNextMove(self, nextMove, GameStatus):
         self.MYDEBUG=isshy.MYDEBUG
+        self.DEBUG = False
  
         t1 = time.time()
         # print GameStatus
-        print("=================================================>")
+        if self.DEBUG: print("=================================================>")
         del GameStatus["field_info"]["withblock"]
         # pprint.pprint(GameStatus, width = 61, compact = True)
         if self.MYDEBUG: print('[board] index =',GameStatus["block_info"]["currentShape"]["index"])
@@ -55,15 +56,14 @@ class Block_Controller(object):
         strategy = (direction0,x0,1,1)
         if (self.MYDEBUG) : print("<<< isshy-you:(EvalValue,shape,strategy(dir,x,y_ope,y_mov))=(",EvalValue,GameStatus["block_info"]["currentShape"]["index"],strategy,")")
         processtime = time.time()-t1
-        time.sleep(0.397)
-        print("=== block index     === (", GameStatus["block_info"]["currentShape"]["index"],")")
-        print("=== processing time === (", processtime,") under usec(",processtime<0.001,")")
+        if self.DEBUG:  print("=== block index     === (", GameStatus["block_info"]["currentShape"]["index"],")")
+        if self.DEBUG:  print("=== processing time === (", processtime,") under usec(",processtime<0.001,")")
         nextMove["strategy"]["direction"] = strategy[0]
         nextMove["strategy"]["x"] = strategy[1]
         nextMove["strategy"]["y_operation"] = strategy[2]
         nextMove["strategy"]["y_moveblocknum"] = strategy[3]
         # print("=== nextMove:",nextMove)
-        print("=== nextMove        === dir(",strategy[0],") xpos(",strategy[1],")")
+        if self.DEBUG:  print("=== nextMove        === dir(",strategy[0],") xpos(",strategy[1],")")
         return nextMove
 
 BLOCK_CONTROLLER = Block_Controller()
