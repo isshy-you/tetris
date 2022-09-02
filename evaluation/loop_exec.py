@@ -76,7 +76,6 @@ def exec_cmd(cmd):
 def start():
     ## define
     EXEC_LOG_ON = 1    
-    SEED_FIX = 1
     ## default value
     GAME_LEVEL = 3
     GAME_TIME = 180
@@ -97,7 +96,6 @@ def start():
     df = read_option_from_excel()
     # for branch_name in branch_list:
     for num in range(len(df)):
-        # SEED_FIX = df.at[num,'SEED_FIX']
         branch_name = df.at[num,'branch_name']
         GAME_LEVEL = df.at[num,'GAME_LEVEL']
         GAME_TIME = df.at[num,'GAME_TIME']
@@ -159,11 +157,6 @@ def start():
                     +"_"+f'{DROP_INTERVAL:03}'\
                     +"_"+f'{INPUT_RANDOM_SEED:+05}'\
                     +"_"+f'{num+1:03}'
-        if GAME_LEVEL==1:
-            INPUT_RANDOM_SEED = -1
-        else:
-            if SEED_FIX != 1:
-                INPUT_RANDOM_SEED = -1
         ## update value if args are given
         args = get_option(GAME_LEVEL,
                         GAME_TIME,
@@ -204,15 +197,15 @@ def start():
 
         ## update field parameter level
         if GAME_LEVEL == 1: # level1
-            RANDOM_SEED = 0            # random seed for field
+            # RANDOM_SEED = 0            # random seed for field
             OBSTACLE_HEIGHT = 0        # obstacle height (blocks)
             OBSTACLE_PROBABILITY = 0   # obstacle probability (percent)
         elif GAME_LEVEL == 2: # level2
-            RANDOM_SEED = -1
+            # RANDOM_SEED = -1
             OBSTACLE_HEIGHT = 0        # obstacle height (blocks)
             OBSTACLE_PROBABILITY = 0   # obstacle probability (percent)
         elif GAME_LEVEL == 3: # level3
-            RANDOM_SEED = -1
+            # RANDOM_SEED = -1
             OBSTACLE_HEIGHT = 10
             OBSTACLE_PROBABILITY = 40
         else:
@@ -220,8 +213,8 @@ def start():
             sys.exit(1)
 
         ## update random seed
-        if INPUT_RANDOM_SEED > 0:
-            RANDOM_SEED = INPUT_RANDOM_SEED
+        # if INPUT_RANDOM_SEED > 0:
+        RANDOM_SEED = INPUT_RANDOM_SEED
 
         ## print
         print('branch:' + branch_name)
