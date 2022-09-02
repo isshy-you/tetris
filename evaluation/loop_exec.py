@@ -213,8 +213,8 @@ def start():
             sys.exit(1)
 
         ## update random seed
-        if INPUT_RANDOM_SEED > 0:
-            RANDOM_SEED = INPUT_RANDOM_SEED
+        # if INPUT_RANDOM_SEED > 0:
+        RANDOM_SEED = INPUT_RANDOM_SEED
 
         ## print
         print('branch:' + branch_name)
