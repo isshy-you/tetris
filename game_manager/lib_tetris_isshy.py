@@ -394,7 +394,10 @@ class lib_tetris:
         point = [-1,-1,-1,-1] #point,x,y,direction
         for y in range(self.height - 3,blockheight , -1):
             for x in order:
-                pat4 = self.calcBoardPat(self.board,x,y)
+                if blockheight < 13 :
+                    pat4 = self.calcBoardPat(self.board,x,y,0)
+                else:
+                    pat4 = self.calcBoardPat(self.board,x,y,1)
                 pat3 = pat4 >> 4
                 pat2 = pat4 >> 8
                 pat=[pat2,pat3,pat4]
@@ -456,10 +459,10 @@ class lib_tetris:
             #if (self.MYDEBUG) : print("x,y,pat=",x,y,format(pat4,'04x'),"point=",point)
         return point[0],point[1],point[3]
 
-    def calcBoardPat(self,board,x,y):
+    def calcBoardPat(self,board,x,y,xofs):
         patx=[0,0,0,0]
         for xx in range(x,x+4,1):
-            if xx < self.width:
+            if xx < self.width-xofs:
                 for yy in range(y,y+4,1):
                     if (yy < self.height) :
                         if (board[yy * self.width + xx]!=0):
@@ -478,6 +481,7 @@ class lib_tetris:
                 patx[xx-x] = 15
         pat = patx[0]*4096+patx[1]*256+patx[2]*16+patx[3]
         return(pat)
+
 
 if __name__ == '__main__':
     isshy=lib_tetris()
