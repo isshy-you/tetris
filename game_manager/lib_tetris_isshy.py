@@ -450,9 +450,9 @@ class lib_tetris:
                                     elif hole >= 3 and self.index_next2==1:
                                         getpoint = getpoint -int(hole)
                                         if (self.MYDEBUG) : print("### use next2 block==0 ###")
-                                    elif hole >= 4 and (self.index_next3==1 or self.index_next4==1 or self.index_next5==1):
+                                    elif hole >= 4 and (self.index_next3==1 or self.index_next4==1):
                                         getpoint = getpoint -int(hole)
-                                        if (self.MYDEBUG) : print("### use next3/4/5 block==0 ###")
+                                        if (self.MYDEBUG) : print("### use next3/4 block==0 ###")
                                     else:
                                         getpoint = getpoint -int(hole/4)
                                 #    nopoint = 1
