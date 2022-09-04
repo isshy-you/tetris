@@ -388,6 +388,7 @@ class lib_tetris:
         self.height = GameStatus["field_info"]["height"] # height=22
         self.index  = GameStatus["block_info"]["currentShape"]["index"] - 1 # 0:I,1:L,2:J,3:T,4:O,5:S,6:Z
         self.index_next = GameStatus["block_info"]["nextShape"]["index"]
+        self.index_next2 = GameStatus["block_info"]["nextShapeList"]['element2']["index"]
         blockheight = self.maxblockheight(self.board)
         if ((self.MYDEBUG)):print('blockheight=',blockheight)
         order = self.makehorizontalorder(blockheight)
@@ -441,7 +442,10 @@ class lib_tetris:
                                     if (self.MYDEBUG) : print("### find HOLE ###",hole,self.index_next)
                                     if hole >= 2 and self.index_next==1:
                                         getpoint = getpoint -int(hole)
-                                        if (self.MYDEBUG) : print("### use next block==0 ###")
+                                        if (self.MYDEBUG) : print("### use next1 block==0 ###")
+                                    elif hole >= 2 and self.index_next2==1:
+                                        getpoint = getpoint -int(hole)
+                                        if (self.MYDEBUG) : print("### use next2 block==0 ###")
                                     else:
                                         getpoint = getpoint -int(hole/4)
                                     if (self.MYDEBUG) : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
