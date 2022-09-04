@@ -454,7 +454,7 @@ class lib_tetris:
                                         getpoint = getpoint -int(hole)
                                         if (self.MYDEBUG) : print("### use next3/4/5 block==0 ###")
                                     else:
-                                        getpoint = getpoint -int(hole/2)
+                                        getpoint = getpoint -int(hole/4)
                                 #    nopoint = 1
                                 #    break
                             if (nopoint==0):
