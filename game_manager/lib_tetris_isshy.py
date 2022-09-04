@@ -4,6 +4,7 @@
 class lib_tetris:
     def __init__(self):
         self.MYDEBUG = False
+        self.ChangeHieght = 13
 
         # Type-I(0)
         # Dir0
@@ -348,13 +349,13 @@ class lib_tetris:
         self.horder[3]=[4, 5, 3, 6, 2, 7, 1, 8, 0, 9]        
 
     def makehorizontalorder(self,maxheight):
-        if maxheight < 16 :
+        if maxheight < 15 : # for Lv1 15 or 16
             # return(self.horder[2])
             return([0, 9, 1, 8, 2, 7, 3, 6, 4, 5])
         else :
             # return(self.horder[3])
             return([4, 5, 3, 6, 2, 7, 1, 8, 0, 9])
-
+ 
     def checkupper(self,board,xpos,ypos): 
         block=0
         for yy in range(ypos,0,-1):
@@ -394,7 +395,7 @@ class lib_tetris:
         point = [-1,-1,-1,-1] #point,x,y,direction
         for y in range(self.height - 3,blockheight , -1):
             for x in order:
-                if blockheight < 13 :
+                if blockheight < self.ChangeHieght :
                     pat4 = self.calcBoardPat(self.board,x,y,0)
                 else:
                     pat4 = self.calcBoardPat(self.board,x,y,1)
