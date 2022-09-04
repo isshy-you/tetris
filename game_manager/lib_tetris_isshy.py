@@ -3,7 +3,7 @@
 
 class lib_tetris:
     def __init__(self):
-        self.MYDEBUG = False
+        self.MYDEBUG = True
         self.ChangeHieght = 13
 
         # Type-I(0)
@@ -366,7 +366,7 @@ class lib_tetris:
 
     def counthole(self,board,xpos,ypos):
         hole=0
-        if (self.height-1<ypos+3): return(0)
+        # if (self.height-1 < ypos+3): return(0)
         for yy in range(ypos,self.height,1):
             #if (yy < height):
             if board[(yy) * self.width + (xpos)] == 0:
@@ -387,8 +387,11 @@ class lib_tetris:
         self.width  = GameStatus["field_info"]["width"] # width=10
         self.height = GameStatus["field_info"]["height"] # height=22
         self.index  = GameStatus["block_info"]["currentShape"]["index"] - 1 # 0:I,1:L,2:J,3:T,4:O,5:S,6:Z
-        self.index_next = GameStatus["block_info"]["nextShape"]["index"]
+        self.index_next1 = GameStatus["block_info"]["nextShape"]["index"]
         self.index_next2 = GameStatus["block_info"]["nextShapeList"]['element2']["index"]
+        self.index_next3 = GameStatus["block_info"]["nextShapeList"]['element3']["index"]
+        self.index_next4 = GameStatus["block_info"]["nextShapeList"]['element4']["index"]
+        self.index_next5 = GameStatus["block_info"]["nextShapeList"]['element5']["index"]
         blockheight = self.maxblockheight(self.board)
         if ((self.MYDEBUG)):print('blockheight=',blockheight)
         order = self.makehorizontalorder(blockheight)
@@ -436,19 +439,22 @@ class lib_tetris:
                                     if (self.MYDEBUG) : print('### BLOCKED BY UPPER at ',direction,xx,y)
                                     nopoint = 1
                                     break
-                                # print('widy,aliy=',self.dic_widy[self.index][direction],self.dic_aliy[self.index][direction])
                                 hole = self.counthole(self.board,xx,y+self.dic_widy[self.index][direction]-self.dic_aliy[self.index][direction]+1)
+                                if self.MYDEBUG: print("### check hole :",hole,xx,y+self.dic_widy[self.index][direction]-self.dic_aliy[self.index][direction]+1)
                                 if (hole > 0):
-                                    if (self.MYDEBUG) : print("### find HOLE ###",hole,self.index_next)
-                                    if hole >= 2 and self.index_next==1:
+                                    if (self.MYDEBUG) : print("### find HOLE next index",self.index_next1,self.index_next2,self.index_next3,self.index_next4,self.index_next5)
+                                    if (self.MYDEBUG) : print("### find HOLE (",hole,")",xx,y,format(pat4,'04x'))
+                                    if hole >= 2 and self.index_next1==1:
                                         getpoint = getpoint -int(hole)
                                         if (self.MYDEBUG) : print("### use next1 block==0 ###")
-                                    elif hole >= 2 and self.index_next2==1:
+                                    elif hole >= 3 and self.index_next2==1:
                                         getpoint = getpoint -int(hole)
                                         if (self.MYDEBUG) : print("### use next2 block==0 ###")
+                                    elif hole >= 4 and (self.index_next3==1 or self.index_next4==1 or self.index_next5==1):
+                                        getpoint = getpoint -int(hole)
+                                        if (self.MYDEBUG) : print("### use next3/4/5 block==0 ###")
                                     else:
-                                        getpoint = getpoint -int(hole/4)
-                                    if (self.MYDEBUG) : print("### BLOCKED BY HOLE(",hole,")",x,xx,y,format(pat4,'04x'))
+                                        getpoint = getpoint -int(hole/2)
                                 #    nopoint = 1
                                 #    break
                             if (nopoint==0):
