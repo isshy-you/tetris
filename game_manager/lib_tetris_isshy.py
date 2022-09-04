@@ -349,9 +349,10 @@ class lib_tetris:
         self.horder[3]=[4, 5, 3, 6, 2, 7, 1, 8, 0, 9]        
 
     def makehorizontalorder(self,maxheight):
-        if maxheight < 14 : # for Lv1 15 or 16
+        if maxheight < 16 : # for Lv1(19238) 16 or 17
             # return(self.horder[2])
-            return([0, 9, 1, 8, 2, 7, 3, 6, 4, 5])
+            # return([0, 9, 1, 8, 2, 7, 3, 6, 4, 5])
+            return([9, 0, 8, 1, 7, 2, 6, 3, 5, 4])
         else :
             # return(self.horder[3])
             # return([4, 5, 3, 6, 2, 7, 1, 8, 0, 9])
