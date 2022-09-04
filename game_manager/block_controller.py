@@ -34,8 +34,14 @@ class Block_Controller(object):
         del GameStatus["field_info"]["withblock"]
         # pprint.pprint(GameStatus, width = 61, compact = True)
         if self.MYDEBUG: print('[board] index =',GameStatus["block_info"]["currentShape"]["index"])
-        if self.MYDEBUG: pprint.pprint(GameStatus["field_info"]["backboard"], width = 31, compact = True)
-
+        # if self.MYDEBUG: pprint.pprint(GameStatus["field_info"]["backboard"], width = 31, compact = True)
+        if self.MYDEBUG: 
+            for jj in range(GameStatus["field_info"]["height"]):
+                tmpstr=''
+                for ii in range(GameStatus["field_info"]["width"]):
+                    tmpstr = tmpstr + str(GameStatus["field_info"]["backboard"][jj*GameStatus["field_info"]["width"]+ii]) + ' '
+                print(format(jj,'02d'),tmpstr)
+            print('-- 0 1 2 3 4 5 6 7 8 9 0 --' )
         # # get data from GameStatus
         # # current shape info
         # CurrentShapeDirectionRange = GameStatus["block_info"]["currentShape"]["direction_range"]
