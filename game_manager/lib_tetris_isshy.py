@@ -150,7 +150,7 @@ class lib_tetris:
                     # 0x53:3,0x52:2,
                     0x11:2,0x01:1} #for Lv3
         # Dir3
-        dic_3_3={   0x111:7,
+        dic_3_3={   0x111:8,
                     0x110:2,0x101:2,0x011:2,
                     0x331:3,0x321:3,0x231:3,0x221:3,
                     0x313:3,0x213:3,0x312:3,0x212:3,
@@ -168,7 +168,7 @@ class lib_tetris:
 
         # TYPE-O(4)
         # DIr0
-        dic_4_0={   0x11:9,
+        dic_4_0={   0x11:14,
                     0x13:4,0x12:4,0x31:4,0x21:4,
                     0x17:3,0x16:3,0x15:3,0x14:3,0x71:3,0x61:3,0x51:3,0x41:3}
         # Dir1
@@ -189,11 +189,11 @@ class lib_tetris:
 
         # TYPE-S(5)
         # Dir0
-        dic_5_0={  0x113:8,0x112:8,0x111:4}
+        dic_5_0={  0x113:13,0x112:13,0x111:4}
         # Dir1
-        dic_5_1={   0x31:6,0x21:6,
+        dic_5_1={   0x31:12,0x21:12,
                     0x11:2,
-                    0x10:5,
+                    0x10:3,
                     # 0x20:1,
                     0x01:1
                     } 
@@ -209,11 +209,11 @@ class lib_tetris:
 
         # TYPE-Z(6)
         # Dir0
-        dic_6_0={  0x311:8,0x211:8,0x111:4}
+        dic_6_0={  0x311:13,0x211:13,0x111:4}
         # Dir1
-        dic_6_1={   0x13:6,0x12:6,
+        dic_6_1={   0x13:12,0x12:12,
                     0x11:2,
-                    0x01:5,
+                    0x01:3,
                     # 0x02:1,
                     0x10:1
                     }
@@ -388,6 +388,8 @@ class lib_tetris:
         self.height = GameStatus["field_info"]["height"] # height=22
         self.index  = GameStatus["block_info"]["currentShape"]["index"] - 1 # 0:I,1:L,2:J,3:T,4:O,5:S,6:Z
         self.index_next = GameStatus["block_info"]["nextShape"]["index"]
+        self.index_next2 = GameStatus["block_info"]["nextShapeList"]['element2']["index"]
+        # if self.MYDEBUG: print(self.index_next, self.index_next2)
         blockheight = self.maxblockheight(self.board)
         if ((self.MYDEBUG)):print('blockheight=',blockheight)
         order = self.makehorizontalorder(blockheight)
@@ -440,6 +442,9 @@ class lib_tetris:
                                 if (hole > 0):
                                     if (self.MYDEBUG) : print("### find HOLE ###",hole,self.index_next)
                                     if hole >= 2 and self.index_next==1:
+                                        getpoint = getpoint -int(hole*2)
+                                        if (self.MYDEBUG) : print("### use next block==0 ###")
+                                    elif hole >= 2 and self.index_next2==1:
                                         getpoint = getpoint -int(hole)
                                         if (self.MYDEBUG) : print("### use next block==0 ###")
                                     else:
