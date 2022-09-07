@@ -406,22 +406,11 @@ class lib_tetris:
                 pat3 = pat4 >> 4
                 pat2 = pat4 >> 8
                 pat=[pat2,pat3,pat4]
-                #check over 4 hole
-                # if self.checkupper(self.board,x+dic_alix[direction],y)!=1 :
-                #     hole=self.counthole(self.board,x+dic_alix[direction],y)
-                #     if (hole >= 4):
-                #         getpoint = 10+hole-4+y*2
-                #         if (((point[0]<getpoint))):
-                #             if (self.MYDEBUG) : print("### FOUND THE HOLE(",hole,")",x,y,format(pat4,'04x'))
-                #             point=getpoint,x,y,direction
-                #             if (self.MYDEBUG) : print("hole=",format(pat4,'04x'),"point=",point)
                 for direction in self.dic_dir[self.index]:
                     nopoint = 0
                     hole = 0
                     if (x <= (self.width-self.dic_widx[self.index][direction]))\
                         and (pat[self.dic_pat[self.index][direction]] in self.dic_pat_dir[self.index][direction]):
-                    # if (x<(self.width-self.dic_pat[self.index][direction]-self.dic_alix[self.index][direction]))\
-                    #     and (pat[self.dic_pat[self.index][direction]] in self.dic_pat_dir[self.index][direction]):
                         # if self.MYDEBUG:
                         #     print('index,direction,patno,pat=',self.index,direction,self.dic_pat[self.index][direction],pat[self.dic_pat[self.index][direction]])
                         basepoint = self.dic_pat_dir[self.index][direction][pat[self.dic_pat[self.index][direction]]]
