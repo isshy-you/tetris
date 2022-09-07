@@ -184,8 +184,8 @@ class lib_tetris:
         dic_widx_4 = [2,2,2,0]
         dic_widy_4 = [2,2,2,0] # not use
 
-        dic_dir_4 = [0,1,2]
-        dic_pat_4 = [0,1,1] # pat2:0,pat3:1,pat4:2
+        dic_dir_4 = [0]
+        dic_pat_4 = [0] # pat2:0,pat3:1,pat4:2
 
         # TYPE-S(5)
         # Dir0
