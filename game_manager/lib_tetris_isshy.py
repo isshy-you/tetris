@@ -77,8 +77,8 @@ class lib_tetris:
         dic_widx_0 = [1,4,1,1]
         dic_widy_0 = [4,1,4,4] # not use
 
-        dic_dir_0 = [0,1,0,0]
-        dic_pat_0 = [0,2,0,1] # pat2:0,pat3:1,pat4:2
+        dic_dir_0 = [0,1]
+        dic_pat_0 = [0,2] # pat2:0,pat3:1,pat4:2
 
         # TYPE-L(1)
         # Dir0
