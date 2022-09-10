@@ -354,7 +354,8 @@ class lib_tetris:
             return([0, 9, 1, 8, 2, 7, 3, 6, 4, 5])
         else :
             # return(self.horder[3])
-            return([4, 5, 3, 6, 2, 7, 1, 8, 0, 9])
+            # return([4, 5, 3, 6, 2, 7, 1, 8, 0, 9])
+            return([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
  
     def checkupper(self,board,xpos,ypos): 
         block=0
