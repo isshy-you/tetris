@@ -4,7 +4,7 @@
 class lib_tetris:
     def __init__(self):
         self.MYDEBUG = False
-        self.ChangeHieght = 13
+        self.ChangeHieght = 17
 
         # Type-I(0)
         # Dir0
