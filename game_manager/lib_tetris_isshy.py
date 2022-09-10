@@ -401,7 +401,7 @@ class lib_tetris:
                 if blockheight < self.ChangeHieght :
                     pat4 = self.calcBoardPat(self.board,x,y,0)
                 else:
-                    pat4 = self.calcBoardPat(self.board,x,y,1)
+                    pat4 = self.calcBoardPat(self.board,x,y,2)
                 pat3 = pat4 >> 4
                 pat2 = pat4 >> 8
                 pat=[pat2,pat3,pat4]
