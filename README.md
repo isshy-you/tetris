@@ -29,7 +29,7 @@
     - [次のブロックのランダム性](#%E6%AC%A1%E3%81%AE%E3%83%96%E3%83%AD%E3%83%83%E3%82%AF%E3%81%AE%E3%83%A9%E3%83%B3%E3%83%80%E3%83%A0%E6%80%A7)
     - [AI実装](#ai%E5%AE%9F%E8%A3%85)
     - [自動評価](#%E8%87%AA%E5%8B%95%E8%A9%95%E4%BE%A1)
-    - [対戦](#%E5%AF%BE%E6%88%A6)
+    - [art](#art)
   - [LICENSE](#license)
   - [Finnaly](#finnaly)
 
@@ -269,6 +269,10 @@ git push                                                   # 変更を反映
 ※追記　Pull Request練習用リポジトリを作成しました。<br>
 [test_pull_request](https://github.com/seigot/test_pull_request)<br>
 <br>
+解説図:<br>
+
+![Git Commentary](doc/pics/20230115_Git_Commentary.png)
+
 参考：<br>
 [GitHub-プルリクエストの作成方法](https://docs.github.com/ja/free-pro-team@latest/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request)<br>
 [[実践] はじめてのPull Requestをやってみよう](https://qiita.com/wataryooou/items/8dce6b6d5f54ab2cef04)<br>
@@ -306,9 +310,8 @@ nextShapeIndex = np_randomShape.random.randint(1, 8)
 スコアアタック用サーバ  
 https://github.com/seigot/tetris_score_server
 
-### 対戦
-対戦用サーバ  
-https://github.com/seigot/tetris_battle_server
+### art
+[artについて](doc/files/art.md)
 
 ## LICENSE
 
