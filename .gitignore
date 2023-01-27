@@ -6,3 +6,7 @@ tmp.log
 /result.json
 outputs/*
 result/*
+.vscode/launch.json
+result_3rd_final/*
+result_lv2/*
+result_lv3/*
