@@ -7,7 +7,7 @@ import subprocess
 from argparse import ArgumentParser
 from pygit2 import Repository
 
-def get_option(game_level, game_time, mode, random_seed, drop_interval, resultlogjson, train_yaml, predict_weight, user_name, ShapeListMax, BlockNumMax):
+def get_option(game_level, game_time, mode, random_seed, drop_interval, resultlogjson, train_yaml, predict_weight, user_name, ShapeListMax, BlockNumMax, art_config_filepath):
     argparser = ArgumentParser()
     argparser.add_argument('-l', '--game_level', type=int,
                             default=game_level,
@@ -17,7 +17,7 @@ def get_option(game_level, game_time, mode, random_seed, drop_interval, resultlo
                             help='Specify game time(s), if specify -1, do endless loop')
     argparser.add_argument('-m', '--mode', type=str,
                             default=mode,
-                            help='Specify mode (keyboard/gamepad/sample/train/predict/train_sample/predict_sample/train_sample2/predict_sample2) if necessary')
+                            help='Specify mode (keyboard/gamepad/sample/art/train/predict/train_sample/predict_sample/train_sample2/predict_sample2) if necessary')
     argparser.add_argument('-r', '--random_seed', type=int,
                             default=random_seed,
                             help='Specify random seed if necessary') 
@@ -42,12 +42,17 @@ def get_option(game_level, game_time, mode, random_seed, drop_interval, resultlo
     argparser.add_argument('--BlockNumMax', type=int,
                             default=BlockNumMax,
                             help='Specigy BlockNumMax if necessary')
+    argparser.add_argument('--art_config_filepath', type=str,
+                           default=art_config_filepath,
+                           help='art_config file path')
     return argparser.parse_args()
 
 def get_python_cmd():
     ret = subprocess.run("python --version", shell=True, \
                          stderr=subprocess.PIPE, encoding="utf-8")
     print(ret)
+    if "not found" in ret.stderr:
+        return "python3"
     if "Python 2" in ret.stderr:
         return "python3"
     return "python"
@@ -56,18 +61,20 @@ def start():
     ## define
     EXEC_LOG_ON = 1    
     ## default value
-    GAME_LEVEL = 3
+    GAME_LEVEL = 4
     GAME_TIME = 180
     IS_MODE = "default"
     IS_SAMPLE_CONTROLL = "n"
-    INPUT_RANDOM_SEED = 1
-    DROP_INTERVAL = 1        # drop interval
+    INPUT_RANDOM_SEED = -1
+    INPUT_DROP_INTERVAL = -1
+    DROP_INTERVAL = 1000          # drop interval
     RESULT_LOG_JSON = "result.json"
     USER_NAME = "window_sample"
     SHAPE_LIST_MAX = 6
-    BLOCK_NUM_MAX = 1000
+    BLOCK_NUM_MAX = -1
     TRAIN_YAML = "config/default.yaml"
     PREDICT_WEIGHT = "outputs/latest/best_weight.pt"
+    ART_CONFIG = "default.json"
 
     ## update value if args are given
     result_name = Repository('.').head.shorthand.replace('/','-').replace('_','-')\
@@ -81,23 +88,24 @@ def start():
                       GAME_TIME,
                       IS_MODE,
                       INPUT_RANDOM_SEED,
-                      DROP_INTERVAL,
-                      '', # RESULT_LOG_JSON,
+                      INPUT_DROP_INTERVAL,
+                      '', # RESULT_LOG_JSON
                       TRAIN_YAML,
                       PREDICT_WEIGHT,
                       USER_NAME,
                       SHAPE_LIST_MAX,
-                      BLOCK_NUM_MAX)
+                      BLOCK_NUM_MAX,
+                      ART_CONFIG)
     if args.game_level >= 0:
         GAME_LEVEL = args.game_level
     if args.game_time >= 0 or args.game_time == -1:
         GAME_TIME = args.game_time
-    if args.mode in ("keyboard", "gamepad", "sample", "train", "predict", "train_sample", "predict_sample", "train_sample2", "predict_sample2"):
+    if args.mode in ("keyboard", "gamepad", "sample", "art", "train", "predict", "train_sample", "predict_sample", "train_sample2", "predict_sample2"):
         IS_MODE = args.mode
     if args.random_seed >= 0:
         INPUT_RANDOM_SEED = args.random_seed
     if args.drop_interval > 0:
-        DROP_INTERVAL = args.drop_interval
+        INPUT_DROP_INTERVAL = args.drop_interval
     if len(args.resultlogjson) != 0:
         RESULT_LOG_JSON = args.resultlogjson
     else:
@@ -112,6 +120,8 @@ def start():
         TRAIN_YAML = args.train_yaml
     if args.predict_weight != None:
         PREDICT_WEIGHT = args.predict_weight
+    if len(args.art_config_filepath) != 0:
+        ART_CONFIG = args.art_config_filepath
 
     ## set field parameter for level 1
     RANDOM_SEED = 0            # random seed for field
@@ -123,12 +133,18 @@ def start():
         GAME_TIME = -1
     elif GAME_LEVEL == 1: # level1
         RANDOM_SEED = 0
+        BLOCK_NUM_MAX = 180
     elif GAME_LEVEL == 2: # level2
         RANDOM_SEED = -1
-    elif GAME_LEVEL == 3: # level3
+        BLOCK_NUM_MAX = 180
+    elif GAME_LEVEL == 3 or GAME_LEVEL == 4: # level3 or level4
         RANDOM_SEED = -1
+        BLOCK_NUM_MAX = 180
         OBSTACLE_HEIGHT = 10
         OBSTACLE_PROBABILITY = 40
+        if GAME_LEVEL == 4:
+            BLOCK_NUM_MAX = -1
+            DROP_INTERVAL=1
     else:
         print('invalid level: ' + str(GAME_LEVEL), file=sys.stderr)
         sys.exit(1)
@@ -136,6 +152,9 @@ def start():
     ## update random seed
     if INPUT_RANDOM_SEED >= 0:
         RANDOM_SEED = INPUT_RANDOM_SEED
+    ## update drop interval
+    if INPUT_DROP_INTERVAL > 0:
+        DROP_INTERVAL = INPUT_DROP_INTERVAL
 
     ## print
     print('game_level: ' + str(GAME_LEVEL))
@@ -150,6 +169,7 @@ def start():
     print('RESULT_LOG_JSON: ' + str(RESULT_LOG_JSON))
     print('TRAIN_YAML: ' + str(TRAIN_YAML))
     print('PREDICT_WEIGHT: ' + str(PREDICT_WEIGHT))
+    print('ART_CONFIG: ' + str(ART_CONFIG))
 
     os.makedirs('result', exist_ok=True)
     ## start game
@@ -166,7 +186,8 @@ def start():
         + ' ' + '--train_yaml' + ' ' + str(TRAIN_YAML) \
         + ' ' + '--predict_weight' + ' ' + str(PREDICT_WEIGHT) \
         + ' ' + '--ShapeListMax' + ' ' + str(SHAPE_LIST_MAX) \
-        + ' ' + '--BlockNumMax' + ' ' + str(BLOCK_NUM_MAX)
+        + ' ' + '--BlockNumMax' + ' ' + str(BLOCK_NUM_MAX) \
+        + ' ' + '--art_config_filepath' + ' ' + str(ART_CONFIG)
 
     if EXEC_LOG_ON==1:
         # EXEC_LOG = "result/"+Repository('.').head.shorthand\
