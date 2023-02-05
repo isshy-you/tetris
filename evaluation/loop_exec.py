@@ -127,11 +127,13 @@ def start():
         exec_cmd(cmd)
         cmd = 'git fetch eva'
         exec_cmd(cmd)
-        cmd = 'git checkout eva/'+branch_name+' ./game_manager/block_controller.py'
-        exec_cmd(cmd)
-        cmd = 'git checkout eva/'+branch_name+' ./game_manager/lib_tetris_isshy.py'
-        exec_cmd(cmd)
-        cmd = 'git checkout eva/'+branch_name+' ./game_manager/machine_learning'
+        # cmd = 'git checkout eva/'+branch_name+' ./game_manager/block_controller.py'
+        # exec_cmd(cmd)
+        # cmd = 'git checkout eva/'+branch_name+' ./game_manager/lib_tetris_isshy.py'
+        # exec_cmd(cmd)
+        # cmd = 'git checkout eva/'+branch_name+' ./game_manager/machine_learning'
+        # exec_cmd(cmd)
+        cmd = 'git checkout eva/'+branch_name+' ./game_manager'
         exec_cmd(cmd)
 
         ## set field parameter for level 1
