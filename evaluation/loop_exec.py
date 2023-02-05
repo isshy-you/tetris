@@ -158,7 +158,8 @@ def start():
         #     # seed_max = 1
         #     DROP_INTERVAL = 1         # drop interval
         # for num in range(1,seed_max+1,1):
-        result_name = branch_name.replace('/','-').replace('_','-')\
+        result_name = USER_NAME+'_'\
+                    +branch_name.replace('/','-').replace('_','-')\
                     +"_"+IS_MODE.replace('_','')\
                     +"_"+f'{GAME_LEVEL:1}'\
                     +"_"+f'{GAME_TIME:03}'\

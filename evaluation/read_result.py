@@ -9,11 +9,12 @@ from pathlib import Path
 #                             )
 path = Path('./result/')
 for ii,file in enumerate(path.glob('*.json')):
-    branch,mode,level,time,block,interval,seed,num = file.stem.split('_')
+    username,branch,mode,level,time,block,interval,seed,num = file.stem.split('_')
     f = open(file, 'r')
     print('reading : '+str(file))
     jsdic=json.load(f)
     df2 = pd.DataFrame({'num':num,
+                        'user':username,
                         'branch':[branch],
                         'mode':[mode],
                         'level':level,
