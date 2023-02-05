@@ -82,7 +82,7 @@ def start():
     ## define
     EXEC_LOG_ON = 1    
     ## default value
-    GAME_LEVEL = 4
+    GAME_LEVEL = 1
     GAME_TIME = 180
     IS_MODE = "default"
     IS_SAMPLE_CONTROLL = "n"
@@ -234,8 +234,9 @@ def start():
             sys.exit(1)
 
         ## update random seed
-        if INPUT_RANDOM_SEED >= 0:
-            RANDOM_SEED = INPUT_RANDOM_SEED
+        if GAME_LEVEL != 1:
+            if INPUT_RANDOM_SEED >= 0:
+                RANDOM_SEED = INPUT_RANDOM_SEED
         ## update drop interval
         if INPUT_DROP_INTERVAL > 0:
             DROP_INTERVAL = INPUT_DROP_INTERVAL
