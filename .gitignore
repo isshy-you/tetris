@@ -5,7 +5,7 @@ tmp.log
 **.DS_Store
 /result.json
 outputs/*
-result/*
+result*/*
 .vscode/launch.json
 result_3rd_final/*
 result_lv2/*
