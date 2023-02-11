@@ -28,7 +28,7 @@ class Block_Controller(object):
         self.MYDEBUG = isshy.MYDEBUG
         self.HOLDMODE = isshy.HOLDMODE
         self.DEBUG = True
- 
+
         t1 = time.time()
         # print GameStatus
         if self.DEBUG: print("=================================================>")
@@ -88,7 +88,7 @@ class Block_Controller(object):
                 strategy = (direction0,x0,1,1,'n')
 
         if (self.MYDEBUG) : print("<<< isshy-you:(EvalValue,shape,strategy(dir,x,y_ope,y_mov))=(",EvalValue,GameStatus["block_info"]["currentShape"]["index"],strategy,")")
-        processtime = time.time()-t1
+        processtime = time.time() - t1
         if self.DEBUG:
             print("=== block index(current) === (", GameStatus["block_info"]["currentShape"]["index"],")")
             print("=== block index(hold)    === (", GameStatus["block_info"]["holdShape"]["index"],")")
@@ -97,7 +97,7 @@ class Block_Controller(object):
             else:
                 print("=== use hold             ===")
 
-        if self.DEBUG:  print("=== processing time === (", processtime,") under usec(",processtime<0.001,")")
+        if self.DEBUG:  print("=== processing time === (", processtime,") under 5usec(",processtime<0.005,")")
         nextMove["strategy"]["direction"] = strategy[0]
         nextMove["strategy"]["x"] = strategy[1]
         nextMove["strategy"]["y_operation"] = strategy[2]
