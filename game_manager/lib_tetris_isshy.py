@@ -3,7 +3,8 @@
 
 class lib_tetris:
     def __init__(self):
-        self.MYDEBUG = True
+        self.MYDEBUG = False
+        self.HOLDMODE = True
         self.ChangeHieght = 13
 
         # Type-I(0)
@@ -382,16 +383,31 @@ class lib_tetris:
                     return(yy-4)
         return(self.height-4)
 
-    def calcEvaluationValue(self,GameStatus):
+    def calcEvaluationValue(self,GameStatus,mode):
+        ### mode = 0 : current
+        ### mode = 1 : hold
+        ### mode = 2 : next
         self.board = GameStatus["field_info"]["backboard"]
         self.width  = GameStatus["field_info"]["width"] # width=10
         self.height = GameStatus["field_info"]["height"] # height=22
         self.index  = GameStatus["block_info"]["currentShape"]["index"] - 1 # 0:I,1:L,2:J,3:T,4:O,5:S,6:Z
-        self.index_next1 = GameStatus["block_info"]["nextShape"]["index"]
-        self.index_next2 = GameStatus["block_info"]["nextShapeList"]['element2']["index"]
-        self.index_next3 = GameStatus["block_info"]["nextShapeList"]['element3']["index"]
-        self.index_next4 = GameStatus["block_info"]["nextShapeList"]['element4']["index"]
-        self.index_next5 = GameStatus["block_info"]["nextShapeList"]['element5']["index"]
+        if mode == 0:
+            self.index  = GameStatus["block_info"]["currentShape"]["index"] - 1 # 0:I,1:L,2:J,3:T,4:O,5:S,6:Z
+            self.index_next1 = GameStatus["block_info"]["nextShape"]["index"]
+            self.index_next2 = GameStatus["block_info"]["nextShapeList"]['element2']["index"]
+            self.index_next3 = GameStatus["block_info"]["nextShapeList"]['element3']["index"]
+        elif mode == 1:
+            self.index  = GameStatus["block_info"]["holdShape"]["index"] - 1 # 0:I,1:L,2:J,3:T,4:O,5:S,6:Z
+            self.index_next1 = GameStatus["block_info"]["nextShape"]["index"]
+            self.index_next2 = GameStatus["block_info"]["nextShapeList"]['element2']["index"]
+            self.index_next3 = GameStatus["block_info"]["nextShapeList"]['element3']["index"]
+        elif mode == 2:
+            self.index  = GameStatus["block_info"]["nextShape"]["index"] - 1 # 0:I,1:L,2:J,3:T,4:O,5:S,6:Z
+            self.index_next1 = GameStatus["block_info"]["nextShapeList"]['element2']["index"]
+            self.index_next2 = GameStatus["block_info"]["nextShapeList"]['element3']["index"]
+            self.index_next3 = GameStatus["block_info"]["nextShapeList"]['element4']["index"]
+        # self.index_next4 = GameStatus["block_info"]["nextShapeList"]['element4']["index"]
+        # self.index_next5 = GameStatus["block_info"]["nextShapeList"]['element5']["index"]
         blockheight = self.maxblockheight(self.board)
         if ((self.MYDEBUG)):print('blockheight=',blockheight)
         order = self.makehorizontalorder(blockheight)
@@ -431,7 +447,7 @@ class lib_tetris:
                                 hole = self.counthole(self.board,xx,y+self.dic_widy[self.index][direction]-self.dic_aliy[self.index][direction]+1)
                                 if self.MYDEBUG: print("### check hole :",hole,xx,y+self.dic_widy[self.index][direction]-self.dic_aliy[self.index][direction]+1)
                                 if (hole > 0):
-                                    if (self.MYDEBUG) : print("### find HOLE next index",self.index_next1,self.index_next2,self.index_next3,self.index_next4,self.index_next5)
+                                    # if (self.MYDEBUG) : print("### find HOLE next index",self.index_next1,self.index_next2,self.index_next3,self.index_next4,self.index_next5)
                                     if (self.MYDEBUG) : print("### find HOLE (",hole,")",xx,y,format(pat4,'04x'))
                                     if hole >= 2 and self.index_next1==1:
                                         getpoint = getpoint -int(hole)

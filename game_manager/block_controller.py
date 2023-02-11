@@ -25,8 +25,9 @@ class Block_Controller(object):
     # output
     #    nextMove : nextMove structure which includes next shape position and the other.
     def GetNextMove(self, nextMove, GameStatus):
-        self.MYDEBUG=isshy.MYDEBUG
-        self.DEBUG = False
+        self.MYDEBUG = isshy.MYDEBUG
+        self.HOLDMODE = isshy.HOLDMODE
+        self.DEBUG = True
  
         t1 = time.time()
         # print GameStatus
@@ -58,16 +59,50 @@ class Block_Controller(object):
         # self.board_data_height = GameStatus["field_info"]["height"]
         # self.ShapeNone_index = GameStatus["debug_info"]["shape_info"]["shapeNone"]["index"]
 
-        EvalValue,x0,direction0 = isshy.calcEvaluationValue(GameStatus)
-        strategy = (direction0,x0,1,1)
+
+        print(GameStatus["block_info"]["holdShape"]["index"])
+        if self.HOLDMODE and GameStatus["block_info"]["holdShape"]["index"] == None:
+            ### store hold and use next shape
+            if self.DEBUG: print('store hold and use next shape')
+            EvalValue,x0,direction0 = isshy.calcEvaluationValue(GameStatus,0)
+            strategy = (direction0,x0,1,1,'y')
+        else:
+            ### use current shape
+            EvalValue,x0,direction0 = isshy.calcEvaluationValue(GameStatus,0)
+            if self.HOLDMODE:
+                HoldShapeDirectionRange = GameStatus["block_info"]["holdShape"]["direction_range"]
+                HoldShapeClass = GameStatus["block_info"]["holdShape"]["class"]
+                if (self.MYDEBUG) : print("HoldShapeDirectionRange,HoldshapeCalss=",HoldShapeDirectionRange,HoldShapeClass)
+                ### use hold shape 
+                EvalValue_hold,x0_hold,direction0_hold = isshy.calcEvaluationValue(GameStatus,1)
+                if (self.DEBUG) : print('Normal:',EvalValue,x0,direction0)
+                if (self.DEBUG) : print('Hold  :',EvalValue_hold,x0_hold,direction0_hold)
+
+            if self.HOLDMODE:
+                if EvalValue < EvalValue_hold:
+                    EvalValue = EvalValue_hold
+                    strategy = (direction0_hold,x0_hold,1,1,'y')
+                else:
+                    strategy = (direction0,x0,1,1,'n')
+            else:
+                strategy = (direction0,x0,1,1,'n')
+
         if (self.MYDEBUG) : print("<<< isshy-you:(EvalValue,shape,strategy(dir,x,y_ope,y_mov))=(",EvalValue,GameStatus["block_info"]["currentShape"]["index"],strategy,")")
         processtime = time.time()-t1
-        if self.DEBUG:  print("=== block index     === (", GameStatus["block_info"]["currentShape"]["index"],")")
+        if self.DEBUG:
+            print("=== block index(current) === (", GameStatus["block_info"]["currentShape"]["index"],")")
+            print("=== block index(hold)    === (", GameStatus["block_info"]["holdShape"]["index"],")")
+            if strategy[4] == 'n':
+                print("=== use current          ===")
+            else:
+                print("=== use hold             ===")
+
         if self.DEBUG:  print("=== processing time === (", processtime,") under usec(",processtime<0.001,")")
         nextMove["strategy"]["direction"] = strategy[0]
         nextMove["strategy"]["x"] = strategy[1]
         nextMove["strategy"]["y_operation"] = strategy[2]
         nextMove["strategy"]["y_moveblocknum"] = strategy[3]
+        nextMove["strategy"]["use_hold_function"] = strategy[4]
         # print("=== nextMove:",nextMove)
         if self.DEBUG:  print("=== nextMove        === dir(",strategy[0],") xpos(",strategy[1],")")
         return nextMove
