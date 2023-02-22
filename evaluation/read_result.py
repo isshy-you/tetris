@@ -21,7 +21,7 @@ for ii,file in enumerate(path.glob('*.json')):
                         'time':time,
                         'block':block,
                         'interval':interval,
-                        'seed':seed,
+                        'seed':jsdic['debug_info']['random_seed'],
                         'mode':jsdic['judge_info']['mode'],
                         'score':jsdic['judge_info']['score'],
                         'block_index':jsdic['judge_info']['block_index'],
