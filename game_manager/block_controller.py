@@ -27,7 +27,7 @@ class Block_Controller(object):
     def GetNextMove(self, nextMove, GameStatus):
         self.MYDEBUG = isshy.MYDEBUG
         self.HOLDMODE = isshy.HOLDMODE
-        self.DEBUG = True
+        self.DEBUG = False
 
         t1 = time.time()
         # print GameStatus
